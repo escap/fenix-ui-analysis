@@ -182,12 +182,13 @@ define([
         this.loadSackFromStorage();
     };
 
-    PageController.prototype.getData = function (uid, callback) {
+    PageController.prototype.getData = function (resource, callback) {
 
         var settings = {
-            uid: uid,
+            resource: resource,
             success: callback
         };
+
         this.bridge.query(settings);
     };
 

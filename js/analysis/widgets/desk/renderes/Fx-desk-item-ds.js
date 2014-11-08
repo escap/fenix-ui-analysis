@@ -15,11 +15,12 @@ define([
         },
         RESOURCES: 'resources',
         DSD: 'dsd',
+        METADATA: 'metadata',
         COLUMNS: 'columns',
         VALUES: 'values',
         DATA: 'data',
         VIRTUAL: 'virtualColumn',
-        COLUMN_ID: "columnId",
+        COLUMN_ID: "subject",
         tabs: ['metadata', 'table', 'charts'],
         selectors: {
             content: {
@@ -79,6 +80,8 @@ define([
             this.dataFields.push({ name: column[this.o.COLUMN_ID], type: 'string' });
 
             if (column.dataType === "code") {
+
+                console.log(column.values)
 
                 this.columnsCodeMapping[column.columnId] = this.createMapCode(column.values);
             }
@@ -212,7 +215,7 @@ define([
 
     DataSetRender.prototype.initInnerStructures = function () {
 
-        this.dsd = this.model[this.o.DSD];
+        this.dsd = this.model[this.o.METADATA][this.o.DSD];
         this.visibleColumns = [];
         this.hiddenColumns = [];
         this.columnsCodeMapping = {};
@@ -1124,7 +1127,7 @@ define([
     DataSetRender.prototype.renderItem = function (template, item) {
 
         this.$template = template;
-        this.model = item.resources[0];
+        this.model = item;
 
         this.initInnerStructures();
         this.activatePanels();

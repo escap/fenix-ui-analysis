@@ -1,49 +1,66 @@
 define([
-    'jquery',
-    'text!fx-ana/json/request.json'
-], function ($, request) {
+    'jquery'
+    //'text!fx-ana/json/request.json'
+], function ($) {
 
-    var o = {},
-        defaultOptions = {
-            url: 'http://faostat3.fao.org:7788/find/data/',
-            method: 'POST'
+    // url: 'http://faostat3.fao.org:7799/v2/msd/resources/:uid/:version'
+
+    var defaultOptions = {
+            url: 'http://faostat3.fao.org:7799/v2/msd/resources/',
+            method: 'GET'
         };
 
     function Bridge(opts) {
 
-        $.extend(o, defaultOptions, opts);
+        this.o = {};
+
+        $.extend(true, this.o, defaultOptions, opts);
     }
 
     Bridge.prototype.getMetadata = function () {
 
-        $.ajax({
-            type: o.method,
-            url: o.url,
-            context : this,
-            contentType: 'application/json',
-            data: o.body,
-            success: o.success,
-            error : function () {
-                alert("IPI-side Problems")
-            }
-        });
+        if (this.o.resource.version) {
+            $.ajax({
+                type: this.o.method,
+                url: this.o.url + this.o.resource.uid +'/'+ this.o.resource.version,
+                context : this,
+                contentType: 'application/json',
+                data: {dsd:true, full:true},
+                success: this.o.success,
+                error : function () {
+                    alert("IPI-side Problems")
+                }
+            });
+        } else {
+            $.ajax({
+                type: this.o.method,
+                url: this.o.url + 'uid/' + this.o.resource.uid ,
+                context : this,
+                contentType: 'application/json',
+                data: {dsd:true, full:true},
+                success: this.o.success,
+                error : function () {
+                    alert("IPI-side Problems")
+                }
+            });
+        }
     };
 
     Bridge.prototype.query = function (settings) {
 
-        $.extend(o, settings);
+        $.extend(true, this.o, settings);
 
-        this.createBodyRequest();
+        //this.createBodyRequest();
         this.getMetadata();
     };
 
-    Bridge.prototype.createBodyRequest = function () {
+   /* Bridge.prototype.createBodyRequest = function () {
 
         var r = JSON.parse(request);
-        r.filter.metadata.uid.push({"enumeration": o.uid});
+        r.filter.metadata.uid.push({"enumeration": this.o.uid});
 
-        o.body = JSON.stringify(r);
-    };
+        this.o.body = JSON.stringify(r);
+    };*/
 
     return Bridge;
 });

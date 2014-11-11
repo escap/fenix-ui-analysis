@@ -212,32 +212,32 @@ define([
         });
 
         $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.CLONE_ITEM, function (e, model) {
-            that.saveDeskToStorage(model);
+            //that.saveDeskToStorage(model);
             that.addItemToDesk(model);
         });
 
         $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.REMOVE_ITEM, function (e, container, model) {
-            that.removeDeskItemFromStorage(model);
+            //that.removeDeskItemFromStorage(model);
             that.removeItemFromDesk(container);
         });
 
         $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.MINIMIZE_ITEM, function (e, container, model) {
-            that.saveStackToStorage(model);
-            that.removeDeskItemFromStorage(model);
+            //that.saveStackToStorage(model);
+            //that.removeDeskItemFromStorage(model);
 
             that.addItemToStack(model);
             that.removeItemFromDesk(container);
         });
 
         $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.MOVE_TO_DESK, function (e, model, container) {
-            that.removeStackItemFromStorage(model);
-            that.saveDeskToStorage(model);
+            //that.removeStackItemFromStorage(model);
+            //that.saveDeskToStorage(model);
             that.addItemToDesk(model);
             that.removeItemFromStack(container);
         });
 
         $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.REMOVE_STACK, function (e, model, container) {
-            that.removeStackItemFromStorage(model);
+            //that.removeStackItemFromStorage(model);
             that.removeItemFromStack(container);
         });
     };

@@ -1153,23 +1153,21 @@ define([
 
     DataSetRender.prototype.buildChart = function (type) {
 
-        /*switch (type) {
+        switch (type) {
             case 'line' :
                 this.buildLineChart();
                 break;
             case 'area' :
                 this.buildAreaChart();
                 break;
-        }*/
+        }
     };
 
     DataSetRender.prototype.buildMetadata = function () {
 
         this.$template.find('.meta-uid').html(this.model.metadata.uid);
         this.$template.find('.meta-title').html(this.getLabel(this.model.metadata, 'title'));
-        this.$template.find('.meta-language').html(this.model.metadata.language);
-        this.$template.find('.meta-datatype').html(this.model.metadata.dataType);
-        this.$template.find('.meta-geo').html(this.getLabel(this.model.metadata.geographicExtent, 'title'));
+        this.$template.find('.meta-context').html(this.model.metadata.meContent.resourceRepresentationType);
     };
 
     DataSetRender.prototype.renderItem = function (template, item) {
@@ -1180,7 +1178,7 @@ define([
         this.initInnerStructures();
         this.activatePanels();
         this.buildTable();
-        //this.buildMetadata();
+        this.buildMetadata();
     };
 
     return DataSetRender;

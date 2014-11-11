@@ -41,13 +41,13 @@ define([
         });
 
         var title = 'undefiend';
-        if (this.model.resources[0].metadata.title) {
-            title = this.model.resources[0].metadata.title['EN'] || this.model.resources[0].metadata.title[Object.keys(this.model.resources[0].metadata.title)[0]];
+        if (this.model.metadata.title) {
+            title = this.model.metadata.title['EN'] || this.model.metadata.title[Object.keys(this.model.metadata.title)[0]];
         }
 
         var desc = 'undefined';
-        if (this.model.resources[0].metadata.description ){
-            desc =  this.model.resources[0].metadata.description['EN'] || this.model.resources[0].metadata.description[Object.keys(this.model.resources[0].metadata.description)[0]];
+        if (this.model.metadata.description ){
+            desc =  this.model.metadata.description['EN'] || this.model.metadata.description[Object.keys(this.model.metadata.description)[0]];
         }
 
 

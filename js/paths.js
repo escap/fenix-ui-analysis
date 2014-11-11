@@ -16,7 +16,7 @@ define(function () {
         'jquery': '//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min',
         'pnotify': 'lib/pnotify',
         'highcharts' : '//code.highcharts.com/highcharts',
-        'jqwidgets': "//fenixapps.fao.org/repository/js/jqwidgets/3.1/jqx-all",
+        'jqwidgets': "//fenixapps.fao.org/repository/js/jqwidgets/3.1/jqx-light",
         'jqueryui': "//code.jquery.com/ui/1.10.3/jquery-ui.min",
         'bootstrap' : "//maxcdn.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min",
         'tweenmax': '../node_modules/gsap/src/minified/TweenMax.min',

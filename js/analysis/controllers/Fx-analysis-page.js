@@ -247,7 +247,7 @@ define([
         this.preValidation();
         this.initEventListeners();
         this.renderComponents();
-        this.loadSession();
+        //this.loadSession();
     };
 
     return PageController;

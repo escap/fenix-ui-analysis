@@ -59,13 +59,13 @@ define([
         var map = {};
         for (var i = 0; i < values.length; i++) {
             //TODO throw error if the code is not well-formed
-            map[values[i].code] = this.getLabel(values[i], 'title');
+            map[values[i].code] = this.getLabel(values[i], 'label');
         }
 
         return map;
     };
 
-    DataSetRender.prototype.processColumn = function (index, column) {
+/*    DataSetRender.prototype.processColumn = function (index, column) {
 
         //if ( column.hasOwnProperty(this.o.VALUES) && column[this.o.VALUES] !== null && column[this.o.VALUES].length <= -1 ) {
         if (column.hasOwnProperty(this.o.VIRTUAL) && column[this.o.VIRTUAL] === 'INTERNAL') {
@@ -81,17 +81,15 @@ define([
 
             if (column.dataType === "code") {
 
-                console.log(column.values)
-
-                this.columnsCodeMapping[column.columnId] = this.createMapCode(column.values);
+                this.columnsCodeMapping[this.o.COLUMN_ID] = this.createMapCode(column.values.codes[0].codes);
             }
 
-            if (column.columnId === "VALUE") {
+            if (column[this.o.COLUMN_ID] === "VALUE") {
 
                 this.valueIndex = index;
             }
 
-            if (column.columnId === "TIME") {
+            if (column[this.o.COLUMN_ID] === "TIME") {
                 this.xAxis =[];
                 
                 if ( typeof column.values[0] === 'string') {
@@ -107,14 +105,14 @@ define([
                 
             }
 
-            if (column.columnId === "ITEM") {
+            if (column[this.o.COLUMN_ID] === "ITEM") {
                 
                 this.itemIndex = index;
 
                 if (column.dataType === "code") {
-                    var a = Object.keys(this.columnsCodeMapping[column.columnId]);
+                    var a = Object.keys(this.columnsCodeMapping[column[this.o.COLUMN_ID]]);
                     for (var i = 0; i < a.length; i++) {
-                        this.rawSeries[a[i]] = { name: this.columnsCodeMapping[column.columnId][a[i]], data: [] };
+                        this.rawSeries[a[i]] = { name: this.columnsCodeMapping[column[this.o.COLUMN_ID]][a[i]], data: [] };
                     }
 
                 } else {
@@ -125,6 +123,56 @@ define([
                 }
             }
         }
+    };*/
+
+    DataSetRender.prototype.processColumn = function (index, column) {
+
+            //The column WILL be displayed
+            this.visibleColumns.push(column);
+            this.dataFields.push({ name: column[this.o.COLUMN_ID], type: 'string' });
+
+            if (column.dataType === "code") {
+                this.columnsCodeMapping[column[this.o.COLUMN_ID]] = this.createMapCode(column.values.codes[0].codes);
+            }
+
+            if (column[this.o.COLUMN_ID].toUpperCase() === "VALUE") {
+                this.valueIndex = index;
+            }
+
+            if (column[this.o.COLUMN_ID].toUpperCase() === "TIME") {
+                this.xAxis =[];
+
+                if ( typeof column.values[0] === 'string') {
+
+                    for (var i = 0; i <  column.values.length; i++ ){
+                        //substrig of portion of Date format - it shows year, month and day
+                        this.xAxis.push(column.values[i].substr(5, 11))
+                    }
+
+                } else {
+                    this.xAxis = column.values;
+                }
+
+            }
+
+            if (column[this.o.COLUMN_ID].toUpperCase() === "ITEM") {
+
+                this.itemIndex = index;
+
+                if (column.dataType === "code") {
+                    var a = Object.keys(this.columnsCodeMapping[column[this.o.COLUMN_ID]]);
+                    for (var i = 0; i < a.length; i++) {
+                        this.rawSeries[a[i]] = { name: this.columnsCodeMapping[column[this.o.COLUMN_ID]][a[i]], data: [] };
+                    }
+
+                } else {
+
+                    for (var i = 0; i < column.values.length; i++) {
+                        this.rawSeries[column.values[i]] = { name: column.values[i], data: [] };
+                    }
+                }
+            }
+
     };
 
     DataSetRender.prototype.getData = function () {
@@ -147,7 +195,7 @@ define([
             for (j = 0; j < this.visibleColumns.length; j++) {
 
                 if (this.visibleColumns[j].dataType === 'code') {
-                    d[this.dataFields[j].name] = r[j] + ' - ' + this.columnsCodeMapping[this.visibleColumns[j].columnId][r[j]];
+                    d[this.dataFields[j].name] = r[j] + ' - ' + this.columnsCodeMapping[this.visibleColumns[j][this.o.COLUMN_ID]][r[j]];
                 } else {
                     d[this.dataFields[j].name] = r[j]
                 }
@@ -1105,14 +1153,14 @@ define([
 
     DataSetRender.prototype.buildChart = function (type) {
 
-        switch (type) {
+        /*switch (type) {
             case 'line' :
                 this.buildLineChart();
                 break;
             case 'area' :
                 this.buildAreaChart();
                 break;
-        }
+        }*/
     };
 
     DataSetRender.prototype.buildMetadata = function () {
@@ -1132,7 +1180,7 @@ define([
         this.initInnerStructures();
         this.activatePanels();
         this.buildTable();
-        this.buildMetadata();
+        //this.buildMetadata();
     };
 
     return DataSetRender;

@@ -1,12 +1,8 @@
 /*
-Syntax error: File to import not found or unreadable: fx-mixins.
+Syntax error: File to import not found or unreadable: fx-sidebar.
               Load path: /Users/nicolaselleri/GitHubRepos/fenix-ui-demo-site/submodules/fenix-ui-analysis/css (DEPRECATED)
-        on line 5 of fenix-interface-style.scss
+        on line 10 of fenix-interface-style.scss
 
-1: /* Fenix Interace Common Style *\/
-2: 
-3: /* Produced By Fenix Team and Mentaltoy 2014 All rights riserved *\/
-4: 
 5: @import 'fx-mixins';
 6: @import 'fx-colors';
 7: @import 'fx-typography';
@@ -15,7 +11,7 @@ Syntax error: File to import not found or unreadable: fx-mixins.
 10: @import 'fx-sidebar';
 
 Backtrace:
-fenix-interface-style.scss:5
+fenix-interface-style.scss:10
 /Library/Ruby/Gems/2.0.0/gems/sass-3.3.8/lib/sass/tree/import_node.rb:66:in `rescue in import'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.3.8/lib/sass/tree/import_node.rb:45:in `import'
 /Library/Ruby/Gems/2.0.0/gems/sass-3.3.8/lib/sass/tree/import_node.rb:28:in `imported_file'
@@ -57,4 +53,4 @@ fenix-interface-style.scss:5
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: File to import not found or unreadable: fx-mixins.\A               Load path: /Users/nicolaselleri/GitHubRepos/fenix-ui-demo-site/submodules/fenix-ui-analysis/css (DEPRECATED)\A         on line 5 of fenix-interface-style.scss\A \A 1: /* Fenix Interace Common Style */\A 2: \A 3: /* Produced By Fenix Team and Mentaltoy 2014 All rights riserved */\A 4: \A 5: @import 'fx-mixins';\A 6: @import 'fx-colors';\A 7: @import 'fx-typography';\A 8: @import 'fx-commons';\A 9: \A 10: @import 'fx-sidebar';"; }
+  content: "Syntax error: File to import not found or unreadable: fx-sidebar.\A               Load path: /Users/nicolaselleri/GitHubRepos/fenix-ui-demo-site/submodules/fenix-ui-analysis/css (DEPRECATED)\A         on line 10 of fenix-interface-style.scss\A \A 5: @import 'fx-mixins';\A 6: @import 'fx-colors';\A 7: @import 'fx-typography';\A 8: @import 'fx-commons';\A 9: \A 10: @import 'fx-sidebar';"; }

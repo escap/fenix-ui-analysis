@@ -142,17 +142,16 @@ define([
             if (column[this.o.COLUMN_ID].toUpperCase() === "TIME") {
                 this.xAxis =[];
 
-                if ( typeof column.values[0] === 'string') {
+                if ( typeof column.values.timeList[0] === 'string') {
 
-                    for (var i = 0; i <  column.values.length; i++ ){
+                    for (var i = 0; i <  column.values.timeList.length; i++ ){
                         //substrig of portion of Date format - it shows year, month and day
-                        this.xAxis.push(column.values[i].substr(5, 11))
+                        this.xAxis.push(column.values.timeList[i])
                     }
 
                 } else {
-                    this.xAxis = column.values;
+                    this.xAxis =column.values.timeList;
                 }
-
             }
 
             if (column[this.o.COLUMN_ID].toUpperCase() === "ITEM") {
@@ -593,9 +592,6 @@ define([
     };
 
     DataSetRender.prototype.buildAreaChart = function () {
-
-        console.log(this.series)
-
 
         var conf = {
 

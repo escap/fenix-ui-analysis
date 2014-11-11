@@ -6,7 +6,7 @@ define([
     // url: 'http://faostat3.fao.org:7799/v2/msd/resources/:uid/:version'
 
     var defaultOptions = {
-            url: 'http://faostat3.fao.org:7799/v2/msd/resources/',
+            url: 'http://faostat3.fao.org/d3s2/v2/msd/resources/',
             method: 'GET'
         };
 

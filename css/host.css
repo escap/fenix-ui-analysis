@@ -75,22 +75,6 @@ body {
     .fx-catalog-toolbar .fx-widget-stack-btns input {
       margin-left: 33px; }
 
-.btn {
-  background-color: #0076ff;
-  color: white;
-  border-color: transparent; }
-  .btn:hover {
-    background-color: transparent;
-    color: #0076ff;
-    border-color: #0076ff; }
-  .btn:active {
-    background-color: transparent;
-    color: #0076ff;
-    border-color: #0076ff;
-    -webkit-box-shadow: 0 0 0 white;
-    -moz-box-shadow: 0 0 0 white;
-    box-shadow: 0 0 0 white; }
-
 /*================= Packry =================*/
 .fx-analysis-item {
   width: 50%;

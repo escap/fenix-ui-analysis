@@ -294,6 +294,11 @@ define([
 
     DataSetRender.prototype.buildTable = function () {
 
+        this.renderdTable();
+    };
+
+    DataSetRender.prototype.renderdTable = function () {
+
         var data = this.data;
         // prepare the data
         var source = {
@@ -312,6 +317,7 @@ define([
             });
 
     };
+
 
     DataSetRender.prototype.buildPieChart = function () {
 
@@ -1170,6 +1176,8 @@ define([
 
         this.$template = template;
         this.model = item;
+
+        console.log(item)
 
         this.initInnerStructures();
         this.activatePanels();

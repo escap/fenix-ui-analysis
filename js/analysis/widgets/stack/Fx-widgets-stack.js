@@ -33,7 +33,7 @@ define([
         },
         selectors = {
             LIST: "#fx-ws-list",
-            CLOSE_BTN: "#fx-ws-close-btn"
+            CLOSE_BTN: ".fx-closepanel-container"
         },
         events = {
             CREATE_PANEL: "",
@@ -72,7 +72,7 @@ define([
     FxWidgetsStack.prototype.initPanelBtns = function () {
 
         //Close button
-        this.$panel.find(selectors.CLOSE_BTN).html('Close panel').on(o.interaction, $.proxy(this.closePanel, this));
+        this.$panel.find(selectors.CLOSE_BTN).on(o.interaction, $.proxy(this.closePanel, this));
         $(o.open).on('click', $.proxy(this.openPanel, this))
     };
 

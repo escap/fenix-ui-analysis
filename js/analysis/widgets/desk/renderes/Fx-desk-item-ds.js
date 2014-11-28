@@ -65,66 +65,6 @@ define([
         return map;
     };
 
-/*    DataSetRender.prototype.processColumn = function (index, column) {
-
-        //if ( column.hasOwnProperty(this.o.VALUES) && column[this.o.VALUES] !== null && column[this.o.VALUES].length <= -1 ) {
-        if (column.hasOwnProperty(this.o.VIRTUAL) && column[this.o.VIRTUAL] === 'INTERNAL') {
-
-            //The column will NOT be displayed
-            this.hiddenColumns.push(column);
-            this.indexesToDelete.push(index);
-        } else {
-
-            //The column WILL be displayed
-            this.visibleColumns.push(column);
-            this.dataFields.push({ name: column[this.o.COLUMN_ID], type: 'string' });
-
-            if (column.dataType === "code") {
-
-                this.columnsCodeMapping[this.o.COLUMN_ID] = this.createMapCode(column.values.codes[0].codes);
-            }
-
-            if (column[this.o.COLUMN_ID] === "VALUE") {
-
-                this.valueIndex = index;
-            }
-
-            if (column[this.o.COLUMN_ID] === "TIME") {
-                this.xAxis =[];
-                
-                if ( typeof column.values[0] === 'string') {
-
-                    for (var i = 0; i <  column.values.length; i++ ){
-                        //substrig of portion of Date format - it shows year, month and day
-                        this.xAxis.push(column.values[i].substr(5, 11))    
-                    }
-
-                } else {
-                    this.xAxis = column.values;    
-                }
-                
-            }
-
-            if (column[this.o.COLUMN_ID] === "ITEM") {
-                
-                this.itemIndex = index;
-
-                if (column.dataType === "code") {
-                    var a = Object.keys(this.columnsCodeMapping[column[this.o.COLUMN_ID]]);
-                    for (var i = 0; i < a.length; i++) {
-                        this.rawSeries[a[i]] = { name: this.columnsCodeMapping[column[this.o.COLUMN_ID]][a[i]], data: [] };
-                    }
-
-                } else {
-
-                    for (var i = 0; i < column.values.length; i++) {
-                        this.rawSeries[column.values[i]] = { name: column.values[i], data: [] };
-                    }
-                }
-            }
-        }
-    };*/
-
     DataSetRender.prototype.processColumn = function (index, column) {
 
             //The column WILL be displayed
@@ -135,11 +75,11 @@ define([
                 this.columnsCodeMapping[column[this.o.COLUMN_ID]] = this.createMapCode(column.values.codes[0].codes);
             }
 
-            if (column[this.o.COLUMN_ID].toUpperCase() === "VALUE") {
+            if (column[this.o.COLUMN_ID] === "VALUE") {
                 this.valueIndex = index;
             }
 
-            if (column[this.o.COLUMN_ID].toUpperCase() === "TIME") {
+            if (column[this.o.COLUMN_ID] === "TIME") {
                 this.xAxis =[];
 
                 if ( typeof column.values.timeList[0] === 'string') {
@@ -154,7 +94,7 @@ define([
                 }
             }
 
-            if (column[this.o.COLUMN_ID].toUpperCase() === "ITEM") {
+            if (column[this.o.COLUMN_ID] === "ITEM") {
 
                 this.itemIndex = index;
 
@@ -317,7 +257,6 @@ define([
             });
 
     };
-
 
     DataSetRender.prototype.buildPieChart = function () {
 
@@ -1176,8 +1115,6 @@ define([
 
         this.$template = template;
         this.model = item;
-
-        console.log(item)
 
         this.initInnerStructures();
         this.activatePanels();

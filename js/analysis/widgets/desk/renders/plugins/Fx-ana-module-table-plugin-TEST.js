@@ -2,8 +2,7 @@
 
 define([
     'jquery',
-    'jqwidgets',
-    'highcharts'
+    'jqwidgets'
 ], function ($) {
 
     'use strict';
@@ -33,15 +32,37 @@ define([
             }
         },
         events: {
+            RESIZE_ITEM: "FXDeskItemResize",
+            CLONE_ITEM: 'FXDeskItemCole',
+            REMOVE_ITEM: "FXDeskItemRemove",
+            MINIMIZE_ITEM: "FXDeskItemMinimize"
         }
     };
 
-    function DataSetRender(options) {
+    function TablePlugin(options) {
         this.o = {};
+        this.channels = {};
         $.extend(true, this.o, defaultOptions, options);
     }
 
-    DataSetRender.prototype.getSeries = function () {
+    /*pub/sub for tabs' communication*/
+    TablePlugin.prototype.subscribe = function(channel, fn){
+        if (!this.channels[channel]) this.channels[channel] = [];
+        this.channels[channel].push({ context: this, callback: fn });
+        return this;
+    };
+
+    TablePlugin.prototype.publish = function(channel){
+        if (!this.channels[channel]) return false;
+        var args = Array.prototype.slice.call(arguments, 1);
+        for (var i = 0, l = this.channels[channel].length; i < l; i++) {
+            var subscription = this.channels[channel][i];
+            subscription.callback.apply(subscription.context, args);
+        }
+        return this;
+    };
+
+    TablePlugin.prototype.getSeries = function () {
 
         var o = Object.keys(this.rawSeries);
         for (var i = 0; i < o.length; i++) {
@@ -49,12 +70,12 @@ define([
         }
     };
 
-    DataSetRender.prototype.updateSeries = function (row) {
+    TablePlugin.prototype.updateSeries = function (row) {
 
         this.rawSeries[row[this.itemIndex]].data.push(row[this.valueIndex]);
     };
 
-    DataSetRender.prototype.createMapCode = function (values) {
+    TablePlugin.prototype.createMapCode = function (values) {
 
         var map = {};
         for (var i = 0; i < values.length; i++) {
@@ -65,7 +86,7 @@ define([
         return map;
     };
 
-    DataSetRender.prototype.processColumn = function (index, column) {
+    TablePlugin.prototype.processColumn = function (index, column) {
 
             //The column WILL be displayed
             this.visibleColumns.push(column);
@@ -114,7 +135,7 @@ define([
 
     };
 
-    DataSetRender.prototype.getData = function () {
+    TablePlugin.prototype.getData = function () {
 
         for (var i = 0; i < this.rawData.length; i++) {
 
@@ -146,15 +167,15 @@ define([
         return this.data;
     };
 
-    DataSetRender.prototype.getTitle = function () {
+    TablePlugin.prototype.getTitle = function () {
         return this.model.metadata
     };
 
-    DataSetRender.prototype.getDataFields = function () {
+    TablePlugin.prototype.getDataFields = function () {
         return this.dataFields;
     };
 
-    DataSetRender.prototype.getColumns = function () {
+    TablePlugin.prototype.getColumns = function () {
 
         for (var i = 0; i < this.dataFields.length; i++) {
             var c = { datafield: this.dataFields[i].name};
@@ -166,7 +187,7 @@ define([
         return this.columns;
     };
 
-    DataSetRender.prototype.getColumnLabel = function (column) {
+    TablePlugin.prototype.getColumnLabel = function (column) {
 
         var label = this.getLabel(column, "title");
 
@@ -178,7 +199,7 @@ define([
         return label ? label : this.o.label.UNDEFINED;
     };
 
-    DataSetRender.prototype.getLabel = function (obj, attribute) {
+    TablePlugin.prototype.getLabel = function (obj, attribute) {
 
         var label,
             keys;
@@ -200,7 +221,7 @@ define([
         return label;
     };
 
-    DataSetRender.prototype.initInnerStructures = function () {
+    TablePlugin.prototype.initInnerStructures = function () {
 
         this.dsd = this.model[this.o.METADATA][this.o.DSD];
         this.visibleColumns = [];
@@ -224,7 +245,7 @@ define([
         this.getSeries();
     };
 
-    DataSetRender.prototype.activatePanels = function () {
+    TablePlugin.prototype.activatePanels = function () {
 
         this.$template.find("li[data-tab]").hide();
         for (var i = 0; i < this.o.tabs.length; i++) {
@@ -232,12 +253,12 @@ define([
         }
     };
 
-    DataSetRender.prototype.buildTable = function () {
+    TablePlugin.prototype.buildTable = function () {
 
         this.renderdTable();
     };
 
-    DataSetRender.prototype.renderdTable = function () {
+    TablePlugin.prototype.renderdTable = function () {
 
         var data = this.data;
         // prepare the data
@@ -258,7 +279,7 @@ define([
 
     };
 
-    DataSetRender.prototype.buildPieChart = function () {
+    TablePlugin.prototype.buildPieChart = function () {
 
         var conf = {
 
@@ -536,7 +557,7 @@ define([
 
     };
 
-    DataSetRender.prototype.buildAreaChart = function () {
+    TablePlugin.prototype.buildAreaChart = function () {
 
         var conf = {
 
@@ -814,7 +835,7 @@ define([
 
     };
 
-    DataSetRender.prototype.buildLineChart = function () {
+    TablePlugin.prototype.buildLineChart = function () {
 
         var conf = {
 
@@ -1092,7 +1113,7 @@ define([
 
     };
 
-    DataSetRender.prototype.buildChart = function (type) {
+    TablePlugin.prototype.buildChart = function (type) {
 
         switch (type) {
             case 'line' :
@@ -1104,14 +1125,14 @@ define([
         }
     };
 
-    DataSetRender.prototype.buildMetadata = function () {
+    TablePlugin.prototype.buildMetadata = function () {
 
         this.$template.find('.meta-uid').html(this.model.metadata.uid);
         this.$template.find('.meta-title').html(this.getLabel(this.model.metadata, 'title'));
         this.$template.find('.meta-context').html(this.model.metadata.meContent.resourceRepresentationType);
     };
 
-    DataSetRender.prototype.renderItem = function (template, item) {
+    TablePlugin.prototype.renderItem = function (template, item) {
 
         this.$template = template;
         this.model = item;
@@ -1122,5 +1143,5 @@ define([
         this.buildMetadata();
     };
 
-    return DataSetRender;
+    return TablePlugin;
 });

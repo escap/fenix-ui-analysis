@@ -2,20 +2,20 @@
 
 define([
     'jquery',
-    'fx-ana/widgets/desk/Fx-desk-items-renderer'
-], function ($, Renderer) {
+    'fx-ana/widgets/desk/Fx-ana-module-factory'
+], function ($, ItemsFactory) {
 
     var defaultOptions = {
-        selectors: {
-            EVENTS_LISTENERS: 'body'
+        s: {
+            EVENTS_LISTENERS: 'body',
+            ITEM_CLASS : 'fx-analysis-item',
+            HANDLER_CLASS: "fx-handle"
         },
         events: {
-            CREATE_PANEL: "",
-            ADD_ITEM: "",
-            RESIZE_ITEM: "resizeDeskItem",
-            CLONE_ITEM: 'cloneDeskItem',
-            REMOVE_ITEM: "removeItemFromDesk",
-            MINIMIZE_ITEM: "minimizeDeskItem"
+            RESIZE_ITEM: "FXDeskItemResize",
+            CLONE_ITEM: 'FXDeskItemCole',
+            REMOVE_ITEM: "FXDeskItemRemove",
+            MINIMIZE_ITEM: "FXDeskItemMinimize"
         }
     };
 
@@ -23,10 +23,8 @@ define([
     DeskController.prototype.grid = undefined;
 
     function DeskController(options) {
-
-        if (this.o === undefined) {
-            this.o = {};
-        }
+        this.o = {};
+        this.itemsFactory = new ItemsFactory();
         $.extend(true, this.o, defaultOptions, options);
     }
 
@@ -45,8 +43,9 @@ define([
 
         var self = this;
 
-        $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.RESIZE_ITEM, function (e, container) {
-            self.resizeItem(container);
+        $(this.o.s.EVENTS_LISTENERS)
+            .on(this.o.events.RESIZE_ITEM, function (e, container) {
+            self.resize(container);
         });
     };
 
@@ -57,28 +56,35 @@ define([
         this.initEventListeners();
     };
 
+    /*Functions on grid items*/
+
     DeskController.prototype.addItem = function (item) {
 
         var container = document.createElement('DIV'),
             handler = document.createElement('DIV'),
             content = document.createElement('DIV');
 
-        container.className = 'fx-analysis-item';
-        handler.className = "fx-handle";
+        container.className = this.o.s.ITEM_CLASS;
+        handler.className = this.o.s.HANDLER_CLASS;
 
         container.appendChild(handler);
         container.appendChild(content);
+
         this.grid.addItem(container);
 
-        new Renderer().renderItem(content, item);
-    };
-
-    DeskController.prototype.resizeItem = function (item) {
-        this.grid.resize(item);
+        this.itemsFactory.render({
+            container: container,
+            model: item,
+            style : this.o.style
+        });
     };
 
     DeskController.prototype.removeItem = function (item) {
         this.grid.removeItem(item);
+    };
+
+    DeskController.prototype.resize = function (item) {
+        this.grid.resize(item);
     };
 
     DeskController.prototype.clear = function () {

@@ -10,11 +10,14 @@ define([
             EVENTS_LISTENERS: 'body'
         },
         events: {
+            //Desk Events
+            RESIZE_ITEM: "FXDeskItemResize",
+            CLONE_ITEM: 'FXDeskItemCole',
+            REMOVE_ITEM: "FXDeskItemRemove",
+            MINIMIZE_ITEM: "FXDeskItemMinimize",
+
             CREATE_PANEL: "",
             ADD_ITEM: "",
-            CLONE_ITEM: 'cloneDeskItem',
-            REMOVE_ITEM: "removeItemFromDesk",
-            MINIMIZE_ITEM: "minimizeDeskItem",
             MOVE_TO_DESK: "moveToDesk",
             REMOVE_STACK: "removeStackItem"
         },

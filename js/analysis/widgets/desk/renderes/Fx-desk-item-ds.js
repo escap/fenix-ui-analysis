@@ -149,6 +149,10 @@ define([
             if (this.model.metadata.uid === 'FAOSTAT_QC'){
                 this.filterItemValue = '1817';
             }
+
+            if (this.model.metadata.uid === 'CountrySTAT_215CPD015'){
+                this.filterItemValue = '27';
+            }
         }
 
     };

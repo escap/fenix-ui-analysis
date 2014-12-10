@@ -141,16 +141,14 @@ define([
             this.itemIndex = index;
 
             if (column.dataType === "code") {
-
-
                 this.filterItemValue = Object.keys(this.columnsCodeMapping[column[this.o.COLUMN_ID]])[0];
-
             } else {
-
                 this.filterItemValue =column.values[i][0];
-
             }
-            console.log(this.filterItemValue)
+
+            if (this.model.metadata.uid === 'FAOSTAT_QC'){
+                this.filterItemValue = '1817';
+            }
         }
 
     };

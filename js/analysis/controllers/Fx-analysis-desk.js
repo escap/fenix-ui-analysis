@@ -70,6 +70,7 @@ define([
         container.appendChild(content);
         this.grid.addItem(container);
 
+
         new Renderer().renderItem(content, item);
     };
 

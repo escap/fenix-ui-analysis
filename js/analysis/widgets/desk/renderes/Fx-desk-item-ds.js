@@ -32,8 +32,7 @@ define([
                 PIE_CHART: ".tab-piechart-container"
             }
         },
-        events: {
-        }
+        events: {}
     };
 
     function DataSetRender(options) {
@@ -45,13 +44,36 @@ define([
 
         var o = Object.keys(this.rawSeries);
         for (var i = 0; i < o.length; i++) {
-            this.series.push(this.rawSeries[o[i]]);
+            var filtered = this.rawSeries[o[i]];
+
+            filtered.data = filtered.data.slice(0, this.xAxis.length);
+            this.series.push(filtered);
         }
+
     };
 
     DataSetRender.prototype.updateSeries = function (row) {
 
-        this.rawSeries[row[this.itemIndex]].data.push(row[this.valueIndex]);
+        if (this.rawSeries[row[this.geoIndex]]) {
+
+
+            if (this.rawSeries[row[this.geoIndex]].data) {
+
+                if (row[this.itemIndex] === this.filterItemValue) {
+                    var oldData = this.rawSeries[row[this.geoIndex]].data;
+                    oldData.push(row[this.valueIndex]);
+
+                    this.rawSeries[row[this.geoIndex]].data = oldData;
+
+                }
+
+            }
+        } else {
+            //This means that the dsd distinct does not contain the
+            //value contained in the data arrays
+            //console.log(row[this.geoIndex])
+        }
+
     };
 
     DataSetRender.prototype.createMapCode = function (values) {
@@ -67,50 +89,69 @@ define([
 
     DataSetRender.prototype.processColumn = function (index, column) {
 
-            //The column WILL be displayed
-            this.visibleColumns.push(column);
-            this.dataFields.push({ name: column[this.o.COLUMN_ID], type: 'string' });
+        //The column WILL be displayed
+        this.visibleColumns.push(column);
+        this.dataFields.push({name: column[this.o.COLUMN_ID], type: 'string'});
+
+        if (column.dataType === "code") {
+            this.columnsCodeMapping[column[this.o.COLUMN_ID]] = this.createMapCode(column.values.codes[0].codes);
+        }
+
+        if (column[this.o.COLUMN_ID] === "value") {
+            this.valueIndex = index;
+        }
+
+        if (column[this.o.COLUMN_ID] === "time") {
+            this.xAxis = [];
+
+            if (typeof column.values.timeList[0] === 'string') {
+
+                for (var i = 0; i < column.values.timeList.length; i++) {
+                    //substrig of portion of Date format - it shows year, month and day
+                    this.xAxis.push(column.values.timeList[i])
+                }
+
+            } else {
+                this.xAxis = column.values.timeList;
+            }
+
+        }
+
+        if (column[this.o.COLUMN_ID] === "geo") {
+
+            this.geoIndex = index;
 
             if (column.dataType === "code") {
-                this.columnsCodeMapping[column[this.o.COLUMN_ID]] = this.createMapCode(column.values.codes[0].codes);
-            }
+                var a = Object.keys(this.columnsCodeMapping[column[this.o.COLUMN_ID]]);
+                for (var i = 0; i < a.length; i++) {
+                    this.rawSeries[a[i]] = {name: this.columnsCodeMapping[column[this.o.COLUMN_ID]][a[i]], data: []};
+                }
 
-            if (column[this.o.COLUMN_ID] === "VALUE") {
-                this.valueIndex = index;
-            }
+            } else {
 
-            if (column[this.o.COLUMN_ID] === "TIME") {
-                this.xAxis =[];
-
-                if ( typeof column.values.timeList[0] === 'string') {
-
-                    for (var i = 0; i <  column.values.timeList.length; i++ ){
-                        //substrig of portion of Date format - it shows year, month and day
-                        this.xAxis.push(column.values.timeList[i])
-                    }
-
-                } else {
-                    this.xAxis =column.values.timeList;
+                for (var i = 0; i < column.values.length; i++) {
+                    this.rawSeries[column.values[i]] = {name: column.values[i], data: []};
                 }
             }
+        }
 
-            if (column[this.o.COLUMN_ID] === "ITEM") {
 
-                this.itemIndex = index;
+        if (column[this.o.COLUMN_ID] === "item") {
 
-                if (column.dataType === "code") {
-                    var a = Object.keys(this.columnsCodeMapping[column[this.o.COLUMN_ID]]);
-                    for (var i = 0; i < a.length; i++) {
-                        this.rawSeries[a[i]] = { name: this.columnsCodeMapping[column[this.o.COLUMN_ID]][a[i]], data: [] };
-                    }
+            this.itemIndex = index;
 
-                } else {
+            if (column.dataType === "code") {
 
-                    for (var i = 0; i < column.values.length; i++) {
-                        this.rawSeries[column.values[i]] = { name: column.values[i], data: [] };
-                    }
-                }
+
+                this.filterItemValue = Object.keys(this.columnsCodeMapping[column[this.o.COLUMN_ID]])[0];
+
+            } else {
+
+                this.filterItemValue =column.values[i][0];
+
             }
+            console.log(this.filterItemValue)
+        }
 
     };
 
@@ -157,7 +198,7 @@ define([
     DataSetRender.prototype.getColumns = function () {
 
         for (var i = 0; i < this.dataFields.length; i++) {
-            var c = { datafield: this.dataFields[i].name};
+            var c = {datafield: this.dataFields[i].name};
             c.text = this.getColumnLabel(this.visibleColumns [i]);
             c.width = ( 100 / this.dataFields.length ) + "%";
             this.columns.push(c);
@@ -192,7 +233,7 @@ define([
                 keys = Object.keys(obj[attribute]);
 
                 if (keys.length > 0) {
-                    label = obj[attribute][ keys[0] ];
+                    label = obj[attribute][keys[0]];
                 }
             }
         }
@@ -251,6 +292,8 @@ define([
             {
                 width: '100%',
                 columnsresize: true,
+                filterable: true,
+                sortable: true,
                 source: dataAdapter,
                 columns: this.getColumns(),
                 theme: "fenix"
@@ -1118,6 +1161,7 @@ define([
 
         this.initInnerStructures();
         this.activatePanels();
+
         this.buildTable();
         this.buildMetadata();
     };

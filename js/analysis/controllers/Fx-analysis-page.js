@@ -36,9 +36,6 @@ define([
     PageController.prototype.desk = undefined;
 
     //(injected)
-    PageController.prototype.catalog = undefined;
-
-    //(injected)
     PageController.prototype.stack = undefined;
 
     //(injected)
@@ -117,42 +114,6 @@ define([
         });
     };
 
-    PageController.prototype.initAnimation = function () {
-
-        var that = this;
-
-        $('.overlay-content').hide();
-
-        $("#btn").on('click', that.openOverlay);
-
-        $(".closeOverlay").on('click', function (e) {
-            e.stopPropagation();
-            that.closeOverlay();
-        });
-    };
-
-    PageController.prototype.openOverlay = function () {
-
-        TweenLite.to(
-            document.querySelector("#overlay"), 1,
-            {
-                width: "100%",
-                height: "100%",
-                ease: Power2.easeInOut,
-                onComplete: function () {
-                    $('.overlay-content').fadeIn('fast');
-                }
-            });
-    };
-
-    PageController.prototype.closeOverlay = function () {
-        $('.overlay-content').fadeOut("fast", function () {
-
-            $('.overlay-content').hide();
-            TweenLite.to($("#overlay"), 1, { width: "0%", height: "0%", ease: Power2.easeInOut});
-
-        })
-    };
 
     PageController.prototype.preValidation = function () {
 
@@ -195,21 +156,12 @@ define([
     PageController.prototype.renderComponents = function () {
 
         this.desk.render();
-        if (this.catalog) { this.catalog.render(); }
         this.stack.render();
-
-        this.initAnimation();
     };
 
     PageController.prototype.initEventListeners = function () {
 
         var that = this;
-
-        /*Event triggered by the catalog when "Open Data" button is clicked*/
-        $(this.o.selectors.EVENTS_LISTENERS).on('analyze', function (e, payload) {
-            that.closeOverlay();
-            that.getData(payload, $.proxy(that.addItemToDesk, that))
-        });
 
         $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.CLONE_ITEM, function (e, model) {
             //that.saveDeskToStorage(model);

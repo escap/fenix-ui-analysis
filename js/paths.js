@@ -24,7 +24,8 @@ define(function () {
             'text': '{FENIX_CDN}/js/requirejs/plugins/text/2.0.12/text',
             'mbExtruder': '{FENIX_CDN}/js/jquery.mb.extruder/2.5.5/inc/mbExtruder',
             'jquery.mb.flipText': '{FENIX_CDN}/js/jquery.mb.extruder/2.5.5/inc/jquery.mb.flipText',
-            'jquery.hoverIntent': '{FENIX_CDN}/js/jquery.hoverIntent/1.0/jquery.hoverIntent'
+            'jquery.hoverIntent': '{FENIX_CDN}/js/jquery.hoverIntent/1.0/jquery.hoverIntent',
+            'amplify' : '{FENIX_CDN}/js/amplify/1.1.2/amplify.min'
         },
         shim: {
             'highcharts': {
@@ -44,6 +45,9 @@ define(function () {
             },
             'mbExtruder': {
                 deps: ['jquery', 'jquery.mb.flipText', 'jquery.hoverIntent']
+            },
+            'amplify' : {
+                deps : ['jquery']
             }
         }
     };

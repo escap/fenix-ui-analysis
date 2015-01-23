@@ -23,7 +23,6 @@ define([
         var pageController = new Controller();
 
         $.extend(pageController, {
-            catalog: this.initCatalog(o.catalog),
             stack: this.initStack(),
             desk: this.initDesk(),
             storage: new Storage(),
@@ -51,18 +50,6 @@ define([
         return  $.extend(new Desk(), {
             grid : grid
         });
-    };
-
-    Start.prototype.initCatalog = function (c) {
-
-        if (c) {
-            return c.init({
-                container: document.querySelector('#catalogContainer'),
-                manualRender: true
-            });
-        } else {
-            return null;
-        }
     };
 
     Start.prototype.initStack = function () {

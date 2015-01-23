@@ -20,19 +20,25 @@ define([
 
         $.extend(true, o, options);
 
-        var pageController = new Controller();
+        this.pageController = new Controller();
 
-        $.extend(pageController, {
+        $.extend( this.pageController, {
             stack: this.initStack(),
             desk: this.initDesk(),
             storage: new Storage(),
             bridge : new Bridge()
         });
 
-        pageController.render();
+        this.pageController.render();
+
+        return this;
     };
 
-    Start.prototype.initDesk = function (g) {
+    Start.prototype.getData = function( payload, callback) {
+        this.pageController.getData(payload, callback);
+    };
+
+    Start.prototype.initDesk = function () {
 
         var grid = new Grid().init({
             container: document.querySelector('#fx-ana-result-container'),

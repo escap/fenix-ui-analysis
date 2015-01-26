@@ -67,5 +67,9 @@ define([
         });
     };
 
+    Start.prototype.add = function (item) {
+        this.pageController.addItemToDesk(item);
+    };
+
     return Start;
 });

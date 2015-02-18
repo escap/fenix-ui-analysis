@@ -16,14 +16,16 @@ define([
                 MINIMIZE: "#btn-minimize-",
                 RESIZE: "#btn-resize-",
                 CLONE: "#btn-clone-",
-                REMOVE: "#btn-remove-"
+                REMOVE: "#btn-remove-",
+                FILTEROPEN: "#btn-filter-"
             }
         },
         events: {
             RESIZE_ITEM: "resizeDeskItem",
             CLONE_ITEM: 'cloneDeskItem',
             REMOVE_ITEM: "removeItemFromDesk",
-            MINIMIZE_ITEM: "minimizeDeskItem"
+            MINIMIZE_ITEM: "minimizeDeskItem",
+            FILTER_OPEN: "filterOpen"
         }
     };
 
@@ -95,6 +97,10 @@ define([
 
         this.$template.find(this.o.selectors.buttons.MINIMIZE + this.id).on(this.o.interaction, {self: this}, function (e) {
             $(this).trigger(e.data.self.o.events.MINIMIZE_ITEM, [e.data.self.container.parentNode, e.data.self.model]);
+        });
+
+        this.$template.find(this.o.selectors.buttons.FILTEROPEN + this.id).on(this.o.interaction, {self: this}, function (e) {
+            $(this).trigger(e.data.self.o.events.FILTER_OPEN, [e.data.self.container.parentNode, e.data.self.model]);
         });
     };
 

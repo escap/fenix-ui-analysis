@@ -15,7 +15,9 @@ define([
             RESIZE_ITEM: "resizeDeskItem",
             CLONE_ITEM: 'cloneDeskItem',
             REMOVE_ITEM: "removeItemFromDesk",
-            MINIMIZE_ITEM: "minimizeDeskItem"
+            MINIMIZE_ITEM: "minimizeDeskItem",
+            FILTER_OPEN: "filterOpen",
+            FILTER_OPEN_WRAPPER: "filterOpenWrapper"
         }
     };
 
@@ -47,6 +49,10 @@ define([
 
         $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.RESIZE_ITEM, function (e, container) {
             self.resizeItem(container);
+        });
+
+        $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.FILTER_OPEN, function (e, container, model) {
+            $(this).trigger(self.o.events.FILTER_OPEN_WRAPPER, [container, model]);
         });
     };
 

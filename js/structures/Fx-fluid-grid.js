@@ -59,7 +59,6 @@ define([
     };
 
     Fx_Fluid_Grid.prototype.removeItem = function (item) {
-
         // remove clicked element
         this.pckry.remove(item);
         // layout remaining item elements

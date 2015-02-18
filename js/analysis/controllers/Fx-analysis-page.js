@@ -2,7 +2,8 @@
 
 define([
     'jquery',
-    'tweenmax'
+    'tweenmax',
+    'amplify'
 ], function ($) {
 
     var defaultOptions = {
@@ -16,7 +17,9 @@ define([
             REMOVE_ITEM: "removeItemFromDesk",
             MINIMIZE_ITEM: "minimizeDeskItem",
             MOVE_TO_DESK: "moveToDesk",
-            REMOVE_STACK: "removeStackItem"
+            REMOVE_STACK: "removeStackItem",
+            FILTER_OPEN_WRAPPER: "filterOpenWrapper",
+            FILTER_OPEN_WRAPPER_APP: "filterOpenWrapperApp"
         },
         storage: {
             CATALOG: 'fx.catalog',
@@ -191,6 +194,12 @@ define([
         $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.REMOVE_STACK, function (e, model, container) {
             //that.removeStackItemFromStorage(model);
             that.removeItemFromStack(container);
+        });
+
+        $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.FILTER_OPEN_WRAPPER, function (e, container, model) {
+            //$(this).trigger(self.o.events.FILTER_OPEN_WRAPPER_APP, [container, model]);
+            amplify.publish(that.o.events.FILTER_OPEN_WRAPPER_APP, container, model);
+            that.removeItemFromDesk(container);
         });
     };
 

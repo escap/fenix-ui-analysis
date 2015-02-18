@@ -71,7 +71,6 @@ define([
         } else {
             //This means that the dsd distinct does not contain the
             //value contained in the data arrays
-            //console.log(row[this.geoIndex])
         }
 
     };
@@ -146,11 +145,11 @@ define([
                 this.filterItemValue =column.values[i][0];
             }
 
-            if (this.model.metadata.uid === 'FAOSTAT_QC'){
+            if (this.model.filtered_data.metadata.uid === 'FAOSTAT_QC'){
                 this.filterItemValue = '1817';
             }
 
-            if (this.model.metadata.uid === 'CountrySTAT_215CPD015'){
+            if (this.model.filtered_data.metadata.uid === 'CountrySTAT_215CPD015'){
                 this.filterItemValue = '27';
             }
         }
@@ -190,7 +189,7 @@ define([
     };
 
     DataSetRender.prototype.getTitle = function () {
-        return this.model.metadata
+        return this.model.filtered_data.metadata
     };
 
     DataSetRender.prototype.getDataFields = function () {
@@ -244,8 +243,7 @@ define([
     };
 
     DataSetRender.prototype.initInnerStructures = function () {
-
-        this.dsd = this.model[this.o.METADATA][this.o.DSD];
+        this.dsd = this.model.filtered_data[this.o.METADATA][this.o.DSD];
         this.visibleColumns = [];
         this.hiddenColumns = [];
         this.columnsCodeMapping = {};
@@ -261,7 +259,7 @@ define([
             this.processColumn(i, this.rawColumns[i]);
         }
 
-        this.rawData = this.model[this.o.DATA];
+        this.rawData = this.model.filtered_data[this.o.DATA];
 
         this.getData();
         this.getSeries();
@@ -507,7 +505,7 @@ define([
 
             title: {
                 //enabled: false,
-                text: this.getLabel(this.model.metadata, 'title'),
+                text: this.getLabel(this.model.filtered_data.metadata, 'title'),
                 x: -20 //center
             },
             subtitle: {
@@ -785,7 +783,7 @@ define([
 
             title: {
                 //enabled: false,
-                text: this.getLabel(this.model.metadata, 'title'),
+                text: this.getLabel(this.model.filtered_data.metadata, 'title'),
                 x: -20 //center
             },
             subtitle: {
@@ -1063,7 +1061,7 @@ define([
 
             title: {
                 //enabled: false,
-                text: this.getLabel(this.model.metadata, 'title'),
+                text: this.getLabel(this.model.filtered_data.metadata, 'title'),
                 x: -20 //center
             },
             subtitle: {
@@ -1151,9 +1149,9 @@ define([
 
     DataSetRender.prototype.buildMetadata = function () {
 
-        this.$template.find('.meta-uid').html(this.model.metadata.uid);
-        this.$template.find('.meta-title').html(this.getLabel(this.model.metadata, 'title'));
-        this.$template.find('.meta-context').html(this.model.metadata.meContent.resourceRepresentationType);
+        this.$template.find('.meta-uid').html(this.model.filtered_data.metadata.uid);
+        this.$template.find('.meta-title').html(this.getLabel(this.model.filtered_data.metadata, 'title'));
+        this.$template.find('.meta-context').html(this.model.filtered_data.metadata.meContent.resourceRepresentationType);
     };
 
     DataSetRender.prototype.renderItem = function (template, item) {

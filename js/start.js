@@ -68,7 +68,9 @@ define([
     };
 
     Start.prototype.add = function (item) {
+        var filteredData = item.filtered_data;
         this.pageController.addItemToDesk(item);
+//        this.pageController.addItemToDesk(filteredData);
     };
 
     return Start;

@@ -41,7 +41,7 @@ body{
 }
 
 #overlay {
-  .closeOverlay{
+  .close_overlay{
     height: 35px;
     width: 35px;
     background: url("img/icons-sprite.png") no-repeat -595px 0px;
@@ -125,7 +125,7 @@ body{
 
 }
 
-.closeOverlay {
+.close_overlay {
   position: absolute;
   right: 0;
 }

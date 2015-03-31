@@ -2,7 +2,6 @@
 
 define([
     'jquery',
-    'tweenmax',
     'amplify'
 ], function ($) {
 

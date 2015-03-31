@@ -1,5 +1,4 @@
 /*global define */
-
 define([
     'jquery',
     'fx-ana/controllers/Fx-analysis-page',
@@ -7,6 +6,7 @@ define([
     'fx-ana/widgets/stack/Fx-widgets-stack',
     'fx-ana/controllers/Fx-analysis-desk',
     'fx-ana/structures/Fx-fluid-grid',
+    'fx-ana/widgets/bridge/Bridge',
     'fx-ana/widgets/bridge/Bridge'
 ], function ($, Controller, Storage, Stack, Desk, Grid, Bridge) {
 

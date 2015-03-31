@@ -20,20 +20,25 @@ define([
 
         $.extend(true, o, options);
 
-        var pageController = new Controller();
+        this.pageController = new Controller();
 
-        $.extend(pageController, {
-            catalog: this.initCatalog(o.catalog),
+        $.extend( this.pageController, {
             stack: this.initStack(),
             desk: this.initDesk(),
             storage: new Storage(),
             bridge : new Bridge()
         });
 
-        pageController.render();
+        this.pageController.render();
+
+        return this;
     };
 
-    Start.prototype.initDesk = function (g) {
+    Start.prototype.getData = function( payload, callback) {
+        this.pageController.getData(payload, callback);
+    };
+
+    Start.prototype.initDesk = function () {
 
         var grid = new Grid().init({
             container: document.querySelector('#fx-ana-result-container'),
@@ -53,18 +58,6 @@ define([
         });
     };
 
-    Start.prototype.initCatalog = function (c) {
-
-        if (c) {
-            return c.init({
-                container: document.querySelector('#catalogContainer'),
-                manualRender: true
-            });
-        } else {
-            return null;
-        }
-    };
-
     Start.prototype.initStack = function () {
 
         return new Stack().init({
@@ -72,6 +65,12 @@ define([
             open : '#fx-widgets-stack-btn',
             counter : '#fx-widgets-stack-counter'
         });
+    };
+
+    Start.prototype.add = function (item) {
+        var filteredData = item.filtered_data;
+        this.pageController.addItemToDesk(item);
+//        this.pageController.addItemToDesk(filteredData);
     };
 
     return Start;

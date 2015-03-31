@@ -2,7 +2,8 @@
 
 define([
     'jquery',
-    'tweenmax'
+    'tweenmax',
+    'amplify'
 ], function ($) {
 
     var defaultOptions = {
@@ -19,7 +20,9 @@ define([
             CREATE_PANEL: "",
             ADD_ITEM: "",
             MOVE_TO_DESK: "moveToDesk",
-            REMOVE_STACK: "removeStackItem"
+            REMOVE_STACK: "removeStackItem",
+            FILTER_OPEN_WRAPPER: "filterOpenWrapper",
+            FILTER_OPEN_WRAPPER_APP: "filterOpenWrapperApp"
         },
         storage: {
             CATALOG: 'fx.catalog',
@@ -37,9 +40,6 @@ define([
 
     //(injected)
     PageController.prototype.desk = undefined;
-
-    //(injected)
-    PageController.prototype.catalog = undefined;
 
     //(injected)
     PageController.prototype.stack = undefined;
@@ -120,42 +120,6 @@ define([
         });
     };
 
-    PageController.prototype.initAnimation = function () {
-
-        var that = this;
-
-        $('.overlay-content').hide();
-
-        $("#btn").on('click', that.openOverlay);
-
-        $(".closeOverlay").on('click', function (e) {
-            e.stopPropagation();
-            that.closeOverlay();
-        });
-    };
-
-    PageController.prototype.openOverlay = function () {
-
-        TweenLite.to(
-            document.querySelector("#overlay"), 1,
-            {
-                width: "100%",
-                height: "100%",
-                ease: Power2.easeInOut,
-                onComplete: function () {
-                    $('.overlay-content').fadeIn('fast');
-                }
-            });
-    };
-
-    PageController.prototype.closeOverlay = function () {
-        $('.overlay-content').fadeOut("fast", function () {
-
-            $('.overlay-content').hide();
-            TweenLite.to($("#overlay"), 1, { width: "0%", height: "0%", ease: Power2.easeInOut});
-
-        })
-    };
 
     PageController.prototype.preValidation = function () {
 
@@ -198,21 +162,12 @@ define([
     PageController.prototype.renderComponents = function () {
 
         this.desk.render();
-        if (this.catalog) { this.catalog.render(); }
         this.stack.render();
-
-        this.initAnimation();
     };
 
     PageController.prototype.initEventListeners = function () {
 
         var that = this;
-
-        /*Event triggered by the catalog when "Open Data" button is clicked*/
-        $(this.o.selectors.EVENTS_LISTENERS).on('analyze', function (e, payload) {
-            that.closeOverlay();
-            that.getData(payload, $.proxy(that.addItemToDesk, that))
-        });
 
         $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.CLONE_ITEM, function (e, model) {
             //that.saveDeskToStorage(model);
@@ -242,6 +197,12 @@ define([
         $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.REMOVE_STACK, function (e, model, container) {
             //that.removeStackItemFromStorage(model);
             that.removeItemFromStack(container);
+        });
+
+        $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.FILTER_OPEN_WRAPPER, function (e, container, model) {
+            //$(this).trigger(self.o.events.FILTER_OPEN_WRAPPER_APP, [container, model]);
+            amplify.publish(that.o.events.FILTER_OPEN_WRAPPER_APP, container, model);
+            that.removeItemFromDesk(container);
         });
     };
 

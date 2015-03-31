@@ -4,7 +4,7 @@ define([
     'jquery',
     'fx-ana/widgets/stack/Fx-stack-items-renderer',
     'text!fx-ana/html/widgets/fx-widgets-stack/template.html',
-    'lib/mbExtruder'
+    'mbExtruder'
 ], function ($, Renderer, template) {
 
     'use strict';

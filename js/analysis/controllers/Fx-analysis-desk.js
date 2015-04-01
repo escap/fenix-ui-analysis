@@ -7,8 +7,7 @@ define([
 
     var defaultOptions = {
         s: {
-            EVENTS_LISTENERS: 'body',
-            ITEM_CLASS : 'fx-analysis-item',
+            ITEM_CLASS: 'fx-analysis-item',
             HANDLER_CLASS: "fx-handle"
         },
         events: {
@@ -28,35 +27,7 @@ define([
         $.extend(true, this.o, defaultOptions, options);
     }
 
-    DeskController.prototype.preValidation = function () {
-
-        if (!this.grid) {
-            throw new Error("DeskController: INVALID GRID ITEM.")
-        }
-    };
-
-    DeskController.prototype.renderComponents = function () {
-        this.grid.render();
-    };
-
-    DeskController.prototype.initEventListeners = function () {
-
-        var self = this;
-
-        $(this.o.s.EVENTS_LISTENERS)
-            .on(this.o.events.RESIZE_ITEM, function (e, container) {
-            self.resize(container);
-        });
-    };
-
-    DeskController.prototype.render = function () {
-
-        this.preValidation();
-        this.renderComponents();
-        this.initEventListeners();
-    };
-
-    /*Functions on grid items*/
+    /* API */
 
     DeskController.prototype.addItem = function (item) {
 
@@ -75,7 +46,7 @@ define([
         this.itemsFactory.render({
             container: container,
             model: item,
-            style : this.o.style
+            style: this.o.style
         });
     };
 
@@ -90,6 +61,35 @@ define([
     DeskController.prototype.clear = function () {
 
         this.grid.clear();
+    };
+
+    /* end API */
+
+    DeskController.prototype.bindEventListeners = function () {
+
+        var self = this;
+
+        amplify.subscribe(this.o.events.RESIZE_ITEM, function (e, container) {
+            self.resize(container);
+        });
+    };
+
+    DeskController.prototype.renderComponents = function () {
+        this.grid.render();
+    };
+
+    DeskController.prototype.preValidation = function () {
+
+        if (!this.grid) {
+            throw new Error("DeskController: INVALID GRID ITEM.")
+        }
+    };
+
+    DeskController.prototype.render = function () {
+
+        this.preValidation();
+        this.renderComponents();
+        this.bindEventListeners();
     };
 
     return DeskController;

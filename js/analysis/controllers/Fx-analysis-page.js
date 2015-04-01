@@ -2,38 +2,36 @@
 
 define([
     'jquery',
+    'text!fx-ana/html/structure.html',
     'amplify'
-], function ($) {
+], function ($, structure) {
+
 
     var defaultOptions = {
-        selectors: {
-            EVENTS_LISTENERS: 'body'
-        },
         events: {
-            //Desk Events
-            RESIZE_ITEM: "FXDeskItemResize",
-            CLONE_ITEM: 'FXDeskItemCole',
-            REMOVE_ITEM: "FXDeskItemRemove",
-            MINIMIZE_ITEM: "FXDeskItemMinimize",
 
-            CREATE_PANEL: "",
-            ADD_ITEM: "",
-            MOVE_TO_DESK: "moveToDesk",
-            REMOVE_STACK: "removeStackItem",
-            FILTER_OPEN_WRAPPER: "filterOpenWrapper",
-            FILTER_OPEN_WRAPPER_APP: "filterOpenWrapperApp"
-        },
-        storage: {
-            CATALOG: 'fx.catalog',
-            STACK: 'fx.stack'
+            //Desk Events
+            RESIZE_ITEM: "fx.analysis.desk.resize",
+            CLONE_ITEM: 'fx.analysis.desk.clone',
+            REMOVE_ITEM: "fx.analysis.desk.remove",
+            MINIMIZE_ITEM: "fx.analysis.desk.minimize",
+
+
+            MOVE_TO_DESK: "fx.analysis.stack.move",
+            REMOVE_STACK: "fx.analysis.stack.remove"
+
+            //FILTER_OPEN_WRAPPER: "filterOpenWrapper",
+            //FILTER_OPEN_WRAPPER_APP: "filterOpenWrapperApp"
         }
+    }, s = {
+        GRID_STRUCTURE: "[data-component='grid']",
+        STACK_STRUCTURE: "[data-component='stack']"
     };
 
     function PageController(options) {
 
-        if (this.o === undefined) {
-            this.o = {};
-        }
+        this.o = {};
+
         $.extend(true, this.o, defaultOptions, options);
     }
 
@@ -48,6 +46,34 @@ define([
 
     //(injected)
     PageController.prototype.bridge = undefined;
+
+    /* Desk */
+
+    PageController.prototype.addItemToDesk = function (item) {
+        this.desk.addItem(item);
+    };
+
+    PageController.prototype.removeItemFromDesk = function (item) {
+        this.desk.removeItem(item);
+    };
+
+    /* Stack */
+
+    PageController.prototype.addItemToStack = function (item) {
+        this.stack.addItem(item);
+    };
+
+    PageController.prototype.removeItemFromStack = function (item) {
+        this.stack.removeItem(item);
+    };
+
+    /* Session  */
+
+    PageController.prototype.loadSession = function () {
+
+        this.loadDeskFromStorage();
+        this.loadStackFromStorage();
+    };
 
     PageController.prototype.saveDeskToStorage = function (model) {
         var that = this;
@@ -94,7 +120,7 @@ define([
         });
     };
 
-    PageController.prototype.loadSackFromStorage = function () {
+    PageController.prototype.loadStackFromStorage = function () {
         var that = this;
         this.storage.getItem(this.o.storage.STACK, function (items) {
             var datasets;
@@ -119,34 +145,7 @@ define([
         });
     };
 
-
-    PageController.prototype.preValidation = function () {
-
-    };
-
-    PageController.prototype.addItemToDesk = function (item) {
-        this.desk.addItem(item);
-    };
-
-    PageController.prototype.removeItemFromDesk = function (item) {
-        this.desk.removeItem(item);
-    };
-
-    PageController.prototype.addItemToStack = function (item) {
-        this.stack.addItem(item);
-    };
-
-    PageController.prototype.removeItemFromStack = function (item) {
-        this.stack.removeItem(item);
-    };
-
-    PageController.prototype.loadSession = function () {
-
-        //load Desk
-        this.loadDeskFromStorage();
-        //load Stack
-        this.loadSackFromStorage();
-    };
+    /* API */
 
     PageController.prototype.getData = function (resource, callback) {
 
@@ -161,56 +160,103 @@ define([
     PageController.prototype.renderComponents = function () {
 
         this.desk.render();
-        this.stack.render();
+
+        if (this.components.stack.active === true) {
+            this.stack.render();
+        }
     };
 
-    PageController.prototype.initEventListeners = function () {
+    PageController.prototype.bindEventListeners = function () {
 
         var that = this;
 
-        $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.CLONE_ITEM, function (e, model) {
-            //that.saveDeskToStorage(model);
+        amplify.subscribe(this.o.events.CLONE_ITEM, function (e, model) {
+
             that.addItemToDesk(model);
+
+            if (that.components.session.active === true) {
+                that.saveDeskToStorage(model);
+            }
         });
 
-        $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.REMOVE_ITEM, function (e, container, model) {
-            //that.removeDeskItemFromStorage(model);
+        amplify.subscribe(this.o.events.REMOVE_ITEM, function (e, container, model) {
+
             that.removeItemFromDesk(container);
+
+            if (that.components.session.active === true) {
+                that.removeDeskItemFromStorage(model);
+            }
         });
 
-        $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.MINIMIZE_ITEM, function (e, container, model) {
-            //that.saveStackToStorage(model);
-            //that.removeDeskItemFromStorage(model);
+        amplify.subscribe(this.o.events.MINIMIZE_ITEM, function (e, container, model) {
 
             that.addItemToStack(model);
             that.removeItemFromDesk(container);
+
+            if (that.components.session.active === true) {
+                that.saveStackToStorage(model);
+                that.removeDeskItemFromStorage(model);
+            }
         });
 
-        $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.MOVE_TO_DESK, function (e, model, container) {
-            //that.removeStackItemFromStorage(model);
-            //that.saveDeskToStorage(model);
+        amplify.subscribe(this.o.events.MOVE_TO_DESK, function (e, model, container) {
+
             that.addItemToDesk(model);
             that.removeItemFromStack(container);
+
+            if (that.components.session.active === true) {
+                that.removeStackItemFromStorage(model);
+                that.saveDeskToStorage(model);
+            }
+
         });
 
-        $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.REMOVE_STACK, function (e, model, container) {
-            //that.removeStackItemFromStorage(model);
+        amplify.subscribe(this.o.events.REMOVE_STACK, function (e, model, container) {
+
             that.removeItemFromStack(container);
         });
 
-        $(this.o.selectors.EVENTS_LISTENERS).on(this.o.events.FILTER_OPEN_WRAPPER, function (e, container, model) {
-            //$(this).trigger(self.o.events.FILTER_OPEN_WRAPPER_APP, [container, model]);
+       /* amplify.subscribe(this.o.events.FILTER_OPEN_WRAPPER, function (e, container, model) {
+
             amplify.publish(that.o.events.FILTER_OPEN_WRAPPER_APP, container, model);
             that.removeItemFromDesk(container);
-        });
+            if (that.components.session.active === true) {
+                //$(this).trigger(self.o.events.FILTER_OPEN_WRAPPER_APP, [container, model]);
+            }
+        });*/
+    };
+
+    PageController.prototype.appendHtmlStructures = function () {
+
+        var $structure = $(structure);
+
+        $(this.host.container).append($structure.find(s.GRID_STRUCTURE));
+
+        if (this.components.session.active === true) {
+            $(this.host.container).append($structure.find(s.STACK_STRUCTURE));
+        }
+    };
+
+    PageController.prototype.preValidation = function () {
+
     };
 
     PageController.prototype.render = function () {
 
         this.preValidation();
-        this.initEventListeners();
+
+        this.components = $.extend(true, {
+            stack: {active: false},
+            session: {active: false}
+        }, this.host);
+
+        this.appendHtmlStructures();
+        this.bindEventListeners();
         this.renderComponents();
-        //this.loadSession();
+
+        if (this.components.session.active === true) {
+            this.loadSession();
+        }
     };
 
     return PageController;

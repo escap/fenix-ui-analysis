@@ -82,7 +82,7 @@ define([
 
     Fx_Fluid_Grid.prototype.preValidation = function () {
 
-        if (!w_Commons.isElement(this.o.container)) {
+        if (!w_Commons.isElement($(this.o.container)[0])) {
             throw new Error("Fluid Grid: INVALID_CONTAINER.")
         }
 

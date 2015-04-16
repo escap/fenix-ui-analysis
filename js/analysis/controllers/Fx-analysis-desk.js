@@ -1,9 +1,11 @@
-/*global define */
+/*global define, amplify */
 
 define([
     'jquery',
     'fx-ana/widgets/desk/Fx-ana-module-factory'
 ], function ($, ItemsFactory) {
+
+    'use strict';
 
     var defaultOptions = {
         s: {
@@ -81,7 +83,7 @@ define([
     DeskController.prototype.preValidation = function () {
 
         if (!this.grid) {
-            throw new Error("DeskController: INVALID GRID ITEM.")
+            throw new Error("DeskController: INVALID GRID ITEM.");
         }
     };
 

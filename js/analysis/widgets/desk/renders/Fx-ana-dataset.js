@@ -27,7 +27,7 @@ define([
                 path: 'fx-ana/widgets/desk/renders/plugins/Fx-ana-module-table-plugin'
             }
         },
-        tabs: { 'metadata' : { type: 'simple', callback: 'once'},  'table' : { type: 'simple', callback: 'once'}},
+        tabs: {'metadata': {type: 'simple', callback: 'once'}, 'table': {type: 'simple', callback: 'once'}},
         //tabs: { 'metadata' : { type: 'simple', callback: 'once'},  'table' : { type: 'simple', callback: 'once'}, dropdown : {type:'dropdown', label : {'EN' : 'my Drop'}}},
         initialTab: 'metadata',
         events: {
@@ -50,13 +50,13 @@ define([
 
     /* pub/sub for tabs' communication */
     DS.prototype.subscribe = function (channel, fn) {
-        if (!this.channels[channel]) this.channels[channel] = [];
+        if (!this.channels[channel]) { this.channels[channel] = []; }
         this.channels[channel].push({context: this, callback: fn});
         return this;
     };
 
     DS.prototype.publish = function (channel) {
-        if (!this.channels[channel]) return false;
+        if (!this.channels[channel]) { return false; }
         var args = Array.prototype.slice.call(arguments, 1);
         for (var i = 0, l = this.channels[channel].length; i < l; i++) {
             var subscription = this.channels[channel][i];
@@ -69,19 +69,19 @@ define([
 
         var call = this.o.tabs[plugin].callback;
 
-        if (call === 'no'){
+        if (call === 'no') {
             return;
         }
 
         try {
 
-            if (call === 'once'){
+            if (call === 'once') {
                 this.o.tabs[plugin].callback = 'no';
             }
 
             this.o.plugin_instances[plugin].show();
 
-        } catch (e){
+        } catch (e) {
             throw new Error('Impossible to find show() method for ' + plugin + ' analysis plugin.');
         }
 
@@ -104,10 +104,6 @@ define([
 
         this.showInitialTab();
     };
-
-
-
-
 
     DS.prototype.addSimpleTabOpener = function (plugin, index, controller) {
 
@@ -143,27 +139,27 @@ define([
             $plugin_container = $('<li></li>',
                 {
                     role: "presentation",
-                    'class' : 'dropdown'
+                    'class': 'dropdown'
                 }),
             $a = $('<a></a>',
                 {
                     id: "#fx-dropdown-" + plugin + "-" + index,
                     'aria-controls': plugin,
-                    'class':"dropdown-toggle",
-                    'data-toggle' :"dropdown"
+                    'class': "dropdown-toggle",
+                    'data-toggle': "dropdown"
                 }),
             $ul = $('<ul></ul>', {
                 'class': "dropdown-menu",
-                role:"menu"
+                role: "menu"
             });
 
-        $a.html(dropdown['label'][this.o.lang || 'EN'] + '<span class="caret"></span>');
+        $a.html(dropdown.label[this.o.lang || 'EN'] + '<span class="caret"></span>');
         //$a.addClass(controller.get('style'));
 
         $plugin_container.append($a).append($ul);
 
 
-        for (var i =0; i <  children.length; i++){
+        for (var i = 0; i < children.length; i++) {
             this.createOpener(children[i], $ul);
         }
 
@@ -176,7 +172,7 @@ define([
         var $plugin,
             requiredPlugin;
 
-        window.fx_dynamic_id_counter > -1 ? window.fx_dynamic_id_counter++ : window.fx_dynamic_id_counter = 0;
+        if ( window.fx_dynamic_id_counter > -1 ) {window.fx_dynamic_id_counter++; } else { window.fx_dynamic_id_counter = 0;}
 
         if (this.o.tabs[tab].type === 'simple') {
 
@@ -199,14 +195,14 @@ define([
                 }
 
             } else {
-                throw new Error(tab + ' has to implement the isSuitable() method')
+                throw new Error(tab + ' has to implement the isSuitable() method');
             }
 
         } else {
             $plugin = this.addDropdownTabOpener(tab, window.fx_dynamic_id_counter);
         }
 
-       $container.append($plugin);
+        $container.append($plugin);
     };
 
     DS.prototype.addTabContent = function (plugin, index) {
@@ -232,8 +228,7 @@ define([
 
         var tabs = Object.keys(this.o.tabs);
 
-
-        for (var i = 0; i < tabs.length ; i++) {
+        for (var i = 0; i < tabs.length; i++) {
             this.createOpener(tabs[i], this.o.template.find(this.o.s.TABS));
         }
 
@@ -261,7 +256,7 @@ define([
     };
 
     DS.prototype.removePluginInstance = function (plugin) {
-        delete self.o.plugin_instances[plugin];
+        delete this.o.plugin_instances[plugin];
     };
 
     DS.prototype.loadPlugins = function () {
@@ -273,13 +268,13 @@ define([
 
         for (var i = 0; i < keys.length; i++) {
             if (!plugins[keys[i]]) {
-                throw new Error('Please register "' + keys[i] + '" analysis plugin before to use it.')
+                throw new Error('Please register "' + keys[i] + '" analysis plugin before to use it.');
             }
 
             if (plugins[keys[i]].path) {
-                paths.push(plugins[keys[i]].path)
+                paths.push(plugins[keys[i]].path);
             } else {
-                throw new Error('Impossible to load "' + keys[i] + '" analysis plugin. Please specify a path.')
+                throw new Error('Impossible to load "' + keys[i] + '" analysis plugin. Please specify a path.');
             }
         }
 
@@ -305,7 +300,7 @@ define([
 
     DS.prototype.render = function (options) {
 
-        $.extend(true, this.o, options);
+         $.extend(true, this.o, options);
 
         this.loadPlugins();
     };

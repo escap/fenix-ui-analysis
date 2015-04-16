@@ -1,4 +1,4 @@
-/*global define */
+/*global define, amplify */
 
 define([
     'jquery',
@@ -6,6 +6,7 @@ define([
     'amplify'
 ], function ($, structure) {
 
+    'use strict';
 
     var defaultOptions = {
         events: {
@@ -50,6 +51,7 @@ define([
     /* Desk */
 
     PageController.prototype.addItemToDesk = function (item) {
+
         this.desk.addItem(item);
     };
 
@@ -215,6 +217,19 @@ define([
 
             that.removeItemFromStack(container);
         });
+
+
+        if (this.hasOwnProperty('host') && this.host.hasOwnProperty('listenToCatalog') && this.host.listenToCatalog.active === true ) {
+            amplify.subscribe(this.host.listenToCatalog.event, $.proxy(function (model) {
+                this.bridge.query({
+                    model: model,
+                    success: $.proxy(function (model) {
+                        amplify.publish('fx.widget.analysis.bridge.success', model);
+                        this.addItemToDesk(model);
+                    }, this)
+                });
+            }, this));
+        }
 
        /* amplify.subscribe(this.o.events.FILTER_OPEN_WRAPPER, function (e, container, model) {
 

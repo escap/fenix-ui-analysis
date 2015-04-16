@@ -1,12 +1,17 @@
+/*global define, alert, console*/
 define([
-    'jquery'
+    'jquery',
+    'fx-ana/config/services',
+    'fx-ana/config/services-default'
     //'text!fx-ana/json/request.json'
-], function ($) {
+], function ($, S, DS) {
+
+    'use strict';
 
     var defaultOptions = {
-            url: 'http://faostat3.fao.org/d3s2/v2/msd/resources/',
-            method: 'GET'
-        };
+        url: S.SERVICES_BASE_ADDRESS || DS.SERVICES_BASE_ADDRESS,
+        method: 'GET'
+    };
 
     function Bridge(opts) {
 
@@ -15,50 +20,54 @@ define([
         $.extend(true, this.o, defaultOptions, opts);
     }
 
-    Bridge.prototype.getMetadata = function () {
+    Bridge.prototype.getResource = function () {
 
-        if (this.o.resource.version) {
-            $.ajax({
-                type: this.o.method,
-                url: this.o.url + this.o.resource.uid +'/'+ this.o.resource.version,
-                context : this,
-                contentType: 'application/json',
-                data: {dsd:true, full:true},
-                success: this.o.success,
-                error : function () {
-                    alert("IPI-side Problems")
-                }
-            });
+        var url;
+
+        if (this.o.query.hasOwnProperty('model') && ! this.o.query.model.hasOwnProperty('version')) {
+            url = '/resources/uid/' + this.o.query.model.uid;
         } else {
-            $.ajax({
-                type: this.o.method,
-                url: this.o.url + 'uid/' + this.o.resource.uid ,
-                context : this,
-                contentType: 'application/json',
-                data: {dsd:true, full:true},
-                success: this.o.success,
-                error : function () {
-                    alert("IPI-side Problems")
-                }
-            });
+            url = '/resources/' + this.o.query.model.uid + '/' + this.o.query.model.version;
         }
+
+        $.ajax({
+            type: this.o.method,
+            url: this.o.url + url,
+            context: this,
+            contentType: 'application/json',
+            data: {dsd: true, full: true},
+            success: this.o.query.success,
+            error: $.proxy(function (err) {
+
+                console.warn(err);
+
+                if (this.o.query.error && typeof this.o.query.error === 'function') {
+                    this.o.query.error.call();
+                } else {
+                    alert("IPI-side Problems");
+                }
+
+            }, this)
+        });
     };
 
-    Bridge.prototype.query = function (settings) {
+    Bridge.prototype.query = function (conf) {
 
-        $.extend(true, this.o, settings);
+        this.o.query = {};
+
+        $.extend(true, this.o.query, conf);
 
         //this.createBodyRequest();
-        this.getMetadata();
+        this.getResource();
     };
 
-   /* Bridge.prototype.createBodyRequest = function () {
+    /* Bridge.prototype.createBodyRequest = function () {
 
-        var r = JSON.parse(request);
-        r.filter.metadata.uid.push({"enumeration": this.o.uid});
+     var r = JSON.parse(request);
+     r.filter.metadata.uid.push({"enumeration": this.o.uid});
 
-        this.o.body = JSON.stringify(r);
-    };*/
+     this.o.body = JSON.stringify(r);
+     };*/
 
     return Bridge;
 });

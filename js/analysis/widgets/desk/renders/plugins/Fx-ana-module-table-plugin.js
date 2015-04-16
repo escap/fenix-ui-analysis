@@ -213,6 +213,6 @@ define([
         this.initInnerStructures();
     };
 
-    return TablePlugin
+    return TablePlugin;
 
 });

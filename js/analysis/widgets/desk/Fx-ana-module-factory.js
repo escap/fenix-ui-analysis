@@ -50,13 +50,13 @@
         $.extend(true, this.o, defaultOptions, options);
 
         this.renders = {};
-        this.renders['DATASET'] = new DataSetRenderer();
+        this.renders.DATASET = new DataSetRenderer();
     }
 
     Factory.prototype.getRender = function (model) {
 
         //TODO add logic to discriminate if the resource shown is a dataset, a codelist or else
-        return this.renders['DATASET'];
+        return this.renders.DATASET;
     };
 
     Factory.prototype.render = function (options) {
@@ -66,6 +66,9 @@
             opt = $.extend({template: _$template}, options);
 
         this.compileTemplate(opt);
+
+        console.log("Factory.js#render")
+        console.log(options)
 
         render.render(opt);
     };
@@ -83,7 +86,7 @@
             clone = options.template.find(this.o.selectors.buttons.CLONE),
             resize = options.template.find(this.o.selectors.buttons.RESIZE),
             minimize = options.template.find(this.o.selectors.buttons.MINIMIZE),
-            style = options['style'];
+            style = options.style;
 
         remove.on(this.o.interaction, {self: this}, function (e) {
             $(this).trigger(e.data.self.o.events.REMOVE_ITEM, [options.container, options.model]);

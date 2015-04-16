@@ -10,6 +10,8 @@ define([
     'fx-ana/widgets/bridge/Bridge'
 ], function ($, Controller, Storage, Stack, Desk, Grid, Bridge) {
 
+    'use strict';
+
     function Start(options) {
 
         this.o = {};
@@ -82,7 +84,6 @@ define([
     };
 
     Start.prototype.add = function (item) {
-        var filteredData = item.filtered_data;
         this.pageController.addItemToDesk(item);
     };
 

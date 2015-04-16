@@ -1,4 +1,7 @@
+/* global define*/
 define(function () {
+
+    'use strict';
 
     var config = {
 
@@ -12,6 +15,8 @@ define(function () {
             'fx-ana/start': './start',
             'fx-ana/utils': 'analysis/utils',
             'fx-ana/widgets': 'analysis/widgets',
+            'fx-ana/config' :  '../config',
+
             //Third party libs
             'bootstrap': '{FENIX_CDN}/js/bootstrap/3.2/js/bootstrap.min',
             'draggabilly': '{FENIX_CDN}/js/draggabilly/dist/draggabilly.pkgd.min',

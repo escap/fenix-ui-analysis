@@ -7,14 +7,16 @@ define([
     'draggabilly'
 ], function ($, W_Commons, Packery, Draggabilly) {
 
+    'use strict';
+
     var defaultOptions = {
             css: {
                 FIT: "fit"
-            }}
-        , w_Commons;
+            }
+        }, w_Commons;
 
     function Fx_Fluid_Grid() {
-        this.o = { };
+        this.o = {};
         w_Commons = new W_Commons();
     }
 
@@ -46,7 +48,7 @@ define([
         // add and lay out newly appended elements
         this.pckry.appended(item);
 
-        var draggie = new Draggabilly(item, this. o.drag);
+        var draggie = new Draggabilly(item, this.o.drag);
         // bind Draggabilly events to Packery
         this.pckry.bindDraggabillyEvents(draggie);
 
@@ -83,15 +85,17 @@ define([
     Fx_Fluid_Grid.prototype.preValidation = function () {
 
         if (!w_Commons.isElement($(this.o.container)[0])) {
-            throw new Error("Fluid Grid: INVALID_CONTAINER.")
+            throw new Error("Fluid Grid: INVALID_CONTAINER.");
         }
 
+        this.o.container = $(this.o.container)[0];
+
         if (!this.o.hasOwnProperty("config")) {
-            throw new Error("Fluid Grid: NO CONFIG")
+            throw new Error("Fluid Grid: NO CONFIG");
         }
 
         if (!this.o.drag.hasOwnProperty("handle")) {
-            throw new Error("Fluid Grid: NO HANDLER SELECTOR")
+            throw new Error("Fluid Grid: NO HANDLER SELECTOR");
         }
 
     };

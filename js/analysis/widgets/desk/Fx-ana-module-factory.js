@@ -67,9 +67,6 @@
 
         this.compileTemplate(opt);
 
-        console.log("Factory.js#render")
-        console.log(options)
-
         render.render(opt);
     };
 

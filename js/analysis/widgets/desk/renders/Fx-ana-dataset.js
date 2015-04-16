@@ -28,9 +28,12 @@ define([
             },
             'map': {
                 path: 'fx-ana/widgets/desk/renders/plugins/Fx-ana-module-map-plugin'
+            },
+            'chart': {
+                path: 'fx-ana/widgets/desk/renders/plugins/Fx-ana-module-chart-plugin'
             }
         },
-        tabs: {'metadata': {type: 'simple', callback: 'once'}, 'table': {type: 'simple', callback: 'once'}, 'map': {type: 'simple', callback: 'once'}},
+        tabs: {'metadata': {type: 'simple', callback: 'once'}, 'table': {type: 'simple', callback: 'once'}, 'map': {type: 'simple', callback: 'always'}, 'chart': {type: 'simple', callback: 'once'}},
         //tabs: { 'metadata' : { type: 'simple', callback: 'once'},  'table' : { type: 'simple', callback: 'once'}, dropdown : {type:'dropdown', label : {'EN' : 'my Drop'}}},
         initialTab: 'metadata',
         events: {

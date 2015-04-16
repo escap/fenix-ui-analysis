@@ -9,17 +9,7 @@ define([
 
     var defaultOptions = {
         interaction: "click",
-        label: 'Table',
-        o: {
-            RESOURCES: 'resources',
-            DSD: 'dsd',
-            METADATA: 'metadata',
-            COLUMNS: 'columns',
-            VALUES: 'values',
-            DATA: 'data',
-            VIRTUAL: 'virtualColumn',
-            COLUMN_ID: "subject"
-        }
+        label: 'Chart'
     };
 
     function ChartPlugin(options) {
@@ -31,18 +21,11 @@ define([
         return this;
     }
 
-    ChartPlugin.prototype.renderTable = function () {
+    ChartPlugin.prototype.renderChart = function () {
 
         this.chartCreator.render({
             container: this.$el,
-            model:  this._model
-            /*
-             if you want to override the default configuration,
-             options: {
-             sortable: true
-             }
-             */
-
+            model: this._model
         });
     };
 
@@ -56,7 +39,7 @@ define([
     ChartPlugin.prototype.show = function () {
 
         if (!this.initialized) {
-            this.renderTable();
+            this.renderChart();
             this.initialized = true;
         }
     };

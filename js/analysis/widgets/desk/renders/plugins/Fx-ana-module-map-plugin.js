@@ -15,8 +15,6 @@ define([
 
     function MapPlugin(options) {
 
-        console.log(options)
-
         this.mapCreator = new MapCreator();
 
         this.o = {};
@@ -42,6 +40,8 @@ define([
         if (!this.initialized) {
             this.renderMap();
             this.initialized = true;
+        } else {
+            this.mapCreator.invalidateSize();
         }
     };
 
@@ -66,11 +66,6 @@ define([
 
         //cache original model
         this._model = $.extend(true, {}, this.model);
-
-        console.log(this)
-        console.log(this.o)
-        console.log(this.o.$el)
-
 
         this.mapCreator.render({
             container: this.$el,

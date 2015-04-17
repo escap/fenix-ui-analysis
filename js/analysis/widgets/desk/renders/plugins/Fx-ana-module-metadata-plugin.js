@@ -29,6 +29,7 @@ define([
         return this;
     }
 
+    //Mandatory
     MetadataPlugin.prototype.isSuitable = function () {
 
         var valid = true;
@@ -62,7 +63,7 @@ define([
 
         var $dt = $('<dt></dt>'),
             $dd = $('<dd></dd>'),
-            label = this.fields[field][this.lang] || this.fields[field]['EN'];
+            label = this.fields[field][this.lang] || this.fields[field].EN;
 
         $dt.html(label);
 
@@ -73,6 +74,7 @@ define([
 
     };
 
+    //Optional
     MetadataPlugin.prototype.init = function () {
 
         //cache original model
@@ -83,6 +85,7 @@ define([
 
     };
 
+    //Optional
     MetadataPlugin.prototype.get = function (attr, lang) {
 
         var o = this[attr];
@@ -116,6 +119,7 @@ define([
         }
     };
 
+    //Mandatory
     MetadataPlugin.prototype.show = function () {
 
         if (!this.initialized){

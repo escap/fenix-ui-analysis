@@ -46,13 +46,13 @@
         $.extend(true, this.o, defaultOptions, options);
 
         this.renders = {};
-        this.renders.DATASET = new DataSetRenderer();
+        this.renders.DATASET = DataSetRenderer;
     }
 
     Factory.prototype.getRender = function (model) {
 
         //TODO add logic to discriminate if the resource shown is a dataset, a codelist or else
-        return this.renders.DATASET;
+        return new this.renders.DATASET();
     };
 
     Factory.prototype.render = function (options) {
@@ -89,7 +89,7 @@
            amplify.publish(E.MODULE_CLONE, options.model);
         });
 
-        resize.on(this.o.interaction,function () {
+        resize.on(this.o.interaction, function () {
            amplify.publish(E.MODULE_RESIZE, options.container);
             $(this).resize();
             $(window).trigger('resize');

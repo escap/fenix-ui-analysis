@@ -18,7 +18,6 @@ define([
 
     var defaultOptions = {
         interaction: "click",
-        plugin_instances: {},
         plugin_registry: {
             'metadata': {
                 path: 'fx-ana/widgets/desk/renders/plugins/Fx-ana-module-metadata-plugin'
@@ -33,7 +32,12 @@ define([
                 path: 'fx-ana/widgets/desk/renders/plugins/Fx-ana-module-chart-plugin'
             }
         },
-        tabs: {'metadata': {type: 'simple', callback: 'once'}, 'table': {type: 'simple', callback: 'once'}, 'map': {type: 'simple', callback: 'always'}, 'chart': {type: 'simple', callback: 'once'}},
+        tabs: {
+            'metadata': {type: 'simple', callback: 'once'},
+            'table': {type: 'simple', callback: 'once'},
+            //'map': {type: 'simple', callback: 'always'},
+            'chart': {type: 'simple', callback: 'once'}
+        },
         //tabs: { 'metadata' : { type: 'simple', callback: 'once'},  'table' : { type: 'simple', callback: 'once'}, dropdown : {type:'dropdown', label : {'EN' : 'my Drop'}}},
         initialTab: 'metadata',
         s: {
@@ -42,21 +46,22 @@ define([
         }
     };
 
-    function DS(options) {
-        this.o = {};
-        this.channels = {};
-        $.extend(true, this.o, defaultOptions, options);
+    function DS() {
     }
 
     /* pub/sub for tabs' communication */
     DS.prototype.subscribe = function (channel, fn) {
-        if (!this.channels[channel]) { this.channels[channel] = []; }
+        if (!this.channels[channel]) {
+            this.channels[channel] = [];
+        }
         this.channels[channel].push({context: this, callback: fn});
         return this;
     };
 
     DS.prototype.publish = function (channel) {
-        if (!this.channels[channel]) { return false; }
+        if (!this.channels[channel]) {
+            return false;
+        }
         var args = Array.prototype.slice.call(arguments, 1);
         for (var i = 0, l = this.channels[channel].length; i < l; i++) {
             var subscription = this.channels[channel][i];
@@ -104,6 +109,8 @@ define([
 
         this.showInitialTab();
     };
+
+    /* fn Openers */
 
     DS.prototype.addSimpleTabOpener = function (plugin, index, controller) {
 
@@ -172,7 +179,11 @@ define([
         var $plugin,
             requiredPlugin;
 
-        if ( window.fx_dynamic_id_counter > -1 ) {window.fx_dynamic_id_counter++; } else { window.fx_dynamic_id_counter = 0;}
+        if (window.fx_dynamic_id_counter > -1) {
+            window.fx_dynamic_id_counter++;
+        } else {
+            window.fx_dynamic_id_counter = 0;
+        }
 
         if (this.o.tabs[tab].type === 'simple') {
 
@@ -204,6 +215,8 @@ define([
 
         $container.append($plugin);
     };
+
+    /* end fn Openers */
 
     DS.prototype.addTabContent = function (plugin, index) {
 
@@ -248,7 +261,7 @@ define([
             $el: this.addTabContent(plugin, index),
             controller: this,
             index: index,
-            model: this.o.model
+            model: $.extend(true, {}, this.o.model)
         });
 
         return this.o.plugin_instances[plugin];
@@ -277,7 +290,6 @@ define([
                 throw new Error('Impossible to load "' + keys[i] + '" analysis plugin. Please specify a path.');
             }
         }
-
         //Async load of plugin js source
         require(paths, $.proxy(this.onPluginsLoadSuccess, this));
 
@@ -300,7 +312,11 @@ define([
 
     DS.prototype.render = function (options) {
 
-         $.extend(true, this.o, options);
+        this.o = {};
+        this.o.plugin_instances = {};
+        this.channels = {};
+        $.extend(true, this.o, defaultOptions);
+        $.extend(true, this.o, options);
 
         this.loadPlugins();
     };

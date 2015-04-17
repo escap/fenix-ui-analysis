@@ -35,7 +35,7 @@ define([
         tabs: {
             'metadata': {type: 'simple', callback: 'once'},
             'table': {type: 'simple', callback: 'once'},
-            //'map': {type: 'simple', callback: 'always'},
+            'map': {type: 'simple', callback: 'always'},
             'chart': {type: 'simple', callback: 'once'}
         },
         //tabs: { 'metadata' : { type: 'simple', callback: 'once'},  'table' : { type: 'simple', callback: 'once'}, dropdown : {type:'dropdown', label : {'EN' : 'my Drop'}}},

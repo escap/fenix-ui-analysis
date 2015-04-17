@@ -79,7 +79,8 @@ body {
 .fx-analysis-item {
   width: 50%;
   z-index: 200;
-  /* Veify correct z.index */ }
+  /* Veify correct z.index */
+  height: 525px; }
 
 .fx-analysis-item.fit {
   width: 100%; }

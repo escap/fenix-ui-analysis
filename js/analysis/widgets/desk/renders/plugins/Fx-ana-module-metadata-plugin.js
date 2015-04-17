@@ -1,25 +1,16 @@
 /*global define, Promise */
 
 define([
-    'jquery'
-], function ($) {
+    'jquery',
+    'underscore',
+    'text!fx-ana/html/widgets/desk/plugins/metadata-template.html'
+], function ($, _, template) {
 
     'use strict';
 
     var defaultOptions = {
         interaction: "click",
-        label: 'Metadata',
-        fields: {
-            'title': {
-                'EN': 'Title'
-            },
-            'uid': {
-                'EN': 'Uid'
-            },
-            'version': {
-                'EN': 'Version'
-            }
-        }
+        label: 'Metadata'
     };
 
     function MetadataPlugin(options) {
@@ -39,39 +30,6 @@ define([
         }
 
         return valid;
-    };
-
-    MetadataPlugin.prototype.getModelField = function (field) {
-
-        var _field = this.metadata,
-            paths = field.split(".");
-
-        for (var i = 0; i < paths.length; i++) {
-            if (_field.hasOwnProperty(paths[i])) {
-                _field = _field[paths[i]];
-            }
-        }
-
-        if (typeof _field === 'object') {
-            return _field[this.lang || 'EN'];
-        } else {
-            return _field;
-        }
-    };
-
-    MetadataPlugin.prototype.appendField = function (field) {
-
-        var $dt = $('<dt></dt>'),
-            $dd = $('<dd></dd>'),
-            label = this.fields[field][this.lang] || this.fields[field].EN;
-
-        $dt.html(label);
-
-        $dd.html(this.getModelField(field));
-
-        this.$resume.append($dt);
-        this.$resume.append($dd);
-
     };
 
     //Optional
@@ -103,20 +61,7 @@ define([
 
     MetadataPlugin.prototype.print = function () {
 
-        var fs = Object.keys(this.fields),
-            i;
-
-        this.$resume = $('<div/>', {
-            'class': 'dl-horizontal'
-        });
-
-        this.$el.append(this.$resume);
-
-        for (i = 0; i < fs.length; i++) {
-            if (this.model.metadata.hasOwnProperty(fs[i])) {
-                this.appendField(fs[i]);
-            }
-        }
+        this.$el.html(_.template(template, { model : this.model.metadata } ));
     };
 
     //Mandatory

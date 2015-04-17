@@ -37,12 +37,16 @@ define([
     //Mandatory
     MapPlugin.prototype.show = function () {
 
+
+
         if (!this.initialized) {
             this.renderMap();
             this.initialized = true;
-        } else {
-            this.mapCreator.invalidateSize();
         }
+
+            console.log(123)
+            this.mapCreator.invalidateSize();
+
     };
 
     //Optional

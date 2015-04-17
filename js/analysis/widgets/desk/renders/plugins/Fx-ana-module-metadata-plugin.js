@@ -61,7 +61,11 @@ define([
 
     MetadataPlugin.prototype.print = function () {
 
-        this.$el.html(_.template(template, { model : this.model.metadata } ));
+        console.log(this.model.metadata)
+
+        var t =  _.template(template )( { model: this.model.metadata });
+
+        this.$el.append( t );
     };
 
     //Mandatory

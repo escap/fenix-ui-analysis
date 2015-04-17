@@ -3,20 +3,14 @@
 define([
     'jquery',
     'text!fx-ana/html/structure.html',
+    'fx-ana/config/events',
     'amplify'
-], function ($, structure) {
+], function ($, structure, E) {
 
     'use strict';
 
     var defaultOptions = {
         events: {
-
-            //Desk Events
-            RESIZE_ITEM: "fx.analysis.desk.resize",
-            CLONE_ITEM: 'fx.analysis.desk.clone',
-            REMOVE_ITEM: "fx.analysis.desk.remove",
-            MINIMIZE_ITEM: "fx.analysis.desk.minimize",
-
 
             MOVE_TO_DESK: "fx.analysis.stack.move",
             REMOVE_STACK: "fx.analysis.stack.remove"
@@ -172,7 +166,7 @@ define([
 
         var that = this;
 
-        amplify.subscribe(this.o.events.CLONE_ITEM, function (e, model) {
+        amplify.subscribe(E.MODULE_CLONE, function ( model) {
 
             that.addItemToDesk(model);
 
@@ -181,7 +175,7 @@ define([
             }
         });
 
-        amplify.subscribe(this.o.events.REMOVE_ITEM, function (e, container, model) {
+        amplify.subscribe(E.MODULE_REMOVE, function (container, model) {
 
             that.removeItemFromDesk(container);
 
@@ -190,7 +184,7 @@ define([
             }
         });
 
-        amplify.subscribe(this.o.events.MINIMIZE_ITEM, function (e, container, model) {
+        amplify.subscribe(E.MODULE_MINIMIZE, function ( container, model) {
 
             that.addItemToStack(model);
             that.removeItemFromDesk(container);
@@ -201,7 +195,7 @@ define([
             }
         });
 
-        amplify.subscribe(this.o.events.MOVE_TO_DESK, function (e, model, container) {
+        amplify.subscribe(E.MOVE_TO_DESK, function ( model, container) {
 
             that.addItemToDesk(model);
             that.removeItemFromStack(container);
@@ -213,7 +207,7 @@ define([
 
         });
 
-        amplify.subscribe(this.o.events.REMOVE_STACK, function (e, model, container) {
+        amplify.subscribe(E.REMOVE_FROM_STACK, function ( model, container) {
 
             that.removeItemFromStack(container);
         });

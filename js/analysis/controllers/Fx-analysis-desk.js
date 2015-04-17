@@ -2,8 +2,9 @@
 
 define([
     'jquery',
-    'fx-ana/widgets/desk/Fx-ana-module-factory'
-], function ($, ItemsFactory) {
+    'fx-ana/widgets/desk/Fx-ana-module-factory',
+    'fx-ana/config/events'
+], function ($, ItemsFactory, E) {
 
     'use strict';
 
@@ -11,12 +12,6 @@ define([
         s: {
             ITEM_CLASS: 'fx-analysis-item',
             HANDLER_CLASS: "fx-handle"
-        },
-        events: {
-            RESIZE_ITEM: "FXDeskItemResize",
-            CLONE_ITEM: 'FXDeskItemCole',
-            REMOVE_ITEM: "FXDeskItemRemove",
-            MINIMIZE_ITEM: "FXDeskItemMinimize"
         }
     };
 
@@ -71,7 +66,7 @@ define([
 
         var self = this;
 
-        amplify.subscribe(this.o.events.RESIZE_ITEM, function (e, container) {
+        amplify.subscribe(E.MODULE_RESIZE, function (container) {
             self.resize(container);
         });
     };

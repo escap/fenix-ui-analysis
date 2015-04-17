@@ -1,4 +1,4 @@
-/*global define */
+/*global define, amplify */
 
 /*
  * Responsibilities:
@@ -20,8 +20,10 @@
     'jquery',
     'fx-ana/widgets/desk/renders/Fx-ana-dataset',
     'text!fx-ana/html/widgets/desk/items/template.html',
+     'fx-ana/config/events',
+     'amplify',
     'bootstrap'
-], function ($, DataSetRenderer, template) {
+], function ($, DataSetRenderer, template, E) {
 
     'use strict';
 
@@ -34,12 +36,6 @@
                 CLONE: "[data-control='clone']",
                 REMOVE: "[data-control='remove']"
             }
-        },
-        events: {
-            RESIZE_ITEM: "FXDeskItemResize",
-            CLONE_ITEM: 'FXDeskItemCole',
-            REMOVE_ITEM: "FXDeskItemRemove",
-            MINIMIZE_ITEM: "FXDeskItemMinimize"
         }
     };
 
@@ -63,7 +59,7 @@
 
         var _$template = $(template),
             render = this.getRender(),
-            opt = $.extend({template: _$template}, options);
+            opt = $.extend(true, {template: _$template}, options);
 
         this.compileTemplate(opt);
 
@@ -85,22 +81,22 @@
             minimize = options.template.find(this.o.selectors.buttons.MINIMIZE),
             style = options.style;
 
-        remove.on(this.o.interaction, {self: this}, function (e) {
-            $(this).trigger(e.data.self.o.events.REMOVE_ITEM, [options.container, options.model]);
+        remove.on(this.o.interaction, function () {
+           amplify.publish(E.MODULE_REMOVE, options.container, options.model);
         });
 
-        clone.on(this.o.interaction, {self: this}, function (e) {
-            $(this).trigger(e.data.self.o.events.CLONE_ITEM, [options.model]);
+        clone.on(this.o.interaction, function () {
+           amplify.publish(E.MODULE_CLONE, options.model);
         });
 
-        resize.on(this.o.interaction, {self: this}, function (e) {
-            $(this).trigger(e.data.self.o.events.RESIZE_ITEM, [options.container]);
+        resize.on(this.o.interaction,function () {
+           amplify.publish(E.MODULE_RESIZE, options.container);
             $(this).resize();
             $(window).trigger('resize');
         });
 
-        minimize.on(this.o.interaction, {self: this}, function (e) {
-            $(this).trigger(e.data.self.o.events.MINIMIZE_ITEM, [options.container, options.model]);
+        minimize.on(this.o.interaction, function () {
+           amplify.publish(E.MODULE_MINIMIZE, options.container, options.model);
         });
 
         if (style) {

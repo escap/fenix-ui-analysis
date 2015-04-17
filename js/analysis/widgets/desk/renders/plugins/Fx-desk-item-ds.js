@@ -39,12 +39,6 @@ define([
                 LINE_CHART: ".tab-linechart-container",
                 PIE_CHART: ".tab-piechart-container"
             }
-        },
-        events: {
-            RESIZE_ITEM: "FXDeskItemResize",
-            CLONE_ITEM: 'FXDeskItemCole',
-            REMOVE_ITEM: "FXDeskItemRemove",
-            MINIMIZE_ITEM: "FXDeskItemMinimize"
         }
     };
 
@@ -56,13 +50,13 @@ define([
 
     /*pub/sub for tabs' communication*/
     DataSetRender.prototype.subscribe = function(channel, fn){
-        if (!this.channels[channel]) this.channels[channel] = [];
+        if (!this.channels[channel]) { this.channels[channel] = []; }
         this.channels[channel].push({ context: this, callback: fn });
         return this;
     };
 
     DataSetRender.prototype.publish = function(channel){
-        if (!this.channels[channel]) return false;
+        if (!this.channels[channel]) { return false; }
         var args = Array.prototype.slice.call(arguments, 1);
         for (var i = 0, l = this.channels[channel].length; i < l; i++) {
             var subscription = this.channels[channel][i];
@@ -97,7 +91,9 @@ define([
 
     DataSetRender.prototype.processColumn = function (index, column) {
 
-            //The column WILL be displayed
+        var i;
+
+        //The column WILL be displayed
             this.visibleColumns.push(column);
             this.dataFields.push({ name: column[this.o.COLUMN_ID], type: 'string' });
 
@@ -114,9 +110,9 @@ define([
 
                 if ( typeof column.values.timeList[0] === 'string') {
 
-                    for (var i = 0; i <  column.values.timeList.length; i++ ){
+                    for (i = 0; i <  column.values.timeList.length; i++ ){
                         //substrig of portion of Date format - it shows year, month and day
-                        this.xAxis.push(column.values.timeList[i])
+                        this.xAxis.push(column.values.timeList[i]);
                     }
 
                 } else {
@@ -130,13 +126,13 @@ define([
 
                 if (column.dataType === "code") {
                     var a = Object.keys(this.columnsCodeMapping[column[this.o.COLUMN_ID]]);
-                    for (var i = 0; i < a.length; i++) {
+                    for (i = 0; i < a.length; i++) {
                         this.rawSeries[a[i]] = { name: this.columnsCodeMapping[column[this.o.COLUMN_ID]][a[i]], data: [] };
                     }
 
                 } else {
 
-                    for (var i = 0; i < column.values.length; i++) {
+                    for (i = 0; i < column.values.length; i++) {
                         this.rawSeries[column.values[i]] = { name: column.values[i], data: [] };
                     }
                 }
@@ -166,7 +162,7 @@ define([
                 if (this.visibleColumns[j].dataType === 'code') {
                     d[this.dataFields[j].name] = r[j] + ' - ' + this.columnsCodeMapping[this.visibleColumns[j][this.o.COLUMN_ID]][r[j]];
                 } else {
-                    d[this.dataFields[j].name] = r[j]
+                    d[this.dataFields[j].name] = r[j];
                 }
             }
 
@@ -177,7 +173,7 @@ define([
     };
 
     DataSetRender.prototype.getTitle = function () {
-        return this.model.metadata
+        return this.model.metadata;
     };
 
     DataSetRender.prototype.getDataFields = function () {
@@ -216,7 +212,7 @@ define([
         if (obj.hasOwnProperty(attribute) && obj.title !== null) {
 
             if (obj[attribute].hasOwnProperty('EN')) {
-                label = obj[attribute]['EN'];
+                label = obj[attribute].EN;
             } else {
 
                 keys = Object.keys(obj[attribute]);

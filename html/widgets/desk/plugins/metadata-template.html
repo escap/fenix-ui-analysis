@@ -30,10 +30,10 @@
     </div>
     <% } %>
 
-    <% if (model.meIdentification && model.meIdentification.meContent && model.meIdentification.meContent.seCoverage) { %>
+    <% if (model.meContent && model.meContent.seCoverage && model.meContent.seCoverage && && model.meContent.seCoverage.coverageGeographic) { %>
     <div class="row">
         <div class="col-xs-3">REGION</div>
-        <div class="col-xs-9"><%= meIdentification.meContent.seCoverage.coverageGeographic %></div>
+        <div class="col-xs-9"><%= meIdentification.meContent.seCoverage.coverageGeographic.idCodeList %></div>
     </div>
     <% } %>
 

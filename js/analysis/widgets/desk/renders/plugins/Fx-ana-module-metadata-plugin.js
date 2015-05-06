@@ -3,8 +3,9 @@
 define([
     'jquery',
     'underscore',
+    'FENIX_UI_METADATA_VIEWER',
     'text!fx-ana/html/widgets/desk/plugins/metadata-template.html'
-], function ($, _, template) {
+], function ($, _, METADATDA, template) {
 
     'use strict';
 
@@ -61,11 +62,19 @@ define([
 
     MetadataPlugin.prototype.print = function () {
 
-        console.log(this.model.metadata)
-
         var t =  _.template(template )( { model: this.model.metadata });
 
         this.$el.append( t );
+
+        /* Metadata. */
+        var metadata = new METADATDA();
+        metadata.init({
+            data: this.model.metadata,
+            lang: 'en',
+            //placeholder_id: 'metadata_panel',
+            placeholder : this.$el.find('.metadata_panel')
+        });
+
     };
 
     //Mandatory

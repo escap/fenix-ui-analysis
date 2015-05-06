@@ -1,47 +1,9 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-12">Metadata</div>
+        <div class="col-xs-12 metadata_panel_holder">
 
-    </div>
+                <div class="metadata_panel"></div>
 
-    <div class="row">
-        <div class="col-xs-3">TITLE</div>
-        <div class="col-xs-9"><%= model.title.EN %></div>
-    </div>
-
-    <% if (model.meIdentification && model.meIdentification.contacts && model.meIdentification.contacts.ojContact.organization) { %>
-        <div class="row">
-            <div class="col-xs-3">SOURCE</div>
-            <div class="col-xs-9"><%= model.meIdentification.contacts.ojContact.organization %></div>
         </div>
-    <% } %>
-
-    <% if (model.meIdentification && model.meIdentification.meContent && mmeIdentification.meContent.description) { %>
-    <div class="row">
-        <div class="col-xs-3">DESCRIPTION</div>
-        <div class="col-xs-9"><%= mmeIdentification.meContent.description.EN %></div>
     </div>
-    <% } %>
-
-    <% if (model.meIdentification && model.meIdentification.meContent && model.meIdentification.meContent.seCoverage) { %>
-    <div class="row">
-        <div class="col-xs-3">SECTOR</div>
-        <div class="col-xs-9"><%= meIdentification.meContent.seCoverage.coverageSectors %></div>
-    </div>
-    <% } %>
-
-    <% if (model.meContent && model.meContent.seCoverage && model.meContent.seCoverage && && model.meContent.seCoverage.coverageGeographic) { %>
-    <div class="row">
-        <div class="col-xs-3">REGION</div>
-        <div class="col-xs-9"><%= meIdentification.meContent.seCoverage.coverageGeographic.idCodeList %></div>
-    </div>
-    <% } %>
-
-    <% if (model.meIdentification && model.meIdentification.meContent && model.meIdentification.seReferencePopulation.referencePeriod) { %>
-    <div class="row">
-        <div class="col-xs-3">PERIODICITY</div>
-        <div class="col-xs-9"><%= model.meIdentification.meContent.seReferencePopulation.referencePeriod %></div>
-    </div>
-    <% } %>
-
 </div>

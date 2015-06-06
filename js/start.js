@@ -1,12 +1,11 @@
 /*global define */
 define([
     'jquery',
-    'fx-ana/controllers/Fx-analysis-page',
+    'fx-ana/controllers/Fx-analysis-main',
     'fx-ana/widgets/storage/SessionStorage',
     'fx-ana/widgets/stack/Fx-widgets-stack',
     'fx-ana/controllers/Fx-analysis-desk',
     'fx-ana/structures/Fx-fluid-grid',
-    'fx-ana/widgets/bridge/Bridge',
     'fx-ana/widgets/bridge/Bridge'
 ], function ($, Controller, Storage, Stack, Desk, Grid, Bridge) {
 
@@ -14,9 +13,7 @@ define([
 
     function Start(options) {
 
-        this.o = {};
-
-        $.extend(true, this.o, options);
+        this.o = $.extend(true, {}, options);
     }
 
     Start.prototype.init = function (o) {
@@ -25,12 +22,12 @@ define([
 
         $.extend(true, this.o, o);
 
-        this.pageController = new Controller();
+        this.mainController = new Controller();
 
         conf = {
-            host : this.o,
+            host: this.o,
             desk: this.initDesk(),
-            bridge : new Bridge()
+            bridge: new Bridge()
         };
 
         //configure modules stack if active
@@ -43,9 +40,9 @@ define([
             conf.storage = new Storage();
         }
 
-        $.extend( this.pageController, conf);
+        $.extend(this.mainController, conf);
 
-        this.pageController.render();
+        this.mainController.render();
 
         return this;
     };
@@ -66,7 +63,7 @@ define([
         });
 
         return $.extend(new Desk(), {
-            grid : grid
+            grid: grid
         });
     };
 
@@ -74,17 +71,17 @@ define([
 
         return new Stack().init({
             container: "#fx-widgets-stack",
-            open : '#fx-widgets-stack-btn',
-            counter : '#fx-widgets-stack-counter'
+            open: '#fx-widgets-stack-btn',
+            counter: '#fx-widgets-stack-counter'
         });
     };
 
-    Start.prototype.getData = function( payload, callback) {
-        this.pageController.getData(payload, callback);
+    Start.prototype.getData = function (payload, callback) {
+        this.mainController.getData(payload, callback);
     };
 
     Start.prototype.add = function (item) {
-        this.pageController.addItemToDesk(item);
+        this.mainController.addItemToDesk(item);
     };
 
     return Start;

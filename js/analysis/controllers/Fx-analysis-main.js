@@ -23,7 +23,7 @@ define([
         STACK_STRUCTURE: "[data-component='stack']"
     };
 
-    function PageController(options) {
+    function MainController(options) {
 
         this.o = {};
 
@@ -31,47 +31,46 @@ define([
     }
 
     //(injected)
-    PageController.prototype.desk = undefined;
+    MainController.prototype.desk = undefined;
 
     //(injected)
-    PageController.prototype.stack = undefined;
+    MainController.prototype.stack = undefined;
 
     //(injected)
-    PageController.prototype.storage = undefined;
+    MainController.prototype.storage = undefined;
 
     //(injected)
-    PageController.prototype.bridge = undefined;
+    MainController.prototype.bridge = undefined;
 
     /* Desk */
 
-    PageController.prototype.addItemToDesk = function (item) {
-
+    MainController.prototype.addItemToDesk = function (item) {
         this.desk.addItem(item);
     };
 
-    PageController.prototype.removeItemFromDesk = function (item) {
+    MainController.prototype.removeItemFromDesk = function (item) {
         this.desk.removeItem(item);
     };
 
     /* Stack */
 
-    PageController.prototype.addItemToStack = function (item) {
+    MainController.prototype.addItemToStack = function (item) {
         this.stack.addItem(item);
     };
 
-    PageController.prototype.removeItemFromStack = function (item) {
+    MainController.prototype.removeItemFromStack = function (item) {
         this.stack.removeItem(item);
     };
 
     /* Session  */
 
-    PageController.prototype.loadSession = function () {
+    MainController.prototype.loadSession = function () {
 
         this.loadDeskFromStorage();
         this.loadStackFromStorage();
     };
 
-    PageController.prototype.saveDeskToStorage = function (model) {
+    MainController.prototype.saveDeskToStorage = function (model) {
         var that = this;
 
         this.storage.getItem(this.o.storage.CATALOG, function (item) {
@@ -81,7 +80,7 @@ define([
         });
     };
 
-    PageController.prototype.removeDeskItemFromStorage = function (model) {
+    MainController.prototype.removeDeskItemFromStorage = function (model) {
 
         var that = this;
         this.storage.getItem(this.o.storage.CATALOG, function (item) {
@@ -92,7 +91,7 @@ define([
         });
     };
 
-    PageController.prototype.loadDeskFromStorage = function () {
+    MainController.prototype.loadDeskFromStorage = function () {
         var that = this;
         this.storage.getItem(this.o.storage.CATALOG, function (items) {
             var datasets;
@@ -106,7 +105,7 @@ define([
         });
     };
 
-    PageController.prototype.saveStackToStorage = function (model) {
+    MainController.prototype.saveStackToStorage = function (model) {
 
         var that = this;
         this.storage.getItem(this.o.storage.STACK, function (item) {
@@ -116,7 +115,7 @@ define([
         });
     };
 
-    PageController.prototype.loadStackFromStorage = function () {
+    MainController.prototype.loadStackFromStorage = function () {
         var that = this;
         this.storage.getItem(this.o.storage.STACK, function (items) {
             var datasets;
@@ -130,7 +129,7 @@ define([
         });
     };
 
-    PageController.prototype.removeStackItemFromStorage = function (model) {
+    MainController.prototype.removeStackItemFromStorage = function (model) {
 
         var that = this;
         this.storage.getItem(this.o.storage.STACK, function (item) {
@@ -143,7 +142,7 @@ define([
 
     /* API */
 
-    PageController.prototype.getData = function (resource, callback) {
+    MainController.prototype.getData = function (resource, callback) {
 
         var settings = {
             resource: resource,
@@ -153,7 +152,7 @@ define([
         this.bridge.query(settings);
     };
 
-    PageController.prototype.renderComponents = function () {
+    MainController.prototype.renderComponents = function () {
 
         this.desk.render();
 
@@ -162,7 +161,7 @@ define([
         }
     };
 
-    PageController.prototype.bindEventListeners = function () {
+    MainController.prototype.bindEventListeners = function () {
 
         var that = this;
 
@@ -215,13 +214,15 @@ define([
 
         if (this.hasOwnProperty('host') && this.host.hasOwnProperty('listenToCatalog') && this.host.listenToCatalog.active === true ) {
             amplify.subscribe(this.host.listenToCatalog.event, $.proxy(function (model) {
-                this.bridge.query({
+
+                this.bridge.getResourceMetadata({
                     model: model,
-                    success: $.proxy(function (model) {
-                        amplify.publish('fx.widget.analysis.bridge.success', model);
-                        this.addItemToDesk(model);
+                    success: $.proxy(function (metadata) {
+                        amplify.publish('fx.widget.analysis.bridge.success', metadata);
+                        this.addItemToDesk($.extend(true, {}, metadata));
                     }, this)
                 });
+
             }, this));
         }
 
@@ -235,7 +236,7 @@ define([
         });*/
     };
 
-    PageController.prototype.appendHtmlStructures = function () {
+    MainController.prototype.appendHtmlStructures = function () {
 
         var $structure = $(structure);
 
@@ -246,21 +247,23 @@ define([
         }
     };
 
-    PageController.prototype.preValidation = function () {
+    MainController.prototype.preValidation = function () {
 
     };
 
-    PageController.prototype.render = function () {
+    MainController.prototype.render = function () {
 
         this.preValidation();
 
         this.components = $.extend(true, {
-            stack: {active: false},
-            session: {active: false}
+            stack: { active: false },
+            session: { active: false }
         }, this.host);
 
         this.appendHtmlStructures();
+
         this.bindEventListeners();
+
         this.renderComponents();
 
         if (this.components.session.active === true) {
@@ -268,5 +271,5 @@ define([
         }
     };
 
-    return PageController;
+    return MainController;
 });

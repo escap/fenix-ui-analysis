@@ -39,7 +39,7 @@ define([
             success: this.o.query.success,
             error: $.proxy(function (err) {
 
-                console.warn(err);
+                console.error(err);
 
                 if (this.o.query.error && typeof this.o.query.error === 'function') {
                     this.o.query.error.call();
@@ -59,6 +59,46 @@ define([
 
         //this.createBodyRequest();
         this.getResource();
+    };
+
+    Bridge.prototype.getResourceMetadata = function (conf) {
+
+        console.log(conf)
+
+        return
+
+
+        this.o.query = {};
+
+        $.extend(true, this.o.query, conf);
+
+        var url;
+
+        if (this.o.query.hasOwnProperty('model') && ! this.o.query.model.hasOwnProperty('version')) {
+            url = '/resources/metadata/uid/' + this.o.query.model.uid;
+        } else {
+            url = '/resources/metadata/' + this.o.query.model.uid + '/' + this.o.query.model.version;
+        }
+
+        $.ajax({
+            type: this.o.method,
+            url: this.o.url + url,
+            context: this,
+            contentType: 'application/json',
+            data: {dsd: true, full: true},
+            success: this.o.query.success,
+            error: $.proxy(function (err) {
+
+                console.error(err);
+
+                if (this.o.query.error && typeof this.o.query.error === 'function') {
+                    this.o.query.error.call();
+                } else {
+                    alert("IPI-side Problems");
+                }
+
+            }, this)
+        });
     };
 
     /* Bridge.prototype.createBodyRequest = function () {

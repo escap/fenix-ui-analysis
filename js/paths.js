@@ -28,7 +28,8 @@ define(function () {
             'mbExtruder': '{FENIX_CDN}/js/jquery.mb.extruder/2.5.5/inc/mbExtruder',
             'jquery.mb.flipText': '{FENIX_CDN}/js/jquery.mb.extruder/2.5.5/inc/jquery.mb.flipText',
             'jquery.hoverIntent': '{FENIX_CDN}/js/jquery.hoverIntent/1.0/jquery.hoverIntent',
-            'amplify' : '{FENIX_CDN}/js/amplify/1.1.2/amplify.min'
+            'amplify' : '{FENIX_CDN}/js/amplify/1.1.2/amplify.min',
+            'q' : '{FENIX_CDN}/js/q/1.1.2/q'
         },
         shim: {
             'highcharts': {

@@ -15,8 +15,6 @@ define([
             MOVE_TO_DESK: "fx.analysis.stack.move",
             REMOVE_STACK: "fx.analysis.stack.remove"
 
-            //FILTER_OPEN_WRAPPER: "filterOpenWrapper",
-            //FILTER_OPEN_WRAPPER_APP: "filterOpenWrapperApp"
         }
     }, s = {
         GRID_STRUCTURE: "[data-component='grid']",
@@ -213,15 +211,19 @@ define([
 
 
         if (this.hasOwnProperty('host') && this.host.hasOwnProperty('listenToCatalog') && this.host.listenToCatalog.active === true ) {
-            amplify.subscribe(this.host.listenToCatalog.event, $.proxy(function (model) {
 
-                this.bridge.getResourceMetadata({
-                    model: model,
-                    success: $.proxy(function (metadata) {
-                        amplify.publish('fx.widget.analysis.bridge.success', metadata);
-                        this.addItemToDesk($.extend(true, {}, metadata));
-                    }, this)
+            amplify.subscribe(this.host.listenToCatalog.event, $.proxy(function (event) {
+
+                console.log(event)
+
+                return;
+
+                this.bridge.getResourceMetadata(event).then(function (metadata) {
+
+                    amplify.publish('fx.widget.analysis.bridge.success', metadata);
+                    that.addItemToDesk($.extend(true, {}, metadata));
                 });
+
 
             }, this));
         }

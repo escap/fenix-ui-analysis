@@ -2,112 +2,85 @@
 define([
     'jquery',
     'fx-ana/config/services',
-    'fx-ana/config/services-default'
-    //'text!fx-ana/json/request.json'
-], function ($, S, DS) {
+    'fx-ana/config/services-default',
+    'q'
+], function ($, S, DS, Q) {
 
     'use strict';
 
     var defaultOptions = {
-        url: S.SERVICES_BASE_ADDRESS || DS.SERVICES_BASE_ADDRESS,
-        method: 'GET'
+        url: S.SERVICES_BASE_ADDRESS || DS.SERVICES_BASE_ADDRESS
     };
 
     function Bridge(opts) {
 
-        this.o = {};
-
-        $.extend(true, this.o, defaultOptions, opts);
+        this.o = $.extend(true, {}, defaultOptions, opts);
     }
 
-    Bridge.prototype.getResource = function () {
+    Bridge.prototype.getResourceData = function () {
 
-        var url;
+        var url,
+            self = this;
 
-        if (this.o.query.hasOwnProperty('model') && ! this.o.query.model.hasOwnProperty('version')) {
-            url = '/resources/uid/' + this.o.query.model.uid;
+        if (this.o.query.hasOwnProperty('model') && !this.o.query.model.hasOwnProperty('version')) {
+            url = '/processes/' + this.o.query.model.uid;
         } else {
-            url = '/resources/' + this.o.query.model.uid + '/' + this.o.query.model.version;
+            url = '/processes/' + this.o.query.model.uid + '/' + this.o.query.model.version;
         }
 
-        $.ajax({
-            type: this.o.method,
-            url: this.o.url + url,
-            context: this,
-            contentType: 'application/json',
-            data: {dsd: true, full: true},
-            success: this.o.query.success,
-            error: $.proxy(function (err) {
+        return Q.Promise(function (resolve, reject) {
 
-                console.error(err);
+            $.ajax({
+                type: 'POST',
+                url: self.o.url + url,
+                context: this,
+                contentType: 'application/json',
+                data: "", //TODO
+                success: function (data, textStatus, jqXHR) {
 
-                if (this.o.query.error && typeof this.o.query.error === 'function') {
-                    this.o.query.error.call();
-                } else {
-                    alert("IPI-side Problems");
-                }
-
-            }, this)
+                    if (jqXHR.status === 200) {
+                        resolve(data);
+                    } else {
+                        reject(new Error("Status code was " + jqXHR.status));
+                    }
+                },
+                error: reject
+            });
         });
-    };
-
-    Bridge.prototype.query = function (conf) {
-
-        this.o.query = {};
-
-        $.extend(true, this.o.query, conf);
-
-        //this.createBodyRequest();
-        this.getResource();
     };
 
     Bridge.prototype.getResourceMetadata = function (conf) {
 
-        console.log(conf)
+        var url,
+            self = this;
 
-        return
-
-
-        this.o.query = {};
-
-        $.extend(true, this.o.query, conf);
-
-        var url;
-
-        if (this.o.query.hasOwnProperty('model') && ! this.o.query.model.hasOwnProperty('version')) {
-            url = '/resources/metadata/uid/' + this.o.query.model.uid;
+        if (!conf.hasOwnProperty('version')) {
+            url = '/msd/resources/metadata/uid/' + conf.uid;
         } else {
-            url = '/resources/metadata/' + this.o.query.model.uid + '/' + this.o.query.model.version;
+            url = '/msd/resources/metadata/' + conf.uid + '/' + conf.version;
         }
 
-        $.ajax({
-            type: this.o.method,
-            url: this.o.url + url,
-            context: this,
-            contentType: 'application/json',
-            data: {dsd: true, full: true},
-            success: this.o.query.success,
-            error: $.proxy(function (err) {
+        return Q.Promise(function (resolve, reject) {
 
-                console.error(err);
+            $.ajax({
+                type: 'GET',
+                url: self.o.url + url,
+                context: this,
+                contentType: 'application/json',
+                data: {dsd: true, full: true},
+                success: function (data, textStatus, jqXHR) {
 
-                if (this.o.query.error && typeof this.o.query.error === 'function') {
-                    this.o.query.error.call();
-                } else {
-                    alert("IPI-side Problems");
-                }
-
-            }, this)
+                    if (jqXHR.status === 200) {
+                        resolve(data);
+                    } else {
+                        reject(new Error("Status code was " + jqXHR.status));
+                    }
+                },
+                error: reject
+            });
         });
+
     };
-
-    /* Bridge.prototype.createBodyRequest = function () {
-
-     var r = JSON.parse(request);
-     r.filter.metadata.uid.push({"enumeration": this.o.uid});
-
-     this.o.body = JSON.stringify(r);
-     };*/
 
     return Bridge;
 });

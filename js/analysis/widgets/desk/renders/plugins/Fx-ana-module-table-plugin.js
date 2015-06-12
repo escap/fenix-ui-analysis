@@ -2,8 +2,9 @@
 
 define([
     'jquery',
+    'fx-ana/widgets/bridge/Bridge',
     'fx-t-c/start'
-], function ($, TableCreator) {
+], function ($, Bridge, TableCreator) {
 
     'use strict';
 
@@ -21,7 +22,6 @@ define([
             COLUMN_ID: "subject"
         }
     };
-
 
     function TablePlugin(options) {
 
@@ -55,6 +55,9 @@ define([
 
     //Mandatory
     TablePlugin.prototype.show = function () {
+
+        console.log("Table show")
+        return;
 
         if (!this.initialized) {
             this.renderTable();

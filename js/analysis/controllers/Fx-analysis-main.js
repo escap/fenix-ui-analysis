@@ -65,6 +65,7 @@ define([
     MainController.prototype.loadSession = function () {
 
         this.loadDeskFromStorage();
+
         this.loadStackFromStorage();
     };
 
@@ -209,14 +210,9 @@ define([
             that.removeItemFromStack(container);
         });
 
-
         if (this.hasOwnProperty('host') && this.host.hasOwnProperty('listenToCatalog') && this.host.listenToCatalog.active === true ) {
 
             amplify.subscribe(this.host.listenToCatalog.event, $.proxy(function (event) {
-
-                console.log(event)
-
-                return;
 
                 this.bridge.getResourceMetadata(event).then(function (metadata) {
 

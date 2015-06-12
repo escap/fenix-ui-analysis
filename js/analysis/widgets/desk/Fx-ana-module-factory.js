@@ -9,19 +9,19 @@
 
 
 /*
-* Custom css class
-* style.MODULE_CONTROL_REMOVE
-* style.MODULE_CONTROL_CLONE
-* style.MODULE_CONTROL_RESIZE
-* style.MODULE_CONTROL_MINIMIZE
-* */
+ * Custom css class
+ * style.MODULE_CONTROL_REMOVE
+ * style.MODULE_CONTROL_CLONE
+ * style.MODULE_CONTROL_RESIZE
+ * style.MODULE_CONTROL_MINIMIZE
+ * */
 
- define([
+define([
     'jquery',
     'fx-ana/widgets/desk/renders/Fx-ana-dataset',
     'text!fx-ana/html/widgets/desk/items/template.html',
-     'fx-ana/config/events',
-     'amplify',
+    'fx-ana/config/events',
+    'amplify',
     'bootstrap'
 ], function ($, DataSetRenderer, template, E) {
 
@@ -82,21 +82,21 @@
             style = options.style;
 
         remove.on(this.o.interaction, function () {
-           amplify.publish(E.MODULE_REMOVE, options.container, options.model);
+            amplify.publish(E.MODULE_REMOVE, options.container, options.model);
         });
 
         clone.on(this.o.interaction, function () {
-           amplify.publish(E.MODULE_CLONE, options.model);
+            amplify.publish(E.MODULE_CLONE, options.model);
         });
 
         resize.on(this.o.interaction, function () {
-           amplify.publish(E.MODULE_RESIZE, options.container);
+            amplify.publish(E.MODULE_RESIZE, options.container);
             $(this).resize();
             $(window).trigger('resize');
         });
 
         minimize.on(this.o.interaction, function () {
-           amplify.publish(E.MODULE_MINIMIZE, options.container, options.model);
+            amplify.publish(E.MODULE_MINIMIZE, options.container, options.model);
         });
 
         if (style) {

@@ -2,8 +2,9 @@
 
 define([
     'jquery',
+    'fx-ana/widgets/bridge/Bridge',
     'fx-m-c/start'
-], function ($, MapCreator) {
+], function ($, Bridge, MapCreator) {
 
     'use strict';
 
@@ -36,6 +37,9 @@ define([
 
     //Mandatory
     MapPlugin.prototype.show = function () {
+
+        console.log("Map Show")
+        return;
 
 
 

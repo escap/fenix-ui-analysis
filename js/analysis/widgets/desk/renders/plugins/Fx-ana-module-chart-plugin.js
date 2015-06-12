@@ -2,8 +2,9 @@
 
 define([
     'jquery',
+    'fx-ana/widgets/bridge/Bridge',
     'fx-c-c/start'
-], function ($, ChartCreator) {
+], function ($, Bridge, ChartCreator) {
 
     'use strict';
 
@@ -37,6 +38,9 @@ define([
 
     //Mandatory
     ChartPlugin.prototype.show = function () {
+
+        console.log("Chart show")
+        return;
 
         if (!this.initialized) {
             this.renderChart();

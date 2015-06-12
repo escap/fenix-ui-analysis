@@ -97,7 +97,7 @@ define([
         var initial = this.o.initialTab;
 
         this.o.template.find(this.o.s.TABS).find('[data-plugin="' + initial + '"] > a').tab('show');
-        //this.showTab(initial);
+
     };
 
     DS.prototype.initTabSystem = function () {
@@ -254,10 +254,10 @@ define([
 
         var registry = this.o.plugin_registry,
         //Note that for sync call the argument of require() is not an array but a string
-            requiredPlugin = require(registry[plugin].path);
+            RequiredPlugin = require(registry[plugin].path);
 
         //cache the plugin instance
-        this.o.plugin_instances[plugin] = new requiredPlugin({
+        this.o.plugin_instances[plugin] = new RequiredPlugin({
             $el: this.addTabContent(plugin, index),
             controller: this,
             index: index,
@@ -275,7 +275,7 @@ define([
     DS.prototype.loadPlugins = function () {
 
         var plugins = $.extend(true, this.o.plugin_registry, this.o.plugins || {}),
-        //Load just the js of desired tabs
+            //Load just the js of desired tabs
             keys = Object.keys(this.o.tabs),
             paths = [];
 
@@ -313,10 +313,12 @@ define([
     DS.prototype.render = function (options) {
 
         this.o = {};
+
         this.o.plugin_instances = {};
+
         this.channels = {};
-        $.extend(true, this.o, defaultOptions);
-        $.extend(true, this.o, options);
+
+        $.extend(true, this.o, defaultOptions, options);
 
         this.loadPlugins();
     };

@@ -17,7 +17,7 @@ define([
         this.o = $.extend(true, {}, defaultOptions, opts);
     }
 
-    Bridge.prototype.getResourceData = function () {
+    Bridge.prototype.getResourceData = function ( filter ) {
 
         var url,
             self = this;
@@ -35,7 +35,7 @@ define([
                 url: self.o.url + url,
                 context: this,
                 contentType: 'application/json',
-                data: "", //TODO
+                data: filter, //TODO
                 success: function (data, textStatus, jqXHR) {
 
                     if (jqXHR.status === 200) {
@@ -55,9 +55,9 @@ define([
             self = this;
 
         if (!conf.hasOwnProperty('version')) {
-            url = '/msd/resources/metadata/uid/' + conf.uid;
+            url = '/resources/metadata/uid/' + conf.uid;
         } else {
-            url = '/msd/resources/metadata/' + conf.uid + '/' + conf.version;
+            url = '/resources/metadata/' + conf.uid + '/' + conf.version;
         }
 
         return Q.Promise(function (resolve, reject) {
@@ -67,11 +67,10 @@ define([
                 url: self.o.url + url,
                 context: this,
                 contentType: 'application/json',
-                data: {dsd: true, full: true},
                 success: function (data, textStatus, jqXHR) {
 
                     if (jqXHR.status === 200) {
-                        resolve(data);
+                        resolve({metadata: data });
                     } else {
                         reject(new Error("Status code was " + jqXHR.status));
                     }

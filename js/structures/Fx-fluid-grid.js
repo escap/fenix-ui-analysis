@@ -10,10 +10,10 @@ define([
     'use strict';
 
     var defaultOptions = {
-            css: {
-                FIT: "fit"
-            }
-        }, w_Commons;
+        css: {
+            FIT: "fit"
+        }
+    }, w_Commons;
 
     function Fx_Fluid_Grid() {
         this.o = {};
@@ -25,14 +25,27 @@ define([
         var $item = $(item);
 
         if ($item.hasClass(this.o.css.FIT)) {
-            $item.removeClass(this.o.css.FIT);
-            this.pckry.layout();
+            this.setItemWidth(item, 'half');
         } else {
-            $item.addClass(this.o.css.FIT);
-            this.pckry.fit($item.get(0));
+            this.setItemWidth(item, 'full');
         }
 
         return $item.get(0);
+    };
+
+    Fx_Fluid_Grid.prototype.setItemWidth = function (item, width) {
+
+        var $item = $(item);
+
+        if (width === 'full') {
+            $item.addClass(this.o.css.FIT);
+            this.pckry.fit($item.get(0));
+        } else {
+            $item.removeClass(this.o.css.FIT);
+        }
+
+        this.pckry.layout();
+
     };
 
     Fx_Fluid_Grid.prototype.getElementsCounts = function () {

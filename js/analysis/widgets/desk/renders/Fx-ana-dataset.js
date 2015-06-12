@@ -1,4 +1,4 @@
-/*global define */
+/*global define, amplify */
 
 /*
  * Responsibilities:
@@ -11,8 +11,10 @@
 define([
     'require',
     'jquery',
+    'fx-ana/config/events',
+    'amplify',
     'bootstrap'
-], function (require, $) {
+], function (require, $, E) {
 
     'use strict';
 
@@ -109,6 +111,19 @@ define([
 
         this.showInitialTab();
     };
+
+    /* API for tabs */
+
+    DS.prototype.resize = function () {
+
+        amplify.publish(E.TAB_RESIZE, this.o.container);
+    };
+
+    DS.prototype.setModuleWidth = function (width) {
+
+        amplify.publish(E.TAB_SET_MODULE_WIDTH, this.o.container, width);
+    };
+
 
     /* fn Openers */
 
@@ -308,11 +323,14 @@ define([
 
             self.showTab($(tab).parent().attr('data-plugin'));
         });
+
     };
 
     DS.prototype.render = function (options) {
 
-        this.o = {};
+        this.o = {
+            id: Math.random()
+        };
 
         this.o.plugin_instances = {};
 

@@ -46,6 +46,11 @@ define([
         this.grid.resize(item);
     };
 
+    DeskController.prototype.setItemWidth = function (item, width) {
+
+        this.grid.setItemWidth(item, width);
+    };
+
     DeskController.prototype.clear = function () {
 
         this.grid.clear();
@@ -59,6 +64,10 @@ define([
 
         amplify.subscribe(E.MODULE_RESIZE, function (container) {
             self.resize(container);
+        });
+
+        amplify.subscribe(E.MODULE_SET_WIDTH, function (container, width) {
+            self.setItemWidth(container, width);
         });
     };
 

@@ -1,10 +1,12 @@
-/*global define, Promise */
+/*global define, amplify */
 
 define([
     'jquery',
     'fx-ana/widgets/bridge/Bridge',
-    'fx-m-c/start'
-], function ($, Bridge, MapCreator) {
+    'fx-m-c/start',
+    'fx-ana/config/events',
+    "amplify"
+], function ($, Bridge, MapCreator, E) {
 
     'use strict';
 
@@ -39,6 +41,9 @@ define([
     MapPlugin.prototype.show = function () {
 
         console.log("Map Show")
+
+        this.controller.setModuleWidth( 'full' );
+
         return;
 
 

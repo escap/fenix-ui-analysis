@@ -3,31 +3,200 @@
 define([
     'jquery',
     'fx-ana/widgets/bridge/Bridge',
-    'fx-c-c/start'
-], function ($, Bridge, ChartCreator) {
+    'text!fx-ana/widgets/desk/renders/plugins/html/Fx-ana-module-chart-plugin-template.hbs',
+    'fx-c-c/start',
+    'handlebars',
+    'select2'
+], function ($, Bridge, pluginTemplate, ChartCreator, Handlebars) {
 
     'use strict';
 
     var defaultOptions = {
         interaction: "click",
-        label: 'Chart'
+        label: 'Chart',
+        lang: 'EN',
+        chart: {
+            //model: model,
+            adapter: {
+                type: 'timeserie',
+                xDimensions: 'time',
+                yDimensions: 'um',
+                valueDimensions: 'value',
+                seriesDimensions: []
+            }
+            //template: {},
+            //creator: {},
+            //onReady: renderChart1
+        }
+    }, s = {
+        FILTER: '[data-role="filter"]',
+        CONTENT: '[data-role="content"]',
+        FILTER_BTN: '[data-role="filter-btn"]',
+        SELECT_X_AXIS: '[data-axis="x"]',
+        SELECT_Y_AXIS: '[data-axis="y"]',
+        SELECT_VALUE: '[data-axis="value"]',
+        SELECT_AXISES: "select",
+        CHART : '[data-role="chart"]'
     };
 
     function ChartPlugin(options) {
 
-        this.chartCreator = new ChartCreator();
+        this.bridge = new Bridge();
 
         this.o = {};
+
         $.extend(true, this, defaultOptions, options);
+
+        this.chartCreator = new ChartCreator();
+
         return this;
     }
 
+    ChartPlugin.prototype.initTab = function () {
+
+        this.initTemplate();
+
+        this.initVariables();
+
+        this.bindEventListeners();
+
+        this.initContentTab();
+
+        this.getData();
+
+    };
+
+    ChartPlugin.prototype.initTemplate = function () {
+
+        var template = Handlebars.compile(pluginTemplate);
+        var html = template({}),
+            $injectMe = $(html);
+
+        $injectMe.find(s.FILTER).hide();
+
+        this.$el.html($injectMe);
+    };
+
+    ChartPlugin.prototype.initVariables = function () {
+
+        this.$filterBtn = this.$el.find(s.FILTER_BTN);
+        this.$filter = this.$el.find(s.FILTER);
+        this.$content = this.$el.find(s.CONTENT);
+        this.$selectXAxis = this.$el.find(s.SELECT_X_AXIS);
+        this.$selectYAxis = this.$el.find(s.SELECT_Y_AXIS);
+        this.$selectValue = this.$el.find(s.SELECT_VALUE);
+        this.$selectAxisis = this.$el.find(s.SELECT_AXISES);
+        this.$chart = this.$el.find(s.CHART);
+
+    };
+
+    ChartPlugin.prototype.bindEventListeners = function () {
+
+        this.$filterBtn.on('click', $.proxy(this.onFilterBtnClick, this));
+
+        this.$selectAxisis.on('change', $.proxy(this.onSelectChange, this));
+    };
+
+    ChartPlugin.prototype.getData = function () {
+
+        this.bridge.getResourceData(this.model.metadata, this.getFilter()).then($.proxy(this.onGetResourceDataSuccess, this));
+    };
+
+    ChartPlugin.prototype.getFilter = function () {
+
+        return [];
+    };
+
+    ChartPlugin.prototype.onGetResourceDataSuccess = function (response) {
+
+        this.model = response;
+
+        this.renderChart();
+    };
+
     ChartPlugin.prototype.renderChart = function () {
 
-        this.chartCreator.render({
-            container: this.$el,
-            model: this._model
+        var self= this;
+
+        var config = $.extend(true, this.chart, {
+            adapter: {
+                lang: this.lang,
+                xDimensions:      this.$selectXAxis.val(),
+                yDimensions: this.$selectYAxis.val(),
+                valueDimensions: this.$selectValue.val(),
+            },
+            model: this.model,
+            onReady: function (c) {
+
+                c.render(  {
+                    container: self.$chart,
+                    creator: {
+                        chartObj: {
+                            chart: {
+                                type: 'bar'
+                            }
+                        }
+                    }
+                });
+            }
         });
+
+
+        this.chartCreator.init(config);
+    };
+
+    /* Event callbacks*/
+
+    ChartPlugin.prototype.onFilterBtnClick = function () {
+
+        this.controller.resize();
+
+        this.$filter.toggle();
+
+        //Important! correspondence with template
+        this.$content.toggleClass('col-sm-6');
+
+        this.$content.toggleClass('col-sm-12');
+    };
+
+    ChartPlugin.prototype.onSelectChange = function () {
+
+        this.renderChart();
+    };
+
+    ChartPlugin.prototype.initContentTab = function () {
+
+        var columns = document.createDocumentFragment(),
+            _columns;
+
+        if (this.model.metadata && this.model.metadata.dsd && this.model.metadata.dsd.columns) {
+
+            _columns = this.model.metadata.dsd.columns;
+
+            for (var i = 0; i < _columns.length; i++) {
+
+                var option = document.createElement('option');
+                option.value = _columns[i].subject;
+                option.text = _columns[i].title[this.lang.toUpperCase()];
+                columns.appendChild(option);
+
+            }
+        }
+
+        this.$selectAxisis.append(columns);
+
+        this.$selectXAxis.val(this.chart.adapter.xDimensions);
+
+        this.$selectYAxis.val(this.chart.adapter.yDimensions);
+
+        this.$selectValue.val(this.chart.adapter.valueDimensions);
+
+        this.$selectXAxis.select2();
+
+        this.$selectYAxis.select2();
+
+        this.$selectValue.select2();
+
     };
 
     //Mandatory
@@ -39,12 +208,9 @@ define([
     //Mandatory
     ChartPlugin.prototype.show = function () {
 
-        console.log("Chart show")
-        return;
-
         if (!this.initialized) {
-            this.renderChart();
             this.initialized = true;
+            this.initTab();
         }
     };
 

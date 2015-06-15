@@ -34,7 +34,7 @@ define([
     //Mandatory
     MapPlugin.prototype.isSuitable = function () {
 
-        return true;
+        return false;
     };
 
     //Mandatory

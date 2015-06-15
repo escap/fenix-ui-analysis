@@ -17,28 +17,28 @@ define([
         this.o = $.extend(true, {}, defaultOptions, opts);
     }
 
-    Bridge.prototype.getResourceData = function ( filter ) {
+    Bridge.prototype.getResourceData = function ( conf, filter ) {
 
         var url,
             self = this;
 
-        if (this.o.query.hasOwnProperty('model') && !this.o.query.model.hasOwnProperty('version')) {
-            url = '/processes/' + this.o.query.model.uid;
+        if (!conf.hasOwnProperty('version')) {
+            url = '/processes/' + conf.uid;
         } else {
-            url = '/processes/' + this.o.query.model.uid + '/' + this.o.query.model.version;
+            url = '/processes/' + conf.uid + '/' + conf.version;
         }
 
         return Q.Promise(function (resolve, reject) {
 
             $.ajax({
                 type: 'POST',
-                url: self.o.url + url,
+                url: self.o.url + url + '?language=EN',
                 context: this,
                 contentType: 'application/json',
-                data: filter, //TODO
+                data: JSON.stringify(filter),
                 success: function (data, textStatus, jqXHR) {
 
-                    if (jqXHR.status === 200) {
+                    if (jqXHR.status === 201) {
                         resolve(data);
                     } else {
                         reject(new Error("Status code was " + jqXHR.status));
@@ -55,16 +55,16 @@ define([
             self = this;
 
         if (!conf.hasOwnProperty('version')) {
-            url = '/resources/metadata/uid/' + conf.uid;
+            url = '/msd/resources/metadata/uid/' + conf.uid;
         } else {
-            url = '/resources/metadata/' + conf.uid + '/' + conf.version;
+            url = '/msd/resources/metadata/' + conf.uid + '/' + conf.version;
         }
 
         return Q.Promise(function (resolve, reject) {
 
             $.ajax({
                 type: 'GET',
-                url: self.o.url + url,
+                url: self.o.url + url + "?full=true&dsd=true",
                 context: this,
                 contentType: 'application/json',
                 success: function (data, textStatus, jqXHR) {

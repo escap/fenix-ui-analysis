@@ -117,9 +117,10 @@ define([
     };
 
     Factory.prototype.publishResizeEvent = function (container) {
-        amplify.publish(E.MODULE_RESIZE, container);
+
         $(this).resize();
         $(window).trigger('resize');
+        amplify.publish(E.MODULE_RESIZE, container);
     };
 
     Factory.prototype.publishSetModuleWidthEvent = function (container, width) {

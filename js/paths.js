@@ -29,7 +29,9 @@ define(function () {
             'jquery.mb.flipText': '{FENIX_CDN}/js/jquery.mb.extruder/2.5.5/inc/jquery.mb.flipText',
             'jquery.hoverIntent': '{FENIX_CDN}/js/jquery.hoverIntent/1.0/jquery.hoverIntent',
             'amplify' : '{FENIX_CDN}/js/amplify/1.1.2/amplify.min',
-            'q' : '{FENIX_CDN}/js/q/1.1.2/q'
+            'q' : '{FENIX_CDN}/js/q/1.1.2/q',
+            'handlebars': "{FENIX_CDN}/js/handlebars/2.0.0/handlebars",
+            'select2' : "{FENIX_CDN}/js/select2/3.5.2/js/select2.min"
         },
         shim: {
             'highcharts': {

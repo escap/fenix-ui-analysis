@@ -1,4 +1,4 @@
-/*global define, amplify */
+/*global define, amplify, select2 */
 
 /*
  * Responsibilities:
@@ -80,13 +80,15 @@ define([
             return;
         }
 
+
+        if (call === 'once') {
+            this.o.tabs[plugin].callback = 'no';
+        }
+
+        this.o.plugin_instances[plugin].show();
+
         try {
 
-            if (call === 'once') {
-                this.o.tabs[plugin].callback = 'no';
-            }
-
-            this.o.plugin_instances[plugin].show();
 
         } catch (e) {
             throw new Error('Impossible to find show() method for ' + plugin + ' analysis plugin.');
@@ -123,7 +125,6 @@ define([
 
         amplify.publish(E.TAB_SET_MODULE_WIDTH, this.o.container, width);
     };
-
 
     /* fn Openers */
 

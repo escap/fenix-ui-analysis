@@ -40,6 +40,7 @@ define([
         this._model = $.extend(true, {}, this.model);
 
         this.initialized = false;
+
         this.metadata = this.model.metadata;
 
     };

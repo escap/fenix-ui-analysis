@@ -7,6 +7,7 @@ define(function () {
 
     return {
         MODULE_RESIZE : PREFIX + 'resize',
+        MODULE_RESIZED : PREFIX + 'resized',
         MODULE_CLONE : PREFIX + 'clone',
         MODULE_MINIMIZE : PREFIX + 'minimize',
         MODULE_REMOVE : PREFIX + 'remove',

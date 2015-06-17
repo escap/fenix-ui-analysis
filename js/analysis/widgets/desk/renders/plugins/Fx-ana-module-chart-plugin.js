@@ -1,13 +1,15 @@
-/*global define, Promise */
+/*global define, Promise, amplify */
 
 define([
     'jquery',
     'fx-ana/widgets/bridge/Bridge',
     'text!fx-ana/widgets/desk/renders/plugins/html/Fx-ana-module-chart-plugin-template.hbs',
     'fx-c-c/start',
+    'fx-ana/config/events',
     'handlebars',
+    'amplify',
     'select2'
-], function ($, Bridge, pluginTemplate, ChartCreator, Handlebars) {
+], function ($, Bridge, pluginTemplate, ChartCreator, E, Handlebars) {
 
     'use strict';
 
@@ -15,6 +17,7 @@ define([
         interaction: "click",
         label: 'Chart',
         lang: 'EN',
+        size : 'half',
         chart: {
             //model: model,
             adapter: {
@@ -92,9 +95,19 @@ define([
 
     ChartPlugin.prototype.bindEventListeners = function () {
 
+        var self = this;
+
         this.$filterBtn.on('click', $.proxy(this.onFilterBtnClick, this));
 
         this.$selectAxisis.on('change', $.proxy(this.onSelectChange, this));
+
+        amplify.subscribe(E.MODULE_RESIZED, function (controllerId) {
+
+            if (self.controller.id === controllerId) {
+               self.hideFilterPanel();
+            }
+
+        });
     };
 
     ChartPlugin.prototype.getData = function () {
@@ -116,14 +129,14 @@ define([
 
     ChartPlugin.prototype.renderChart = function () {
 
-        var self= this;
+        var self = this;
 
         var config = $.extend(true, this.chart, {
             adapter: {
                 lang: this.lang,
-                xDimensions:      this.$selectXAxis.val(),
+                xDimensions: this.$selectXAxis.val(),
                 yDimensions: this.$selectYAxis.val(),
-                valueDimensions: this.$selectValue.val(),
+                valueDimensions: this.$selectValue.val()
             },
             model: this.model,
             onReady: function (c) {
@@ -133,7 +146,12 @@ define([
                     creator: {
                         chartObj: {
                             chart: {
-                                type: 'bar'
+                                type: self.$selectXAxis.val() !== 'time' ? 'column' : 'line'
+                            },
+                            plotOptions: {
+                                column: {
+                                    stacking: 'normal'
+                                }
                             }
                         }
                     }
@@ -149,14 +167,47 @@ define([
 
     ChartPlugin.prototype.onFilterBtnClick = function () {
 
-        this.controller.resize();
+        if ( this.size === 'half') {
 
-        this.$filter.toggle();
+            this.showFilterPanel();
+
+        }  else {
+
+            this.hideFilterPanel();
+        }
+
+    };
+
+    ChartPlugin.prototype.showFilterPanel = function() {
+
+        this.$filter.show();
 
         //Important! correspondence with template
-        this.$content.toggleClass('col-sm-6');
+        this.$content.addClass('col-sm-6');
 
-        this.$content.toggleClass('col-sm-12');
+        this.$content.removeClass('col-sm-12');
+
+        this.size = 'full';
+
+        this.controller.setModuleWidth( this.size );
+
+    };
+
+    ChartPlugin.prototype.hideFilterPanel = function() {
+
+        this.$filter.hide();
+
+        //Important! correspondence with template
+        this.$content.removeClass('col-sm-6');
+
+        this.$content.addClass('col-sm-12');
+
+        this.size = 'half';
+
+        $(window).trigger('resize');
+
+        //this.controller.setModuleWidth( this.size );
+
     };
 
     ChartPlugin.prototype.onSelectChange = function () {

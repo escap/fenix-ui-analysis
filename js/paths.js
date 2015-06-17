@@ -20,7 +20,7 @@ define(function () {
             //Third party libs
             'bootstrap': '{FENIX_CDN}/js/bootstrap/3.2/js/bootstrap.min',
             'draggabilly': '{FENIX_CDN}/js/draggabilly/dist/draggabilly.pkgd.min',
-            'highcharts': '{FENIX_CDN}/js/highcharts/4.0.4/js/highcharts-all',
+            'highcharts': '{FENIX_CDN}/js/highcharts/4.1.6/js/highcharts',
             'jquery': '{FENIX_CDN}/js/jquery/2.1.1/jquery.min',
             'jqwidgets': '{FENIX_CDN}/js/jqwidgets/3.1/jqx-light',
             'pnotify': '{FENIX_CDN}/js/pnotify/2.0.1/pnotify.core',

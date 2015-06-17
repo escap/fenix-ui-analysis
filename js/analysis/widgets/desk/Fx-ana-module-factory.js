@@ -4,7 +4,6 @@
  * Responsibilities:
  * Compile blank analysis module template and add callback to control buttons
  * Instantiate and render a module render according to the resource type
- *
  * */
 define([
     'jquery',
@@ -46,26 +45,26 @@ define([
 
         var self = this;
 
-        amplify.subscribe(E.TAB_RESIZE, function (container) {
-            self.publishResizeEvent(container);
+        amplify.subscribe(E.TAB_RESIZE, function (container, controllerId, silent) {
+            self.publishResizeEvent(container, controllerId, silent);
         });
 
-        amplify.subscribe(E.TAB_SET_MODULE_WIDTH, function (container, width) {
-            self.publishSetModuleWidthEvent(container, width);
+        amplify.subscribe(E.TAB_SET_MODULE_WIDTH, function (container, width, controllerId, silent) {
+            self.publishSetModuleWidthEvent(container, width, controllerId, silent);
         });
     };
 
-    Factory.prototype.getRender = function (model) {
+    Factory.prototype.getRender = function (opts) {
 
         //TODO add logic to discriminate if the resource shown is a dataset, a codelist or else
-        return new this.renders.DATASET();
+        return new this.renders.DATASET({ id: opts.id });
     };
 
     Factory.prototype.render = function (options) {
 
         var _$template = $(template),
-            render = this.getRender(),
-            opt = $.extend(true, {template: _$template}, options);
+            opt = $.extend(true, {template: _$template, id: Math.random()}, options),
+            render = this.getRender(opt);
 
         this.compileTemplate(opt);
 
@@ -97,7 +96,7 @@ define([
         });
 
         resize.on(this.o.interaction, function () {
-            self.publishResizeEvent(options.container);
+            self.publishResizeEvent(options.container, options.id);
         });
 
         minimize.on(this.o.interaction, function () {
@@ -116,17 +115,23 @@ define([
         }
     };
 
-    Factory.prototype.publishResizeEvent = function (container) {
+    Factory.prototype.publishResizeEvent = function (container, id, silent) {
 
-        $(this).resize();
-        $(window).trigger('resize');
-        amplify.publish(E.MODULE_RESIZE, container);
+        amplify.publish(E.MODULE_RESIZE, container, id);
+
+        if (silent !== true) {
+            $(window).trigger('resize');
+        }
     };
 
-    Factory.prototype.publishSetModuleWidthEvent = function (container, width) {
-        amplify.publish(E.MODULE_SET_WIDTH, container, width);
-        $(this).resize();
-        $(window).trigger('resize');
+    Factory.prototype.publishSetModuleWidthEvent = function (container, width, id, silent) {
+
+        amplify.publish(E.MODULE_SET_WIDTH, container, width, id);
+
+        if (silent !== true) {
+            $(window).trigger('resize');
+        }
+
     };
 
     return Factory;

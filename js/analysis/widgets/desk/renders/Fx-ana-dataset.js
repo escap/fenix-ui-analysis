@@ -48,7 +48,15 @@ define([
         }
     };
 
-    function DS() {
+    function DS(options) {
+
+        this.o = $.extend(true, {}, defaultOptions, options);
+
+        this.id = this.o.id;
+
+        this.o.plugin_instances = {};
+
+        this.channels = {};
     }
 
     /* pub/sub for tabs' communication */
@@ -80,19 +88,15 @@ define([
             return;
         }
 
-
         if (call === 'once') {
             this.o.tabs[plugin].callback = 'no';
         }
 
         this.o.plugin_instances[plugin].show();
 
-        try {
-
-
-        } catch (e) {
+/*        try { } catch (e) {
             throw new Error('Impossible to find show() method for ' + plugin + ' analysis plugin.');
-        }
+        }*/
 
     };
 
@@ -116,14 +120,14 @@ define([
 
     /* API for tabs */
 
-    DS.prototype.resize = function () {
+    DS.prototype.resize = function ( silent ) {
 
-        amplify.publish(E.TAB_RESIZE, this.o.container);
+        amplify.publish(E.TAB_RESIZE, this.o.container, this.o.id, silent);
     };
 
-    DS.prototype.setModuleWidth = function (width) {
+    DS.prototype.setModuleWidth = function (width, silent) {
 
-        amplify.publish(E.TAB_SET_MODULE_WIDTH, this.o.container, width);
+        amplify.publish(E.TAB_SET_MODULE_WIDTH, this.o.container, width, this.o.id, silent);
     };
 
     /* fn Openers */
@@ -329,15 +333,7 @@ define([
 
     DS.prototype.render = function (options) {
 
-        this.o = {
-            id: Math.random()
-        };
-
-        this.o.plugin_instances = {};
-
-        this.channels = {};
-
-        $.extend(true, this.o, defaultOptions, options);
+        $.extend(true, this.o, options);
 
         this.loadPlugins();
     };

@@ -41,9 +41,11 @@ define([
         this.grid.removeItem(item);
     };
 
-    DeskController.prototype.resize = function (item) {
+    DeskController.prototype.resize = function (item, controllerId) {
 
         this.grid.resize(item);
+
+        amplify.publish(E.MODULE_RESIZED, controllerId);
     };
 
     DeskController.prototype.setItemWidth = function (item, width) {
@@ -62,12 +64,12 @@ define([
 
         var self = this;
 
-        amplify.subscribe(E.MODULE_RESIZE, function (container) {
-            self.resize(container);
+        amplify.subscribe(E.MODULE_RESIZE, function (container, controllerId) {
+            self.resize(container, controllerId);
         });
 
-        amplify.subscribe(E.MODULE_SET_WIDTH, function (container, width) {
-            self.setItemWidth(container, width);
+        amplify.subscribe(E.MODULE_SET_WIDTH, function (container, width, controllerId) {
+            self.setItemWidth(container, width, controllerId);
         });
     };
 

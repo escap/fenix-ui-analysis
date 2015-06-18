@@ -214,12 +214,7 @@ define([
 
             amplify.subscribe(this.host.listenToCatalog.event, $.proxy(function (event) {
 
-                this.bridge.getResourceMetadata(event).then(function (metadata) {
-
-                    amplify.publish('fx.widget.analysis.bridge.success', metadata);
-                    that.addItemToDesk($.extend(true, {}, metadata));
-                });
-
+                that.addItemToDesk($.extend(true, {}, event));
 
             }, this));
         }

@@ -12,9 +12,10 @@ define([
     'require',
     'jquery',
     'fx-ana/config/events',
+    'fx-ana/widgets/bridge/Bridge',
     'amplify',
     'bootstrap'
-], function (require, $, E) {
+], function (require, $, E, Bridge) {
 
     'use strict';
 
@@ -37,12 +38,13 @@ define([
                 path: 'fx-ana/widgets/desk/renders/plugins/Fx-ana-module-filter-plugin'
             }
         },
+        filter: [],
         tabs: {
-            'metadata': {type: 'simple', callback: 'once'},
-            'table': {type: 'simple', callback: 'once'},
+            'metadata': {type: 'simple', callback: 'always'},
+            'table': {type: 'simple', callback: 'always'},
             'map': {type: 'simple', callback: 'always'},
-            'chart': {type: 'simple', callback: 'once'},
-            'filter': {type: 'simple', callback: 'once'}
+            'chart': {type: 'simple', callback: 'always'},
+            'filter': {type: 'simple', callback: 'always'}
         },
         //tabs: { 'metadata' : { type: 'simple', callback: 'once'},  'table' : { type: 'simple', callback: 'once'}, dropdown : {type:'dropdown', label : {'EN' : 'my Drop'}}},
         initialTab: 'metadata',
@@ -61,6 +63,8 @@ define([
         this.o.plugin_instances = {};
 
         this.channels = {};
+
+        this.bridge = new Bridge();
     }
 
     /* pub/sub for tabs' communication */
@@ -86,21 +90,15 @@ define([
 
     DS.prototype.showTab = function (plugin) {
 
-        var call = this.o.tabs[plugin].callback;
-
-        if (call === 'no') {
+        if ( this.o.tabs[plugin].initialized === true) {
             return;
         }
 
-        if (call === 'once') {
-            this.o.tabs[plugin].callback = 'no';
+        if (this.o.tabs[plugin].callback  === 'once') {
+            this.o.tabs[plugin].initialized = true;
         }
 
         this.o.plugin_instances[plugin].show();
-
-/*        try { } catch (e) {
-            throw new Error('Impossible to find show() method for ' + plugin + ' analysis plugin.');
-        }*/
 
     };
 
@@ -224,6 +222,7 @@ define([
                     $plugin = this.addSimpleTabOpener(tab, window.fx_dynamic_id_counter, requiredPlugin);
 
                 } else {
+
                     //rollback of the plugin creation
                     this.removeTabContent(tab, window.fx_dynamic_id_counter);
                     this.removePluginInstance(tab);
@@ -263,15 +262,29 @@ define([
 
     DS.prototype.onPluginsLoadSuccess = function () {
 
-        var tabs = Object.keys(this.o.tabs);
+        this.renderTabs();
+    };
 
-        for (var i = 0; i < tabs.length; i++) {
-            this.createOpener(tabs[i], this.o.template.find(this.o.s.TABS));
-        }
+    DS.prototype.renderTabs = function () {
 
-        //sync call
-        this.initTabSystem();
+        var self = this;
 
+        this.bridge.getResourceMetadata(this.o.resource).then(function (metadata) {
+
+            amplify.publish('fx.widget.analysis.bridge.success', metadata);
+
+            self.o.model = metadata;
+
+            var tabs = Object.keys(self.o.tabs);
+
+            for (var i = 0; i < tabs.length; i++) {
+                self.createOpener(tabs[i], self.o.template.find(self.o.s.TABS));
+            }
+
+            //sync call
+            self.initTabSystem();
+
+        });
     };
 
     DS.prototype.getPluginInstance = function (plugin, index) {
@@ -293,6 +306,7 @@ define([
     };
 
     DS.prototype.removePluginInstance = function (plugin) {
+
         delete this.o.plugin_instances[plugin];
     };
 
@@ -344,6 +358,36 @@ define([
         $.extend(true, this.o, options);
 
         this.loadPlugins();
+
+    };
+
+    DS.prototype.destroyTabs= function () {
+
+        //remove openers
+        this.o.template.find(this.o.s.TABS).children('[data-plugin]').remove();
+
+        //remove tab contents but not filter
+        this.o.template.find(this.o.s.CONTENT).children('[data-plugin]').remove();
+
+        //destroy plugins but not filter
+        var ps = Object.keys(this.o.plugin_instances);
+
+        for (var i = 0; i < ps.length; i++) {
+            if (this.o.plugin_instances.hasOwnProperty(ps[i])){
+                this.o.plugin_instances[ps[i]].destroy();
+                this.o.tabs[ps[i]].initialized = false;
+            }
+        }
+
+    };
+
+    DS.prototype.refresh = function ( filter ) {
+
+        this.o.filter = filter || [];
+
+        this.destroyTabs();
+
+        this.renderTabs();
     };
 
     return DS;

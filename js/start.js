@@ -5,9 +5,8 @@ define([
     'fx-ana/widgets/storage/SessionStorage',
     'fx-ana/widgets/stack/Fx-widgets-stack',
     'fx-ana/controllers/Fx-analysis-desk',
-    'fx-ana/structures/Fx-fluid-grid',
-    'fx-ana/widgets/bridge/Bridge'
-], function ($, Controller, Storage, Stack, Desk, Grid, Bridge) {
+    'fx-ana/structures/Fx-fluid-grid'
+], function ($, Controller, Storage, Stack, Desk, Grid) {
 
     'use strict';
 
@@ -26,8 +25,7 @@ define([
 
         conf = {
             host: this.o,
-            desk: this.initDesk(),
-            bridge: new Bridge()
+            desk: this.initDesk()
         };
 
         //configure modules stack if active
@@ -77,7 +75,7 @@ define([
     };
 
     Start.prototype.getData = function (payload, callback) {
-        this.mainController.getData(payload, callback);
+        //this.mainController.getData(payload, callback);
     };
 
     Start.prototype.add = function (item) {

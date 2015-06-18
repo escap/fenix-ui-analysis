@@ -55,7 +55,7 @@ define([
 
         this.$el.html($injectMe);
 
-        window.fx_dynamic_id_counter > -1 ? window.fx_dynamic_id_counter++ : window.fx_dynamic_id_counter = 0;
+        window.fx_dynamic_id_counter = window.fx_dynamic_id_counter > -1 ? window.fx_dynamic_id_counter++ : 0;
 
         this.o.FILTER_CONTAINER = s.FILTER_CONTAINER + window.fx_dynamic_id_counter;
 
@@ -76,7 +76,7 @@ define([
 
     FilterPlugin.prototype.onFilterBtnClick = function () {
 
-console.log(this.getFilter());
+        this.controller.refresh(this.getFilter());
 
     };
 
@@ -88,14 +88,13 @@ console.log(this.getFilter());
             layout: 'fluidGrid'
         });
 
-
-
         this.filter.add(this.getConfiguration(), null);
 
     };
 
 
     FilterPlugin.prototype.getConfiguration = function () {
+
         var configuration =
             [{
                 "containerType": "fluidGridBaseContainer",
@@ -157,43 +156,6 @@ console.log(this.getFilter());
                             }
                         }
                     }
-                    //,
-                    //{
-                    //    "componentType":"codes-FENIX",
-                    //    "lang":"EN",
-                    //    "title":{"EN": "Reference Area2",
-                    //        "ES": "Intervalo de tiempo",
-                    //        "DE": "Zeitbereich",
-                    //        "FR": "Intervalle de temps"},
-                    //    "name":"ReferenceArea2",
-                    //    "component": {
-                    //        "source": {
-                    //            "uid": "GAUL_ReferenceArea",
-                    //            "version": "1.0"
-                    //        }
-                    //    }
-                    //}
-
-                    //{
-                    //    "componentType":"baseList",
-                    //    "lang":"EN",
-                    //    "title":{"EN":"Region"},
-                    //    "name":"RegionC2",
-                    //    config:{
-                    //        "multipleselection":true,
-                    //        "defaultsource":[
-                    //            {"value":"51325","label":"Central","selected":true},
-                    //            {"value":"51326","label":"Coast","selected":true},
-                    //            {"value":"51327","label":"Eastern","selected":false},
-                    //            {"value":"51328","label":"Nairobi","selected":false},
-                    //            {"value":"51329","label":"North Eastern","selected":false},
-                    //            {"value":"51330","label":"Nyanza","selected":false},
-                    //            {"value":"51331","label":"Rift Valley","selected":false},
-                    //            {"value":"51332","label":"Western","selected":false}
-                    //        ]
-                    //        //"adapter": "function(model, success, error) {var source = [{'value':'1234','label':'S3','selected':false},{'value':'12345','label':'S4','selected':false}]; console.log('THIS!');console.log(this); $.proxy(success(source), this); return true;}"
-                    //    }
-                    //}
                 ]
             },
                 {
@@ -221,6 +183,7 @@ console.log(this.getFilter());
                     ]
                 }
             ];
+
         return configuration;
     };
 
@@ -243,6 +206,12 @@ console.log(this.getFilter());
             this.initialized = true;
             this.initTab();
         }
+    };
+
+    //Mandatory
+    FilterPlugin.prototype.destroy = function () {
+
+        this.initialized = false;
     };
 
     //Optional

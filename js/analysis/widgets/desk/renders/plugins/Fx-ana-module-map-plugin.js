@@ -58,6 +58,12 @@ define([
 
     };
 
+    //Mandatory
+    MapPlugin.prototype.destroy = function () {
+
+        this.initialized = false;
+    };
+
     //Optional
     MapPlugin.prototype.get = function (attr, lang) {
 

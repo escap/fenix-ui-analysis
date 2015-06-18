@@ -33,6 +33,13 @@ define([
         return valid;
     };
 
+    //Mandatory
+    MetadataPlugin.prototype.destroy = function () {
+
+        this.initialized = false;
+
+    };
+
     //Optional
     MetadataPlugin.prototype.init = function () {
 

@@ -31,7 +31,7 @@ define([
 
         this.itemsFactory.render({
             container: $container.get(0),
-            model: item,
+            resource: item,
             style: this.o.style
         });
     };

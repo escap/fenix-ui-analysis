@@ -98,6 +98,12 @@ define([
         }
     };
 
+    //Mandatory
+    BlankPlugin.prototype.destroy = function () {
+
+        this.initialized = false;
+    };
+
     //Optional
     BlankPlugin.prototype.get = function (attr, lang) {
 

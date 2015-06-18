@@ -65,6 +65,12 @@ define([
         }
     };
 
+    //Mandatory
+    TablePlugin.prototype.destroy = function () {
+
+        this.initialized = false;
+    };
+
     //Optional
     TablePlugin.prototype.get = function (attr, lang) {
 

@@ -265,6 +265,12 @@ define([
         }
     };
 
+    //Mandatory
+    ChartPlugin.prototype.destroy = function () {
+
+        this.initialized = false;
+    };
+
     //Optional
     ChartPlugin.prototype.get = function (attr, lang) {
 

@@ -88,11 +88,11 @@ define([
             self = this;
 
         remove.on(this.o.interaction, function () {
-            amplify.publish(E.MODULE_REMOVE, options.container, options.model);
+            amplify.publish(E.MODULE_REMOVE, options.container, options.resource);
         });
 
         clone.on(this.o.interaction, function () {
-            amplify.publish(E.MODULE_CLONE, options.model);
+            amplify.publish(E.MODULE_CLONE, options.resource);
         });
 
         resize.on(this.o.interaction, function () {
@@ -100,7 +100,7 @@ define([
         });
 
         minimize.on(this.o.interaction, function () {
-            amplify.publish(E.MODULE_MINIMIZE, options.container, options.model);
+            amplify.publish(E.MODULE_MINIMIZE, options.container, options.resource);
         });
 
         if (style) {

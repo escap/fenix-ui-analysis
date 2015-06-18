@@ -70,17 +70,16 @@ define([
     FilterPlugin.prototype.bindEventListeners = function () {
 
         this.$el.find(s.FILTER_BTN).on('click', $.proxy(this.onFilterBtnClick, this));
-
-
     };
 
     FilterPlugin.prototype.onFilterBtnClick = function () {
 
         this.controller.refresh(this.getFilter());
-
     };
 
     FilterPlugin.prototype.initContentTab = function () {
+
+        console.log(this.model)
 
         this.filter.init({
             container: this.o.FILTER_CONTAINER ,

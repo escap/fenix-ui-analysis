@@ -317,9 +317,12 @@ define([
 
     DS.prototype.bindEventListeners = function () {
 
-        var self = this;
+        var self = this,
+            $tabs = this.o.template.find(this.o.s.TABS).find('a[data-toggle="tab"]');
 
-        this.o.template.find(this.o.s.TABS).find('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $tabs.off('shown.bs.tab');
+
+        $tabs.on('shown.bs.tab', function (e) {
 
             var tab = e.target; // newly activated tab
             //e.relatedTarget   // previous active tab

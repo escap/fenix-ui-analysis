@@ -32,13 +32,17 @@ define([
             },
             'chart': {
                 path: 'fx-ana/widgets/desk/renders/plugins/Fx-ana-module-chart-plugin'
+            },
+            'filter': {
+                path: 'fx-ana/widgets/desk/renders/plugins/Fx-ana-module-filter-plugin'
             }
         },
         tabs: {
             'metadata': {type: 'simple', callback: 'once'},
             'table': {type: 'simple', callback: 'once'},
             'map': {type: 'simple', callback: 'always'},
-            'chart': {type: 'simple', callback: 'once'}
+            'chart': {type: 'simple', callback: 'once'},
+            'filter': {type: 'simple', callback: 'once'}
         },
         //tabs: { 'metadata' : { type: 'simple', callback: 'once'},  'table' : { type: 'simple', callback: 'once'}, dropdown : {type:'dropdown', label : {'EN' : 'my Drop'}}},
         initialTab: 'metadata',
@@ -310,6 +314,7 @@ define([
                 throw new Error('Impossible to load "' + keys[i] + '" analysis plugin. Please specify a path.');
             }
         }
+
         //Async load of plugin js source
         require(paths, $.proxy(this.onPluginsLoadSuccess, this));
 

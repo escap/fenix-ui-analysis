@@ -79,8 +79,6 @@ define([
 
     FilterPlugin.prototype.initContentTab = function () {
 
-        console.log(this.model)
-
         this.filter.init({
             container: this.o.FILTER_CONTAINER ,
             plugin_prefix: C.PLUGIN_FILTER_COMPONENT_DIRECTORY || DC.PLUGIN_FILTER_COMPONENT_DIRECTORY,
@@ -91,97 +89,118 @@ define([
 
     };
 
+    FilterPlugin.prototype.validateModel = function () {
 
-    FilterPlugin.prototype.getConfiguration = function () {
+        if (!this.model) {
+            throw new Error('Filter plugin: no model ');
+        }
 
-        var configuration =
-            [{
-                "containerType": "fluidGridBaseContainer",
-                "title": "Container Region",
-                "activeTab": "ResurceType",
-                "components": [
-                    {
-                        "componentType": "enumeration-FENIX",
-                        "lang": "EN",
-                        "title": {
-                            "EN": "ResurceType",
-                            "ES": "ResurceType",
-                            "FR": "ResurceType"
-                        },
-                        "name": "ResurceType",
-                        "component": {
-                            "source": {
-                                "uid": "RepresentationType"
-                            }
-                        }
-                    },
-                    {
-                        "componentType": "text-FENIX",
-                        "lang": "EN",
-                        "title": {
-                            "EN": "Uid",
-                            "DE": "Suche",
-                            "ES": "Búsqueda",
-                            "FR": "Recherchet"
-                        },
-                        "name": "Uid",
-                        "component": {
-                            "rendering": {
-                                "placeholder": {
-                                    "EN": "Uid",
-                                    "DE": "uid",
-                                    "ES": "uid",
-                                    "FR": "uid"
-                                },
-                                "htmlattributes": {
-                                    "className": "form-control"
-                                }
-                            }
-                        }
-                    },
-                    {
-                        "componentType": "tree-FENIX",
-                        "lang": "EN",
-                        "title": {
-                            "EN": "Region",
-                            "ES": "ES List",
-                            "FR": "FR List"
-                        },
-                        "name": "Region",
-                        "component": {
-                            "source": {
-                                "uid": "GAUL",
-                                "version": "2014"
-                            }
-                        }
+        if (!this.model.metadata.dsd) {
+            throw new Error('Filter plugin: no model.metadata.dsd ');
+        }
+
+
+        if (!this.model.metadata.dsd) {
+            throw new Error('Filter plugin: no model.metadata.dsd ');
+        }
+
+        if (!this.model.metadata.dsd.columns) {
+            throw new Error('Filter plugin: no model.metadata.dsd.columns ');
+        }
+    };
+
+    FilterPlugin.prototype.getColumnConfiguration = function (column, metadata) {
+
+        var conf = {
+            containerType:"fluidGridBaseContainer",
+            title: column.title.EN,
+            components : []
+        }, component = {
+            lang:"EN",
+            title : column.title
+        };
+
+        if (column.subject === 'value') {
+            return null;
+        }
+
+        component.name = metadata.uid +'_'+column.id;
+
+        //define filter module type
+        switch (column.dataType){
+            case "code" :
+
+                component.componentType = 'codes-FENIX';
+
+                component.component = {
+                    "source": {
+                        "uid": column.values.codes[0].idCodeList,
+                        "version":  column.values.codes[0].version
                     }
-                ]
-            },
-                {
-                    "containerType": "fluidGridBaseContainer",
-                    "title": "Container Region2",
-                    "activeTab": "ReferenceArea2",
-                    "components": [
-                        {
-                            "componentType": "codes-FENIX",
-                            "lang": "EN",
-                            "title": {
-                                "EN": "Reference Area2",
-                                "ES": "Intervalo de tiempo",
-                                "DE": "Zeitbereich",
-                                "FR": "Intervalle de temps"
-                            },
-                            "name": "ReferenceArea2",
-                            "component": {
-                                "source": {
-                                    "uid": "GAUL_ReferenceArea",
-                                    "version": "1.0"
-                                }
-                            }
-                        }
-                    ]
+                };
+
+                break;
+            //case "customCode" : break;
+            case "date" : break;
+            case "month" : break;
+            case "year" :
+
+                component.componentType = 'baseList' ;
+
+                component.config = {
+                    "multipleselection":true,
+                    "defaultsource":[]
+                };
+
+                var timeList = column.values.timeList;
+
+                for (var i =0; i< timeList.length; i++){
+
+                    component.config.defaultsource.push({
+                        value : timeList[i],
+                        label:  String(timeList[i]),
+                        selected: false
+                    });
                 }
-            ];
+
+                break;
+            case "number" : break;
+            case "text" : break;
+            //case "label" : break;
+            case "percentage" : break;
+            //case "time" : break;
+            //case "periodDate" : break;
+            //case "periodMonth" : break;
+            //case "periodYear" : break;
+            //case "periodTime" : break;
+            //case "enumNumber": break;
+            //case "enumString": break;
+            //case "enumBool": break;
+        }
+
+        conf.components.push(component);
+
+        return conf;
+
+    };
+
+    FilterPlugin.prototype.getConfiguration = function ( ) {
+
+        this.validateModel();
+
+        var dsd = this.model.metadata.dsd,
+            columns = dsd.columns,
+            configuration = [];
+
+        for (var i = 0; i < columns.length; i++){
+
+            var c = this.getColumnConfiguration(columns[i], this.model.metadata);
+
+            if ( c !== null) {
+                configuration.push(c);
+            }
+
+        }
 
         return configuration;
     };

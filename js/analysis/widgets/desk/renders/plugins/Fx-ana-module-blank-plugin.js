@@ -53,6 +53,10 @@ define([
         this.$el.html($injectMe);*/
     };
 
+    BlankPlugin.prototype.initContentTab = function () {
+
+    };
+
     BlankPlugin.prototype.initVariables = function () {
 
     };

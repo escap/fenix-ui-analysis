@@ -109,7 +109,7 @@ define([
         }
     };
 
-    FilterPlugin.prototype.getColumnConfiguration = function (column, metadata) {
+    FilterPlugin.prototype.getColumnConfiguration = function (column) {
 
         var conf = {
             containerType:"fluidGridBaseContainer",
@@ -124,7 +124,7 @@ define([
             return null;
         }
 
-        component.name = metadata.uid +'_'+column.id;
+        component.name = column.id;
 
         //define filter module type
         switch (column.dataType){
@@ -194,7 +194,7 @@ define([
 
         for (var i = 0; i < columns.length; i++){
 
-            var c = this.getColumnConfiguration(columns[i], this.model.metadata);
+            var c = this.getColumnConfiguration(columns[i]);
 
             if ( c !== null) {
                 configuration.push(c);

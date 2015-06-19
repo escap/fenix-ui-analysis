@@ -112,17 +112,16 @@ define([
 
     ChartPlugin.prototype.getData = function () {
 
-        this.bridge.getResourceData(this.model.metadata, this.getFilter()).then($.proxy(this.onGetResourceDataSuccess, this));
-    };
+        console.log(this.controller.o.filter)
 
-    ChartPlugin.prototype.getFilter = function () {
-
-        return [];
+        this.bridge.getResourceData(this.model.metadata, this.controller.o.filter).then($.proxy(this.onGetResourceDataSuccess, this));
     };
 
     ChartPlugin.prototype.onGetResourceDataSuccess = function (response) {
 
         this.model = response;
+
+        console.log(response)
 
         this.renderChart();
     };

@@ -90,11 +90,11 @@ define([
 
     DS.prototype.showTab = function (plugin) {
 
-        if ( this.o.tabs[plugin].initialized === true) {
+        if (this.o.tabs[plugin].initialized === true) {
             return;
         }
 
-        if (this.o.tabs[plugin].callback  === 'once') {
+        if (this.o.tabs[plugin].callback === 'once') {
             this.o.tabs[plugin].initialized = true;
         }
 
@@ -122,7 +122,7 @@ define([
 
     /* API for tabs */
 
-    DS.prototype.resize = function ( silent ) {
+    DS.prototype.resize = function (silent) {
 
         amplify.publish(E.TAB_RESIZE, this.o.container, this.o.id, silent);
     };
@@ -313,7 +313,7 @@ define([
     DS.prototype.loadPlugins = function () {
 
         var plugins = $.extend(true, this.o.plugin_registry, this.o.plugins || {}),
-            //Load just the js of desired tabs
+        //Load just the js of desired tabs
             keys = Object.keys(this.o.tabs),
             paths = [];
 
@@ -361,7 +361,7 @@ define([
 
     };
 
-    DS.prototype.destroyTabs= function () {
+    DS.prototype.destroyTabs = function () {
 
         //remove openers
         this.o.template.find(this.o.s.TABS).children('[data-plugin]').remove();
@@ -373,7 +373,7 @@ define([
         var ps = Object.keys(this.o.plugin_instances);
 
         for (var i = 0; i < ps.length; i++) {
-            if (this.o.plugin_instances.hasOwnProperty(ps[i])){
+            if (this.o.plugin_instances.hasOwnProperty(ps[i])) {
                 this.o.plugin_instances[ps[i]].destroy();
                 this.o.tabs[ps[i]].initialized = false;
             }
@@ -381,9 +381,25 @@ define([
 
     };
 
-    DS.prototype.refresh = function ( filter ) {
+    DS.prototype.refresh = function (filter) {
 
-        this.o.filter = filter || [];
+        if (filter) {
+
+            this.o.filter = [
+                {
+                    "name": "simpleFilter",
+                    "parameters": {
+                        "filter": {
+                            "rows": filter
+                        }
+                    }
+                }
+            ];
+
+        } else {
+
+            this.o.filter = [ ];
+        }
 
         this.destroyTabs();
 

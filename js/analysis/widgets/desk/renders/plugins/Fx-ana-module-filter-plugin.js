@@ -130,7 +130,7 @@ define([
         switch (column.dataType){
             case "code" :
 
-                component.componentType = 'codes-FENIX';
+                component.componentType = 'tree-FENIX';
 
                 component.component = {
                     "source": {
@@ -145,7 +145,7 @@ define([
             case "month" : break;
             case "year" :
 
-                component.componentType = 'baseList' ;
+                component.componentType = 'timeList-FENIX' ;
 
                 component.config = {
                     "multipleselection":true,

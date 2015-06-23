@@ -47,7 +47,7 @@ define([
             'filter': {type: 'simple', callback: 'always'}
         },
         //tabs: { 'metadata' : { type: 'simple', callback: 'once'},  'table' : { type: 'simple', callback: 'once'}, dropdown : {type:'dropdown', label : {'EN' : 'my Drop'}}},
-        initialTab: 'metadata',
+        initialTab: 'table',
         s: {
             CONTENT: '[data-role="fx-module-content"]',
             TABS: '[data-role="fx-module-tabs"]',

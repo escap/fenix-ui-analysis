@@ -20,41 +20,67 @@ define([
 
         this.mapCreator = new MapCreator();
 
+        this.bridge = new Bridge();
+
         this.o = {};
+
         $.extend(true, this, defaultOptions, options);
+
         return this;
     }
 
     MapPlugin.prototype.renderMap = function () {
 
-        this.mapCreator.addLayer(this._model);
+        var layer = this.mapCreator.addLayer(this.model);
+        //console.log(layer)
+
+
         this.mapCreator.addCountryBoundaries();
+
+        this.mapCreator.invalidateSize();
     };
+
+  /*  MapPlugin.prototype.test = function (layer) {
+
+        var self = this;
+        window.setTimeout(function() {
+            self.mapCreator.removeLayer(layer);
+
+            self.mapCreator.addLayer(self.model);
+        }, 2000);
+
+    };*/
 
     //Mandatory
     MapPlugin.prototype.isSuitable = function () {
 
-        return false;
+        var columns = this.model.metadata.dsd.columns,
+            suitable = false;
+
+        for (var i=0; i < columns.length; i ++) {
+
+            //TODO check if the join mapping layer is available
+            if (columns[i].subject === 'geo'){
+                suitable = true;
+                break;
+            }
+
+        }
+
+        return suitable;
     };
 
     //Mandatory
     MapPlugin.prototype.show = function () {
 
-        console.log("Map Show")
-
-        this.controller.setModuleWidth( 'full' );
-
-        return;
-
-
+        //this.controller.setModuleWidth( 'full' );
 
         if (!this.initialized) {
-            this.renderMap();
             this.initialized = true;
-        }
-
-            console.log(123)
+            this.initTab();
+        } else {
             this.mapCreator.invalidateSize();
+        }
 
     };
 
@@ -83,14 +109,62 @@ define([
     //Optional
     MapPlugin.prototype.init = function () {
 
-        //cache original model
-        this._model = $.extend(true, {}, this.model);
-
         this.mapCreator.render({
             container: this.$el,
             model: {}
         });
     };
+
+    MapPlugin.prototype.initTab = function () {
+
+        this.initTemplate();
+
+        this.initVariables();
+
+        this.bindEventListeners();
+
+        this.initContentTab();
+
+        this.getData();
+
+    };
+
+    MapPlugin.prototype.initTemplate = function () {
+
+       /* var template = Handlebars.compile(pluginTemplate);
+        var html = template({}),
+            $injectMe = $(html);
+
+        $injectMe.find(s.FILTER).hide();
+
+        this.$el.html($injectMe);*/
+    };
+
+    MapPlugin.prototype.initVariables = function () {
+
+
+    };
+
+    MapPlugin.prototype.bindEventListeners = function () {
+
+    };
+
+    MapPlugin.prototype.initContentTab = function () {
+
+    };
+
+    MapPlugin.prototype.getData = function () {
+
+        this.bridge.getResourceData(this.model.metadata, this.controller.o.filter).then($.proxy(this.onGetResourceDataSuccess, this));
+    };
+
+    MapPlugin.prototype.onGetResourceDataSuccess = function (response) {
+
+        this.model = response;
+
+        this.renderMap();
+    };
+
 
     return MapPlugin;
 

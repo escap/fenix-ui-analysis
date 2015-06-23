@@ -154,6 +154,8 @@ define([
 
                 var timeList = column.values.timeList;
 
+                component.config.sourceType =  "timeList";
+
                 for (var i =0; i< timeList.length; i++){
 
                     component.config.defaultsource.push({
@@ -180,7 +182,7 @@ define([
 
         conf.components.push(component);
 
-        return conf;
+        return component.componentType ? conf : null;
 
     };
 

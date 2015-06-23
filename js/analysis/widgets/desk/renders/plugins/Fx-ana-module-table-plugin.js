@@ -70,15 +70,11 @@ define([
 
     TablePlugin.prototype.getData = function () {
 
-        console.log(this.controller.o.filter)
-
         this.bridge.getResourceData(this.model.metadata, this.controller.o.filter).then($.proxy(this.onGetResourceDataSuccess, this));
     };
 
 
     TablePlugin.prototype.onGetResourceDataSuccess = function (response) {
-
-        console.log(response)
 
         this.model = response;
 

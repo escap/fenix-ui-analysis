@@ -82,6 +82,8 @@ define([
 
     Fx_Fluid_Grid.prototype.initStructure = function () {
 
+        console.log(this.o.config)
+
         this.pckry = new Packery(this.o.container, this.o.config);
 
         var itemElems = this.pckry.getItemElements();

@@ -2,25 +2,10 @@
     <!-- Important! Do not remove col-sm-12 or change accordingly the plugin -->
     <div class="col-sm-12" data-role="content">
 
-        <div class="row">
-            <div class="col-sm-3">
-                <h3>X axis</h3>
-                <select data-axis="x"></select>
-            </div>
-<!--            <div class="col-sm-3">
-                <h3>Y axis</h3>
-                <select data-axis="y"></select></div>
-            <div class="col-sm-3">
-                <h3>Value</h3>
-                <select data-axis="value"></select>
-            </div>-->
+        <button data-role="filter-btn" class="btn btn-default">
+            <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+        </button>
 
-            <div class="col-sm-3">
-                <button data-role="filter-btn" class="btn btn-default">
-                    <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
-                </button>
-            </div>
-        </div>
         <div class="row">
             <div class="col-sm-12">
                 <div data-role="chart"> </div>
@@ -28,6 +13,10 @@
         </div>
     </div>
 
-    <div class="col-sm-6" data-role="filter"> Filter </div>
+    <div class="col-sm-6" data-role="filter">
+        <div class="col-sm-3">
+        <h3>X axis</h3>
+        <select data-axis="x"></select>
+    </div> </div>
 
 </div>

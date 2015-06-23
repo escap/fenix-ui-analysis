@@ -55,7 +55,8 @@ define([
             },
             config: {
                 itemSelector: '.fx-analysis-item',
-                columnWidth: '.fx-analysis-item',
+                percentPosition: true,
+                "columnWidth": '.grid-sizer',
                 rowHeight: '.fx-analysis-item'
             }
         });

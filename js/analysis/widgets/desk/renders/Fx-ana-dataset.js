@@ -50,7 +50,8 @@ define([
         initialTab: 'metadata',
         s: {
             CONTENT: '[data-role="fx-module-content"]',
-            TABS: '[data-role="fx-module-tabs"]'
+            TABS: '[data-role="fx-module-tabs"]',
+            DATASET_DETAILS: '.fx-dataset-details'
         }
     };
 
@@ -269,7 +270,11 @@ define([
 
         var self = this;
 
+        this.o.template.addClass('loading');
+
         this.bridge.getResourceMetadata(this.o.resource).then(function (metadata) {
+
+            self.o.template.removeClass('loading');
 
             amplify.publish('fx.widget.analysis.bridge.success', metadata);
 
@@ -281,11 +286,20 @@ define([
                 self.createOpener(tabs[i], self.o.template.find(self.o.s.TABS));
             }
 
+            self.initDatasetDetails();
+
             //sync call
             self.initTabSystem();
 
         });
     };
+
+    DS.prototype.initDatasetDetails = function () {
+
+        $(this.o.container).find(this.o.s.DATASET_DETAILS).html(this.o.model.metadata.title.EN);
+
+    };
+
 
     DS.prototype.getPluginInstance = function (plugin, index) {
 

@@ -147,23 +147,11 @@ define([
 
                 component.componentType = 'timeList-FENIX' ;
 
-                component.config = {
-                    "multipleselection":true,
-                    "defaultsource":[]
+                component.component = {
+                    sourceType :  "timeList",
+                    defaultsource : column.values.timeList
+
                 };
-
-                var timeList = column.values.timeList;
-
-                component.config.sourceType =  "timeList";
-
-                for (var i =0; i< timeList.length; i++){
-
-                    component.config.defaultsource.push({
-                        value : timeList[i],
-                        label:  String(timeList[i]),
-                        selected: false
-                    });
-                }
 
                 break;
             case "number" : break;

@@ -27,6 +27,11 @@ define([
 
         var $container = $(Item);
 
+        if (this.grid.getElementsCounts() === 0) {
+
+            this.grid.hideCourtesyMessage();
+        }
+
         this.grid.addItem($container.get(0));
 
         this.itemsFactory.render({
@@ -39,6 +44,11 @@ define([
     DeskController.prototype.removeItem = function (item) {
 
         this.grid.removeItem(item);
+
+        if (this.grid.getElementsCounts() === 0) {
+
+            this.grid.showCourtesyMessage();
+        }
     };
 
     DeskController.prototype.resize = function (item, controllerId) {
@@ -92,6 +102,8 @@ define([
         this.renderComponents();
 
         this.bindEventListeners();
+
+        this.grid.showCourtesyMessage();
     };
 
     return DeskController;

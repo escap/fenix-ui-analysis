@@ -12,6 +12,9 @@ define([
     var defaultOptions = {
         css: {
             FIT: "fit"
+        },
+        s : {
+            COURTESY_MESSAGE: ".fx-courtesy"
         }
     }, w_Commons;
 
@@ -82,8 +85,6 @@ define([
 
     Fx_Fluid_Grid.prototype.initStructure = function () {
 
-        console.log(this.o.config)
-
         this.pckry = new Packery(this.o.container, this.o.config);
 
         var itemElems = this.pckry.getItemElements();
@@ -135,6 +136,26 @@ define([
         $.extend(this.o, options);
 
         return this;
+    };
+
+    Fx_Fluid_Grid.prototype.getElementsCounts = function () {
+
+        return this.pckry.getItemElements().length;
+    };
+
+    Fx_Fluid_Grid.prototype.showCourtesyMessage = function () {
+
+        console.log("show")
+
+        $(this.o.container).find(this.o.s.COURTESY_MESSAGE).fadeIn();
+    };
+
+    Fx_Fluid_Grid.prototype.hideCourtesyMessage = function () {
+
+        console.log("hide")
+
+
+        $(this.o.container).find(this.o.s.COURTESY_MESSAGE).fadeOut(200);
     };
 
     return Fx_Fluid_Grid;

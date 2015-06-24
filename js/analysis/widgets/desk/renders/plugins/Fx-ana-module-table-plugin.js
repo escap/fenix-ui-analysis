@@ -91,7 +91,8 @@ define([
 
         this.tableCreator.render({
             container: this.$el,
-            model:  this.model
+            model:  this.model,
+            d3p : true
             /*
              if you want to override the default configuration,
              options: {

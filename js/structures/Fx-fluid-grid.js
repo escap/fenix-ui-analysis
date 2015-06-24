@@ -145,15 +145,10 @@ define([
 
     Fx_Fluid_Grid.prototype.showCourtesyMessage = function () {
 
-        console.log("show")
-
         $(this.o.container).find(this.o.s.COURTESY_MESSAGE).fadeIn();
     };
 
     Fx_Fluid_Grid.prototype.hideCourtesyMessage = function () {
-
-        console.log("hide")
-
 
         $(this.o.container).find(this.o.s.COURTESY_MESSAGE).fadeOut(200);
     };

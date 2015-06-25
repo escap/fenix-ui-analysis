@@ -147,6 +147,16 @@ define([
 
     MapPlugin.prototype.bindEventListeners = function () {
 
+        var self = this;
+
+        amplify.subscribe(E.MODULE_RESIZED, function (controllerId) {
+
+            if (self.controller.id === controllerId) {
+                self.mapCreator.invalidateSize();
+            }
+
+        });
+
     };
 
     MapPlugin.prototype.initContentTab = function () {

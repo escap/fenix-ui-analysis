@@ -221,16 +221,12 @@ define([
 
             for (var i = 0; i < _columns.length; i++) {
 
-                console.log(_columns[i].subject)
-
                 if ( _columns[i].subject !== 'value' && _columns[i].subject !== 'flag'){
                     var option = document.createElement('option');
                     option.value = _columns[i].subject;
                     option.text = _columns[i].title[this.lang.toUpperCase()];
                     columns.appendChild(option);
                 }
-
-
 
             }
         }

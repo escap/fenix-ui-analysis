@@ -5,7 +5,7 @@ define([
     'fx-ana/widgets/storage/SessionStorage',
     'fx-ana/widgets/stack/Fx-widgets-stack',
     'fx-ana/controllers/Fx-analysis-desk',
-    'fx-ana/structures/Fx-fluid-grid'
+    'fx-common/structures/fx-fluid-grid'
 ], function ($, Controller, Storage, Stack, Desk, Grid) {
 
     'use strict';

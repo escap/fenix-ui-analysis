@@ -7,14 +7,12 @@ define(function () {
 
         paths: {
             'fx-ana/analysis': 'analysis',
-            'fx-ana/controllers': 'analysis/controllers',
+            'fx-ana/controllers': './controllers',
             'fx-ana/html': '../html',
             'fx-ana/js': './',
             'fx-ana/json': '../json',
-            'fx-ana/structures': 'structures',
             'fx-ana/start': './start',
-            'fx-ana/utils': 'analysis/utils',
-            'fx-ana/widgets': 'analysis/widgets',
+            'fx-ana/widgets': './widgets',
             'fx-ana/config' :  '../config',
 
             //Third party libs

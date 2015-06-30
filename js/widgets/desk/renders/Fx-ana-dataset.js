@@ -188,7 +188,6 @@ define([
 
         $plugin_container.append($a).append($ul);
 
-
         for (var i = 0; i < children.length; i++) {
             this.createOpener(children[i], $ul);
         }

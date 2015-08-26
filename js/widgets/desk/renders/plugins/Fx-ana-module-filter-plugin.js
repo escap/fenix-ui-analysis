@@ -81,7 +81,6 @@ define([
 
         this.filter.init({
             container: this.o.FILTER_CONTAINER ,
-            plugin_prefix: C.PLUGIN_FILTER_COMPONENT_DIRECTORY || DC.PLUGIN_FILTER_COMPONENT_DIRECTORY,
             layout: 'fluidGrid'
         });
 

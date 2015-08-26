@@ -5,7 +5,7 @@ define(function () {
 
     return {
 
-        PLUGIN_FILTER_COMPONENT_DIRECTORY: "../../../submodules/fenix-ui-filter/"
+        //PLUGIN_FILTER_COMPONENT_DIRECTORY: "../../../submodules/fenix-ui-filter/"
 
     };
 });

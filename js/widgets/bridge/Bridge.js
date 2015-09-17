@@ -22,6 +22,7 @@ define([
         var url,
             self = this;
 
+
         if (!conf.hasOwnProperty('version')) {
             url = '/processes/' + conf.uid;
         } else {

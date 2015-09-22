@@ -56,8 +56,12 @@ define([
 
     Factory.prototype.getRender = function (opts) {
 
+        var filter = opts.resource && opts.resource.filter && Array.isArray(opts.resource.filter) ? opts.resource.filter : [];
+
         //TODO add logic to discriminate if the resource shown is a dataset, a codelist or else
-        return new this.renders.DATASET({ id: opts.id });
+        return new this.renders.DATASET({
+            id: opts.id,
+            filter: filter});
     };
 
     Factory.prototype.render = function (options) {

@@ -305,7 +305,7 @@ define([
         var registry = this.o.plugin_registry,
         //Note that for sync call the argument of require() is not an array but a string
             RequiredPlugin = require(registry[plugin].path);
-
+        
         //cache the plugin instance
         this.o.plugin_instances[plugin] = new RequiredPlugin({
             $el: this.addTabContent(plugin, index),

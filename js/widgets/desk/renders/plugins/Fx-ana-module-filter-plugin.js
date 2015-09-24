@@ -131,10 +131,16 @@ define([
 
                 component.componentType = 'tree-FENIX';
 
+                var uid = (column.values &&  column.values.codes[0])? column.values.codes[0].idCodeList :
+                    column.domain.codes[0].idCodeList;
+
+                var version = (column.values &&  column.values.codes[0])? column.values.codes[0].version :
+                    column.domain.codes[0].version;
+
                 component.component = {
                     "source": {
-                        "uid": column.values.codes[0].idCodeList,
-                        "version":  column.values.codes[0].version
+                        "uid": uid,
+                        "version":  version
                     }
                 };
 

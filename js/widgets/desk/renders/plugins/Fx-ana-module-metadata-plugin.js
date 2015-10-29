@@ -3,11 +3,12 @@
 define([
     'jquery',
     'underscore',
-    'config/Config',
+    'fx-ana/config/config-default',
+    'fx-ana/config/config',
     'FENIX_UI_METADATA_VIEWER',
     'fx-report',
     'text!fx-ana/html/widgets/desk/plugins/metadata-template.html'
-], function ($, _, C,METADATDA,Report, template) {
+], function ($, _, DC,C,METADATDA,Report, template) {
 
     'use strict';
 
@@ -124,7 +125,9 @@ define([
                 }
             };
 
-            self.$report.exportData(payload,C.MD_EXPORT_URL);
+            var exportUrl = DC.MD_EXPORT_URL || C.MD_EXPORT_URL || 'http://fenixapps2.fao.org/fenixExport';
+
+            self.$report.exportData(payload,exportUrl);
         });
     };
 

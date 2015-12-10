@@ -31,9 +31,14 @@ define([
 
     MapPlugin.prototype.renderMap = function () {
 
-        var layer = this.mapCreator.addLayer(this.model);
-        //console.log(layer)
+        this.mapCreator.addLayer(this.model);
+        
+        //TODO extract workspace,layerName by model.metadata
+        //http://fenix.fao.org:20200/geoserver/uneca/wms?service=WMS&version=1.1.0&request=GetMap&layers=uneca:hydrobasins_africa_3857&styles=&bbox=-2021840.2515328003,-4141819.9120579544,6071086.72913805,4517804.763795077&width=478&height=512&srs=EPSG:3857&format=application/openlayers
+        
+        //console.log('addLayerByName',layerName,layerTitle,this.config.url.wms)
 
+        //this.mapCreator.addLayerByName('uneca:hydrobasins_africa_3857','Hydrobasins');
 
         this.mapCreator.addCountryBoundaries();
 

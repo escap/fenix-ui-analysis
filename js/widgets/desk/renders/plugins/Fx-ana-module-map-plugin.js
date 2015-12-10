@@ -33,28 +33,10 @@ define([
 
         this.mapCreator.addLayer(this.model);
         
-        //TODO extract workspace,layerName by model.metadata
-        //http://fenix.fao.org:20200/geoserver/uneca/wms?service=WMS&version=1.1.0&request=GetMap&layers=uneca:hydrobasins_africa_3857&styles=&bbox=-2021840.2515328003,-4141819.9120579544,6071086.72913805,4517804.763795077&width=478&height=512&srs=EPSG:3857&format=application/openlayers
-        
-        //console.log('addLayerByName',layerName,layerTitle,this.config.url.wms)
-
-        //this.mapCreator.addLayerByName('uneca:hydrobasins_africa_3857','Hydrobasins');
-
         this.mapCreator.addCountryBoundaries();
 
         this.mapCreator.invalidateSize();
     };
-
-  /*  MapPlugin.prototype.test = function (layer) {
-
-        var self = this;
-        window.setTimeout(function() {
-            self.mapCreator.removeLayer(layer);
-
-            self.mapCreator.addLayer(self.model);
-        }, 2000);
-
-    };*/
 
     //Mandatory
     MapPlugin.prototype.isSuitable = function () {
@@ -62,14 +44,19 @@ define([
         var columns = this.model.metadata.dsd.columns,
             suitable = false;
 
-        for (var i=0; i < columns.length; i ++) {
-
-            //TODO check if the join mapping layer is available
-            if (columns[i].subject === 'geo'){
+        if( this.model.metadata.dsd['layerName'] && 
+            this.model.metadata.dsd['workspace'] )
                 suitable = true;
-                break;
+        else
+        {
+            //DATASET
+            for (var i=0; i < columns.length; i ++) {
+                //TODO check if the join mapping layer is available
+                if (columns[i].subject === 'geo'){
+                    suitable = true;
+                    break;
+                }
             }
-
         }
 
         return suitable;

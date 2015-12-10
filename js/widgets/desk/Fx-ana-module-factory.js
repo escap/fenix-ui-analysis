@@ -8,11 +8,12 @@
 define([
     'jquery',
     'fx-ana/widgets/desk/renders/Fx-ana-dataset',
+    'fx-ana/widgets/desk/renders/Fx-ana-layer',
     'text!fx-ana/html/widgets/desk/items/template.html',
     'fx-ana/config/events',
     'amplify',
     'bootstrap'
-], function ($, DataSetRenderer, template, E) {
+], function ($, DataSetRenderer, LayerRenderer, template, E) {
 
     'use strict';
 
@@ -37,6 +38,7 @@ define([
         this.renders = {};
 
         this.renders.DATASET = DataSetRenderer;
+        this.renders.LAYER = LayerRenderer;
 
         this.bindEventListeners();
     }
@@ -56,12 +58,22 @@ define([
 
     Factory.prototype.getRender = function (opts) {
 
-        var filter = opts.resource && opts.resource.filter && Array.isArray(opts.resource.filter) ? opts.resource.filter : [];
+        var filter = opts.resource && opts.resource.filter && Array.isArray(opts.resource.filter) ? opts.resource.filter : [],
+            rend;
 
-        //TODO add logic to discriminate if the resource shown is a dataset, a codelist or else
-        return new this.renders.DATASET({
-            id: opts.id,
-            filter: filter});
+        //TODO REFACT
+        if(opts.resource.filter['meContent.resourceRepresentationType']['enumeration'][0] === "geographic")
+        {
+            return new this.renders.LAYER({
+                id: opts.id,
+                filter: filter
+            });
+        }
+        else
+            return new this.renders.DATASET({
+                id: opts.id,
+                filter: filter
+            });
     };
 
     Factory.prototype.render = function (options) {

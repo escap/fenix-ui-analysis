@@ -25,29 +25,19 @@ define([
             'metadata': {
                 path: 'fx-ana/widgets/desk/renders/plugins/Fx-ana-module-metadata-plugin'
             },
-            'table': {
-                path: 'fx-ana/widgets/desk/renders/plugins/Fx-ana-module-table-plugin'
-            },
             'map': {
                 path: 'fx-ana/widgets/desk/renders/plugins/Fx-ana-module-map-plugin'
-            },
-            'chart': {
-                path: 'fx-ana/widgets/desk/renders/plugins/Fx-ana-module-chart-plugin'
-            },
-            'filter': {
-                path: 'fx-ana/widgets/desk/renders/plugins/Fx-ana-module-filter-plugin'
             }
         },
         filter: [],
         tabs: {
-            'metadata': {type: 'simple', callback: 'always'},
-            'table': {type: 'simple', callback: 'always'},
             'map': {type: 'simple', callback: 'always'},
-            'chart': {type: 'simple', callback: 'always'},
-            'filter': {type: 'simple', callback: 'always'}
+            'metadata': {type: 'simple', callback: 'always'},            
+            //'chart': {type: 'simple', callback: 'always'},
+            //'filter': {type: 'simple', callback: 'always'}
         },
         //tabs: { 'metadata' : { type: 'simple', callback: 'once'},  'table' : { type: 'simple', callback: 'once'}, dropdown : {type:'dropdown', label : {'EN' : 'my Drop'}}},
-        initialTab: 'table',
+        initialTab: 'map',
         s: {
             CONTENT: '[data-role="fx-module-content"]',
             TABS: '[data-role="fx-module-tabs"]',

@@ -3,12 +3,12 @@
 define([
     'jquery',
     'underscore',
-    'fx-ana/config/config-default',
-    'fx-ana/config/config',
+    'fx-ana/config/services-default',
+    'fx-ana/config/services',
     'FENIX_UI_METADATA_VIEWER',
     'fx-report',
     'text!fx-ana/html/widgets/desk/plugins/metadata-template.html'
-], function ($, _, DC,C,METADATDA,Report, template) {
+], function ($, _, DS,S,METADATDA,Report, template) {
 
     'use strict';
 
@@ -111,23 +111,32 @@ define([
         var self = this;
         $(defaultOptions.BTN_EXPORT_METADATA, defaultOptions.METADATA_PANEL).on('click', function(){
 
+            var template =
+                (self.model.metadata.dsd.contextSystem &&
+            self.model.metadata.dsd.contextSystem === 'uneca')?
+                'uneca' : 'fao';
+
             var payload = {
+                resource: {
+                    metadata : {
+                        uid : self.model.metadata.uid
+                    },
+                    data : []
+                },
                 input:{
-                    config:{
-                        uid: self.model.metadata.uid
-                    }
                 },
                 output: {
                     config:{
+                        template : template,
                         lang : 'en'.toUpperCase(),
                         fileName: fileName+'.pdf'
                     }
                 }
             };
 
-            var exportUrl = DC.MD_EXPORT_URL || C.MD_EXPORT_URL || 'http://fenixapps2.fao.org/fenixExport';
-
+            var exportUrl = S.SERVICES_BASE_ADDRESS || DS.SERVICES_BASE_ADDRESS || 'http://fenix.fao.org/d3s'
             self.$report.exportData(payload,exportUrl);
+
         });
     };
 

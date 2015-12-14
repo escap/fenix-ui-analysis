@@ -92,13 +92,11 @@ define([
         this.tableCreator.render({
             container: this.$el,
             model:  this.model,
-            d3p : true
-            /*
-             if you want to override the default configuration,
-             options: {
-             sortable: true
-             }
-             */
+            d3p : true,
+            options: {
+                height: 348
+            }
+
 
         });
     };

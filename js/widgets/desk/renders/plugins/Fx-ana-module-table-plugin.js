@@ -93,11 +93,9 @@ define([
             container: this.$el,
             model:  this.model,
             d3p : true,
-            options: {
+            tableOptions: {
                 height: 348
             }
-
-
         });
     };
 

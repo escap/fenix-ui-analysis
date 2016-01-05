@@ -62,8 +62,9 @@ define([
             rend;
 
         //TODO REFACT
-        if(opts.resource.filter['meContent.resourceRepresentationType']['enumeration'][0] === "geographic")
-        {
+        if (opts.resource.filter['meContent.resourceRepresentationType'] && opts.resource.filter['meContent.resourceRepresentationType']['enumeration']
+            && Array.isArray(opts.resource.filter['meContent.resourceRepresentationType']['enumeration']) &&
+            opts.resource.filter['meContent.resourceRepresentationType']['enumeration'][0] === "geographic") {
             return new this.renders.LAYER({
                 id: opts.id,
                 filter: filter

@@ -29,7 +29,9 @@ define(function () {
             'amplify' : '{FENIX_CDN}/js/amplify/1.1.2/amplify.min',
             'q' : '{FENIX_CDN}/js/q/1.1.2/q',
             'handlebars': "{FENIX_CDN}/js/handlebars/2.0.0/handlebars",
-            'select2' : "{FENIX_CDN}/js/select2/3.5.2/js/select2.min"
+            'select2' : "{FENIX_CDN}/js/select2/3.5.2/js/select2.min",
+            loglevel: '{FENIX_CDN}/js/loglevel/1.4.0/loglevel'
+
         },
         shim: {
             'highcharts': {

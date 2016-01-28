@@ -5,7 +5,7 @@ define([
     'underscore',
     'fx-ana/config/services-default',
     'fx-ana/config/services',
-    'FENIX_UI_METADATA_VIEWER',
+    'fx-md-v/start',
     'fx-report',
     'text!fx-ana/html/widgets/desk/plugins/metadata-template.html'
 ], function ($, _, DS,S,METADATDA,Report, template) {

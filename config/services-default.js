@@ -6,10 +6,12 @@ define(function () {
     return {
         SERVICES_BASE_ADDRESS: "http://fenix.fao.org/d3s_dev",
 
-        SERVICE_GET_DATA_METADATA: {service: "resources", queryParams: {full: true, dsd: true}},
-        SERVICE_SAVE_METADATA: {service: "resources/metadata"},
-        SERVICE_SAVE_DSD: {service: "resources/dsd"},
-        SERVICE_SAVE_DATA: {service: "resources"},
+        SERVICE_GET_DATA_METADATA: { service: "resources", queryParams: { full: true, dsd: true } },
+        SERVICE_GET_DATA: { service: "resources/data" },
+        SERVICE_GET_METADATA: { service: "resources/metadata", queryParams: { full: true, dsd: true } },
+        SERVICE_SAVE_METADATA: { service: "resources/metadata" },
+        SERVICE_SAVE_DSD: { service: "resources/dsd" },
+        SERVICE_SAVE_DATA: { service: "resources" },
 
         service_getDataAndMetaURL: function (uid, version) {
             var addr = pathConcatenation(this.SERVICES_BASE_ADDRESS, this.SERVICE_GET_DATA_METADATA.service);

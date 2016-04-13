@@ -83,11 +83,11 @@ define([
         this.$report = new Report();
         this.$report.init('metadataExport')
         var metadata = new METADATDA();
-        metadata.init({
-            data: this.model.metadata,
+        metadata.render({
+            model: this.model.metadata,
             lang: 'en',
             //placeholder_id: 'metadata_panel',
-            placeholder : this.$el.find(defaultOptions.METADATA_PANEL)
+            el : this.$el.find(defaultOptions.METADATA_PANEL)
         });
 
         this._listenToExportMetadata();

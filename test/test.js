@@ -112,7 +112,7 @@ require([
         //trace, debug, info, warn, error, silent
         log.setLevel('trace');
 
-        log.warn("~~~~~ FENIX Catalog: test");
+        log.warn("~~~~~ FENIX Analysis: test");
         log.info("===== Start testing:...");
 
         Test.start();

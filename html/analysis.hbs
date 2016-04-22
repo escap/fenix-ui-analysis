@@ -1,7 +1,49 @@
 <div>
 
     <div data-role="analysis" class="fx-analysis">
-      <h1> ANALYS</h1>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <button class="btn btn-default btn-block" data-action="catalog">
+                    <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div data-role="grid"> </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <ul data-role="stack"  class="list-unstyled"></ul>
+            </div>
+        </div>
+
+        <div data-role="modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="analysisCatalog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div data-role="catalog-container"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
+
+    <li data-role="stack-item">
+        Stack item
+        <button class="btn btn-default" data-action="stack-item-enlarge">
+            <span class="glyphicon glyphicon glyphicon glyphicon-ok" aria-hidden="true"></span>
+        </button>
+        <button class="btn btn-default" data-action="stack-item-remove">
+            <span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </button>
+    </li>
 
 </div>

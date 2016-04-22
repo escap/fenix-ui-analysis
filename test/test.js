@@ -24,12 +24,13 @@ require.config({
         analysisPaths: pathProjectRoot + 'submodules/fenix-ui-analysis/src/js/paths',
         olapPaths: pathProjectRoot + 'submodules/fenix-ui-olap/js/paths',
         reportPaths: pathProjectRoot + 'submodules/fenix-ui-reports/src/js/paths',
-        visualizationPaths : pathProjectRoot + 'submodules/fenix-ui-visualization-box/src/js/paths',
-        dataEditorPaths : pathProjectRoot + 'submodules/fenix-ui-DataEditor/js/paths',
-        dsdEditorPaths : pathProjectRoot + 'submodules/fenix-ui-DSDEditor/js/paths',
-        metadataEditorPaths : pathProjectRoot + 'submodules/fenix-ui-metadata-editor/js/paths',
-        catalogPaths : pathProjectRoot + 'submodules/fenix-ui-catalog/src/js/paths',
-        dataManagementPaths : pathProjectRoot + 'submodules/fenix-ui-data-management/src/js/paths',
+        visualizationPaths: pathProjectRoot + 'submodules/fenix-ui-visualization-box/src/js/paths',
+        dataEditorPaths: pathProjectRoot + 'submodules/fenix-ui-DataEditor/js/paths',
+        dsdEditorPaths: pathProjectRoot + 'submodules/fenix-ui-DSDEditor/js/paths',
+        metadataEditorPaths: pathProjectRoot + 'submodules/fenix-ui-metadata-editor/js/paths',
+        metadataViewerPaths : pathProjectRoot + 'submodules/fenix-ui-metadata-viewer/src/js/paths',
+        catalogPaths: pathProjectRoot + 'submodules/fenix-ui-catalog/src/js/paths',
+        dataManagementPaths: pathProjectRoot + 'submodules/fenix-ui-data-management/src/js/paths',
     }
 });
 
@@ -38,8 +39,13 @@ require([
     "commonPaths",
     "filterPaths",
     "analysisPaths",
-    "catalogPaths"
-], function (Compiler, Common, Filter, Analysis, Catalog ) {
+    "catalogPaths",
+    "visualizationPaths",
+    "olapPaths",
+    "metadataViewerPaths",
+    "chartPaths",
+    "mapPaths"
+], function (Compiler, Common, Filter, Analysis, Catalog, Box, Olap, MetadataViewer, ChartCreator, MapCreator) {
 
     'use strict';
 
@@ -51,19 +57,34 @@ require([
     var catalogConfig = Catalog;
     catalogConfig.baseUrl = submodules_path + 'fenix-ui-catalog/src/js';
 
-    var filterConfig = Filter;
-    filterConfig.baseUrl = submodules_path + 'fenix-ui-filter/src/js';
-
     var analysisConfig = Analysis;
     analysisConfig.baseUrl = submodules_path + 'fenix-ui-analysis/src/js';
 
-    Compiler.resolve([commonConfig, catalogConfig, filterConfig, analysisConfig],
+    var boxConfig = Box;
+    boxConfig.baseUrl = submodules_path + 'fenix-ui-visualization-box/src/js';
+
+    var filterConfig = Filter;
+    filterConfig.baseUrl = submodules_path + 'fenix-ui-filter/src/js';
+
+    var olapConfig = Olap;
+    olapConfig.baseUrl = submodules_path + 'fenix-ui-olap/js';
+
+    var metadataViewerConfig = MetadataViewer;
+    metadataViewerConfig.baseUrl = submodules_path + 'fenix-ui-metadata-viewer/src/js';
+
+    var chartConfig = ChartCreator;
+    chartConfig.baseUrl = submodules_path + 'fenix-ui-chart-creator/src/js';
+
+    var mapConfig = MapCreator;
+    mapConfig.baseUrl = submodules_path + 'fenix-ui-map-creator/src/js';
+
+    Compiler.resolve([commonConfig, catalogConfig, filterConfig, analysisConfig, boxConfig, olapConfig, metadataViewerConfig, chartConfig, mapConfig],
         {
             placeholders: {"FENIX_CDN": "http://fenixrepo.fao.org/cdn"},
 
             config: {
 
-                config : {
+                config: {
 
                     //Set the config for the i18n
                     i18n: {
@@ -92,7 +113,7 @@ require([
 
                 // Underscore and Backbone are not AMD-capable per default,
                 // so we need to use the AMD wrapping of RequireJS
-                shim: { },
+                shim: {},
 
                 //waitSeconds : 15
 
@@ -110,7 +131,7 @@ require([
     ], function (log, Test) {
 
         //trace, debug, info, warn, error, silent
-        log.setLevel('trace');
+        log.setLevel('silent');
 
         log.warn("~~~~~ FENIX Analysis: test");
         log.info("===== Start testing:...");

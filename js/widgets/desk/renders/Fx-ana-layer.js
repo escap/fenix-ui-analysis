@@ -390,12 +390,11 @@ define([
 
             this.o.filter = [
                 {
-                    "name": "simpleFilter",
+                    "name": "filter",
                     "parameters": {
-                        "filter": {
                             "rows": filter
                         }
-                    }
+
                 }
             ];
 

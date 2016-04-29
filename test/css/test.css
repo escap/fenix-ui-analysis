@@ -1,3 +1,5 @@
+/* Fenix Common CSS */
+/* Boostrap Queries */
 .dropdown-submenu {
   position: relative; }
 
@@ -125,13 +127,163 @@
 @keyframes loading {
   100% {
     transform: rotate(360deg); } }
-/* Filter */
-.selector-header h4 {
-  display: inline; }
+/* Fenix Icons */
+.fx-icon, [data-selector-time] .bootstrap-datetimepicker-widget table thead tr:first-child th:hover {
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+  background: url(".//css/img/fenix-catalog-sprite-small.svg") 150px 30px no-repeat; }
 
+.fx-icon-close {
+  background-position: 0 -15px; }
+
+/* Filter */
+[data-selector], [data-semantic] {
+  /* Focused */
+  /* Mandatory */
+  /* Disabled */
+  /* Hovered */ }
+  [data-selector] .disabled, [data-semantic] .disabled {
+    cursor: no-drop;
+    opacity: 0.4; }
+  @media screen and (max-width: 480px) {
+    [data-selector] .controller, [data-semantic] .controller {
+      opacity: 1;
+      pointer-events: auto; } }
+  @media screen and (min-width: 768px) {
+    [data-selector] .controller, [data-semantic] .controller {
+      opacity: 0;
+      pointer-events: none;
+      -webkit-transition: all 0.3s ease 0s;
+      -moz-transition: all 0.3s ease 0s;
+      -ms-transition: all 0.3s ease 0s;
+      -o-transition: all 0.3s ease 0s;
+      transition: all 0.3s ease 0s; }
+    [data-selector]:hover .controller, [data-semantic]:hover .controller {
+      opacity: 1;
+      pointer-events: auto; } }
+
+.selector-header {
+  padding: 10px 0; }
+  .selector-header h1, .selector-header h2, .selector-header h3, .selector-header h4, .selector-header h5 {
+    margin: 0;
+    margin-top: 2px; }
+
+.fx-selector-title {
+  display: inline-block;
+  max-width: 55%; }
+
+.fx-enabled-switch {
+  position: relative;
+  top: 2px; }
+
+.selector-footer [data-role="summary"] {
+  margin: 0; }
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+[data-code] {
+  display: inline-block;
+  cursor: pointer;
+  margin: 0 3px 3px 0;
+  padding: 1px 3px;
+  background-color: #efefef;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  border-radius: 3px; }
+
+.code-brk {
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 10px;
+  color: #999999; }
+
+/* Buttons */
+.btn-default {
+  color: #333333; }
+
+/* Tree */
 .tree-holder {
   height: 150px;
   overflow: auto; }
+
+.fx-tree-search {
+  margin-bottom: 5px; }
+
+.fx-tree-buttons {
+  margin-bottom: 5px; }
+
+.jstree-anchor, .jstree-anchor:link, .jstree-anchor:visited, .jstree-anchor:hover, .jstree-anchor:active {
+  color: #333333; }
+
+/* Range Slider */
+.irs-bar, .irs-bar-edge, .irs-line {
+  height: 5px;
+  top: 37px; }
+
+.irs-bar, .irs-bar-edge {
+  background: #0076ff; }
+
+.irs-line {
+  background: #dddddd;
+  border-color: transparent; }
+
+.irs-slider {
+  background: white;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none; }
+
+.irs-from, .irs-to, .irs-single {
+  background: transparent;
+  color: #0076ff; }
+
+/* Time */
+.time-selector-icon {
+  font-size: 20px; }
+
+[data-selector-time] .day.active {
+  background-color: #0076ff; }
+  [data-selector-time] .day.active:hover {
+    background-color: #407bbf; }
+[data-selector-time] .day.today:before {
+  border-bottom-color: #0076ff; }
+[data-selector-time] .fx-time-addon {
+  font-size: 24px;
+  padding: 2px 8px;
+  color: #0076ff; }
+[data-selector-time] [data-action="incrementHours"], [data-selector-time] [data-action="decrementHours"], [data-selector-time] [data-action="incrementMinutes"], [data-selector-time] [data-action="decrementMinutes"] {
+  font-size: 24px;
+  color: #0076ff; }
+[data-selector-time] .bootstrap-datetimepicker-widget table thead tr:first-child th:hover {
+  background: none !important; }
+[data-selector-time] [data-action="previous"], [data-selector-time] [data-action="next"] {
+  background: url(".//css/img/fenix-catalog-sprite-small.svg") 150px 30px no-repeat;
+  display: block;
+  height: 15px;
+  width: 15px;
+  position: relative;
+  left: 10px;
+  top: 5px; }
+  [data-selector-time] [data-action="previous"]:hover, [data-selector-time] [data-action="next"]:hover {
+    background-color: #dddddd !important;
+    background: url(".//css/img/fenix-catalog-sprite-small.svg") 150px 30px no-repeat; }
+  [data-selector-time] [data-action="previous"] span:before, [data-selector-time] [data-action="next"] span:before {
+    content: none; }
+[data-selector-time] [data-action="next"] {
+  background-position: -135px 0; }
+[data-selector-time] [data-action="previous"] {
+  background-position: -135px -15px; }
+[data-selector-time] [data-action="togglePicker"] {
+  padding: 0; }
+  [data-selector-time] [data-action="togglePicker"] span {
+    font-size: 24px;
+    color: #0076ff;
+    line-height: 35px !important;
+    height: auto !important; }
 
 /* Catalog */
 .fx-catalog [data-content] {
@@ -150,7 +302,7 @@
 
 /* Colors*/
 .fx-box {
-  height: 600px; }
+  height: 450px; }
   .fx-box [data-content] {
     display: none;
     height: 100%; }
@@ -176,6 +328,10 @@
     display: block; }
   .fx-box [data-content="ready"][data-tab="download"] [data-section="download"] {
     display: block; }
+
+.swiper-container, .swiper-slide {
+  width: 100%;
+  height: 350px; }
 
 /*Flip effect */
 /* entire container, keeps perspective */
@@ -217,6 +373,9 @@
   transform: rotateY(180deg);
   background-color: #d2d0d0; }
 
+[data-role="back-content"] {
+  height: 100%; }
+
 /*TODO temporary*/
 [data-role="toolbar"] {
   position: relative;
@@ -229,5 +388,3 @@
   background-color: red; }
 
 /* Analysis */
-
-/*# sourceMappingURL=test.css.map */

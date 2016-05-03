@@ -1,66 +1,440 @@
-/*
-Error: Invalid CSS after "...fde7afaec0e752b": expected "{", was ""
-        on line 172 of ../../../fenix-ui-visualization-box/src/css/_visualization-box.scss
-        from line 17 of test.scss
+/* Fenix Common CSS */
+/*#0076ff*/
+/* Boostrap Queries */
+.dropdown-submenu {
+  position: relative; }
 
-167: [data-tab].active {
-168:   background-color: red;
-169: }
-170: =======
-171: >>>>>>> 11474088c955995b45f44f1d6fde7afaec0e752b
+.dropdown-submenu > .dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  -webkit-border-radius: 0 6px 6px 6px;
+  -moz-border-radius: 0 6px 6px;
+  border-radius: 0 6px 6px 6px; }
 
-Backtrace:
-../../../fenix-ui-visualization-box/src/css/_visualization-box.scss:172
-test.scss:17
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/scss/parser.rb:1162:in `expected'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/scss/parser.rb:1098:in `expected'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/scss/parser.rb:1093:in `tok!'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/scss/parser.rb:638:in `block'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/scss/parser.rb:632:in `ruleset'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/scss/parser.rb:657:in `block_child'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/scss/parser.rb:650:in `block_contents'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/scss/parser.rb:117:in `stylesheet'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/scss/parser.rb:42:in `parse'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/engine.rb:403:in `_to_tree'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/engine.rb:309:in `to_tree'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/perform.rb:324:in `block in visit_import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/stack.rb:88:in `block in with_import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/stack.rb:115:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/stack.rb:88:in `with_import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/perform.rb:323:in `visit_import'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/perform.rb:158:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/stack.rb:79:in `block in with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/stack.rb:115:in `with_frame'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/stack.rb:79:in `with_base'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/perform.rb:158:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/base.rb:52:in `block in visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/base.rb:52:in `map'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/base.rb:52:in `visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/perform.rb:167:in `block in visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/perform.rb:179:in `with_environment'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/perform.rb:166:in `visit_children'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/base.rb:36:in `block in visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/perform.rb:186:in `visit_root'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/base.rb:36:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/perform.rb:157:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/visitors/perform.rb:8:in `visit'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/root_node.rb:36:in `css_tree'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/tree/root_node.rb:29:in `render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/engine.rb:378:in `_render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/engine.rb:295:in `render_with_sourcemap'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/plugin/compiler.rb:490:in `update_stylesheet'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/plugin/compiler.rb:215:in `block in update_stylesheets'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/plugin/compiler.rb:209:in `each'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/plugin/compiler.rb:209:in `update_stylesheets'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/plugin.rb:82:in `update_stylesheets'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/exec/sass_scss.rb:364:in `watch_or_update'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/exec/sass_scss.rb:51:in `process_result'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/exec/base.rb:52:in `parse'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/lib/sass/exec/base.rb:19:in `parse!'
-/Library/Ruby/Gems/2.0.0/gems/sass-3.4.18/bin/scss:13:in `<main>'
-*/
-body:before {
-  white-space: pre;
-  font-family: monospace;
-  content: "Error: Invalid CSS after \"...fde7afaec0e752b\": expected \"{\", was \"\"\A         on line 172 of ../../../fenix-ui-visualization-box/src/css/_visualization-box.scss\A         from line 17 of test.scss\A \A 167: [data-tab].active {\A 168:   background-color: red;\A 169: }\A 170: =======\A 171: >>>>>>> 11474088c955995b45f44f1d6fde7afaec0e752b"; }
+.dropdown-submenu:hover > .dropdown-menu {
+  display: block; }
+
+.dropdown-submenu > a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #ccc;
+  margin-top: 5px;
+  margin-right: -10px; }
+
+.dropdown-submenu:hover > a:after {
+  border-left-color: #fff; }
+
+.dropdown-submenu.pull-left {
+  float: none; }
+
+.dropdown-submenu.pull-left > .dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  -webkit-border-radius: 6px 0 6px 6px;
+  -moz-border-radius: 6px 0 6px 6px;
+  border-radius: 6px 0 6px 6px; }
+
+/* Preload CSS */
+.loading {
+  display: inline-block;
+  border: 0 solid rgba(215, 215, 215, 0.25);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%; }
+
+.loading:before {
+  content: '';
+  display: block;
+  border: 0 solid transparent;
+  border-top-color: #bebebe;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  border-radius: 50%;
+  -webkit-animation: loading 1s ease infinite;
+  -moz-animation: loading 1s ease infinite;
+  -ms-animation: loading 1s ease infinite;
+  -o-animation: loading 1s ease infinite;
+  animation: loading 1s ease infinite; }
+
+/***************************************/
+/*				 LOADING			   */
+/***************************************/
+.loading-16 {
+  width: 12px;
+  height: 12px;
+  border-width: 2px; }
+
+.loading-16:before {
+  width: 12px;
+  height: 12px;
+  border-width: 2px;
+  margin: -2px 0 0 -2px; }
+
+.loading-24 {
+  width: 18px;
+  height: 18px;
+  border-width: 3px; }
+
+.loading-24:before {
+  width: 18px;
+  height: 18px;
+  border-width: 3px;
+  margin: -3px 0 0 -3px; }
+
+.loading-32 {
+  width: 26px;
+  height: 26px;
+  border-width: 4px; }
+
+.loading-32:before {
+  width: 26px;
+  height: 26px;
+  border-width: 4px;
+  margin: -4px 0 0 -4px; }
+
+.loading-48 {
+  width: 38px;
+  height: 38px;
+  border-width: 5px; }
+
+.loading-48:before {
+  width: 38px;
+  height: 38px;
+  border-width: 5px;
+  margin: -5px 0 0 -5px; }
+
+@-webkit-keyframes loading {
+  100% {
+    -webkit-transform: rotate(360deg); } }
+@-moz-keyframes loading {
+  100% {
+    -webkit-transform: rotate(360deg); } }
+@-ms-keyframes loading {
+  100% {
+    -webkit-transform: rotate(360deg); } }
+@-o-keyframes loading {
+  100% {
+    -webkit-transform: rotate(360deg); } }
+@keyframes loading {
+  100% {
+    transform: rotate(360deg); } }
+/* Fenix Icons */
+.fx-icon, [data-selector-time] [data-action="previous"] span, [data-selector-time] [data-action="next"] span {
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+  background-image: url(".//css/img/fenix-catalog-sprite-small.svg");
+  background-repeat: no-repeat;
+  background-size: 150px 30px; }
+
+.fx-icon-close {
+  background-position: 0 -15px; }
+
+/* Filter */
+[data-selector], [data-semantic] {
+  /* Focused */
+  /* Mandatory */
+  /* Disabled */
+  /* Hovered */ }
+  [data-selector] .disabled, [data-semantic] .disabled {
+    cursor: no-drop;
+    opacity: 0.4; }
+  @media screen and (max-width: 480px) {
+    [data-selector] .controller, [data-semantic] .controller {
+      opacity: 1;
+      pointer-events: auto; } }
+  @media screen and (min-width: 768px) {
+    [data-selector] .controller, [data-semantic] .controller {
+      opacity: 0;
+      pointer-events: none;
+      -webkit-transition: all 0.3s ease 0s;
+      -moz-transition: all 0.3s ease 0s;
+      -ms-transition: all 0.3s ease 0s;
+      -o-transition: all 0.3s ease 0s;
+      transition: all 0.3s ease 0s; }
+    [data-selector]:hover .controller, [data-semantic]:hover .controller {
+      opacity: 1;
+      pointer-events: auto; } }
+
+.selector-header {
+  padding: 10px 0; }
+  .selector-header h1, .selector-header h2, .selector-header h3, .selector-header h4, .selector-header h5 {
+    margin: 0;
+    margin-top: 2px; }
+
+.fx-selector-title {
+  display: inline-block;
+  max-width: 40%; }
+
+.fx-enabled-switch {
+  position: relative;
+  top: 2px; }
+
+.selector-footer [data-role="summary"] {
+  margin: 0; }
+
+.truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+[data-code] {
+  display: inline-block;
+  cursor: pointer;
+  margin: 0 3px 3px 0;
+  padding: 1px 3px;
+  background-color: #efefef;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  border-radius: 3px; }
+
+.code-brk {
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 10px;
+  color: #999999; }
+
+/* Buttons */
+.btn-default {
+  color: #333; }
+
+/* Tree */
+.tree-holder {
+  height: 150px;
+  overflow: auto; }
+
+.fx-tree-search {
+  margin-bottom: 5px; }
+
+.fx-tree-buttons {
+  margin-bottom: 5px; }
+
+.jstree-anchor, .jstree-anchor:link, .jstree-anchor:visited, .jstree-anchor:hover, .jstree-anchor:active {
+  color: #333; }
+
+/* Range Slider */
+.irs-bar, .irs-bar-edge, .irs-line {
+  height: 5px;
+  top: 37px; }
+
+.irs-bar {
+  border-top: 1px solid #0076ff;
+  border-bottom: 1px solid #0076ff; }
+
+.irs-bar-edge {
+  border: 1px solid #0076ff; }
+
+.irs-bar, .irs-bar-edge {
+  background: #0076ff; }
+
+.irs-line {
+  background: #dddddd;
+  border-color: transparent; }
+
+.irs-slider {
+  background: white;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none; }
+
+.irs-from, .irs-to, .irs-single {
+  background: transparent;
+  color: #0076ff; }
+
+/* Time */
+.time-selector-icon {
+  font-size: 20px; }
+
+[data-selector-time] .day.active {
+  background-color: #0076ff; }
+  [data-selector-time] .day.active:hover {
+    background-color: #407bbf; }
+[data-selector-time] .day.today:before {
+  border-bottom-color: #0076ff; }
+[data-selector-time] .month.active {
+  background-color: #0076ff; }
+[data-selector-time] .year.active {
+  background-color: #0076ff; }
+[data-selector-time] .fx-time-addon {
+  font-size: 24px;
+  padding: 2px 8px;
+  color: #0076ff; }
+[data-selector-time] [data-action="incrementHours"], [data-selector-time] [data-action="decrementHours"], [data-selector-time] [data-action="incrementMinutes"], [data-selector-time] [data-action="decrementMinutes"] {
+  font-size: 24px;
+  color: #0076ff; }
+[data-selector-time] [data-action="previous"] span:before, [data-selector-time] [data-action="next"] span:before {
+  content: none; }
+[data-selector-time] [data-action="next"] span {
+  background-position: -135px 0; }
+[data-selector-time] [data-action="previous"] span {
+  background-position: -135px -15px; }
+[data-selector-time] [data-action="togglePicker"] {
+  padding: 0; }
+  [data-selector-time] [data-action="togglePicker"] span {
+    font-size: 24px;
+    color: #0076ff;
+    line-height: 35px !important;
+    height: auto !important; }
+
+/* Sortable */
+.filter-sortable-list .list-item {
+  cursor: pointer;
+  margin: 3px;
+  padding: 1px 3px;
+  background-color: #efefef;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  border-radius: 3px; }
+
+[data-group] ul {
+  min-height: 50px;
+  padding: 6px 12px;
+  -webkit-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.075);
+  -moz-box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.075);
+  box-shadow: inset 0px 1px 1px rgba(0, 0, 0, 0.075);
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  -ms-border-radius: 4px;
+  border-radius: 4px;
+  background-color: white;
+  background-image: none;
+  border: 1px solid #d8d8d8; }
+
+/* Catalog */
+.fx-catalog [data-content] {
+  display: none;
+  height: 100%; }
+.fx-catalog [data-status="ready"] [data-content="ready"] {
+  display: block; }
+.fx-catalog [data-status="error"] [data-content="error"] {
+  display: block; }
+.fx-catalog [data-status="loading"] [data-content="loading"] {
+  display: block; }
+.fx-catalog [data-status="empty"] [data-content="empty"] {
+  display: block; }
+.fx-catalog [data-status="intro"] [data-content="intro"] {
+  display: block; }
+
+/* Colors*/
+.fx-box {
+  height: 450px; }
+  .fx-box [data-content] {
+    display: none;
+    height: 100%; }
+  .fx-box[data-status="ready"] [data-content="ready"] {
+    display: block; }
+  .fx-box[data-status="error"] [data-content="error"] {
+    display: block; }
+  .fx-box[data-status="loading"] [data-content="loading"] {
+    display: block; }
+  .fx-box[data-status="empty"] [data-content="empty"] {
+    display: block; }
+  .fx-box [data-content="ready"] [data-section] {
+    display: none; }
+  .fx-box [data-content="ready"][data-tab="chart"] [data-section="chart"] {
+    display: block; }
+  .fx-box [data-content="ready"][data-tab="table"] [data-section="table"] {
+    display: block; }
+  .fx-box [data-content="ready"][data-tab="map"] [data-section="map"] {
+    display: block; }
+  .fx-box [data-content="ready"][data-tab="blank"] [data-section="blank"] {
+    display: block; }
+  .fx-box [data-content="ready"][data-tab="metadata"] [data-section="metadata"] {
+    display: block; }
+  .fx-box [data-content="ready"][data-tab="download"] [data-section="download"] {
+    display: block; }
+
+.swiper-container, .swiper-slide {
+  width: 100%;
+  height: 350px; }
+
+/*Flip effect */
+/* entire container, keeps perspective */
+.flip-container {
+  perspective: 1000; }
+
+/* flip the pane when hovered*/
+.flip-container.flipped .flipper {
+  transform: rotateY(180deg); }
+
+.flip-container, .front, .back {
+  width: 100%;
+  height: 100%; }
+
+/* flip speed goes here */
+.flipper {
+  transition: 0.6s;
+  transform-style: preserve-3d;
+  height: 100%;
+  position: relative; }
+
+/* hide back of pane during swap */
+.front, .back {
+  backface-visibility: hidden;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0; }
+
+/* front pane, placed above back */
+.front {
+  z-index: 2;
+  /* for firefox 31 */
+  transform: rotateY(0deg);
+  background-color: white; }
+
+/* back, initially hidden pane */
+[data-section] {
+  position: relative; }
+
+[data-role="toolbar"] {
+  z-index: 1;
+  position: absolute;
+  background-color: white; }
+
+/* back, initially hidden pane */
+.back {
+  transform: rotateY(180deg);
+  background-color: #d2d0d0; }
+
+.back-row {
+  position: relative; }
+
+[data-role='back-sidebar'] {
+  background-color: white;
+  z-index: 1;
+  position: absolute; }
+  @media screen and (min-width: 768px) {
+    [data-role='back-sidebar'] {
+      position: absolute; } }
+  @media screen and (min-width: 992px) {
+    [data-role='back-sidebar'] {
+      position: relative; } }
+  @media screen and (min-width: 1200px) {
+    [data-role='back-sidebar'] {
+      position: relative; } }
+
+[data-role="back-content"] {
+  height: 100%; }
+
+/*TODO temporary*/
+[data-role="toolbar"] {
+  height: 615px; }
+
+[data-tab].active {
+  background-color: red; }
+
+/* Analysis */
+
+/*# sourceMappingURL=test.css.map */

@@ -174,11 +174,18 @@
 
 .fx-selector-title {
   display: inline-block;
-  max-width: 40%; }
+  max-width: 45%; }
 
-.fx-enabled-switch {
-  position: relative;
-  top: 2px; }
+.filter-enabled-label {
+  width: 10px;
+  font-size: 0;
+  /* Small devices (tablets, 768px and up) */
+  /* Medium devices (desktops, 992px and up) */
+  /* Large devices (large desktops, 1200px and up) */ }
+  @media (min-width: 992px) {
+    .filter-enabled-label {
+      width: auto;
+      font-size: inherit; } }
 
 .selector-footer [data-role="summary"] {
   margin: 0; }
@@ -207,6 +214,10 @@
 /* Buttons */
 .btn-default {
   color: #333; }
+
+[data-role="remove"].btn-round {
+  position: relative;
+  top: -2px; }
 
 /* Tree */
 .tree-holder {
@@ -326,38 +337,84 @@
 .fx-catalog [data-status="intro"] [data-content="intro"] {
   display: block; }
 
-/* Colors*/
-.fx-box {
-  height: 450px; }
-  .fx-box [data-content] {
-    display: none;
-    height: 100%; }
-  .fx-box[data-status="ready"] [data-content="ready"] {
-    display: block; }
-  .fx-box[data-status="error"] [data-content="error"] {
-    display: block; }
-  .fx-box[data-status="loading"] [data-content="loading"] {
-    display: block; }
-  .fx-box[data-status="empty"] [data-content="empty"] {
-    display: block; }
-  .fx-box [data-content="ready"] [data-section] {
-    display: none; }
-  .fx-box [data-content="ready"][data-tab="chart"] [data-section="chart"] {
-    display: block; }
-  .fx-box [data-content="ready"][data-tab="table"] [data-section="table"] {
-    display: block; }
-  .fx-box [data-content="ready"][data-tab="map"] [data-section="map"] {
-    display: block; }
-  .fx-box [data-content="ready"][data-tab="blank"] [data-section="blank"] {
-    display: block; }
-  .fx-box [data-content="ready"][data-tab="metadata"] [data-section="metadata"] {
-    display: block; }
-  .fx-box [data-content="ready"][data-tab="download"] [data-section="download"] {
-    display: block; }
+/* Visualization Box Style */
+/* 450px minus the 20px header */
+.fx-box [data-content] {
+  display: none; }
+.fx-box .front-content, .fx-box .back-content {
+  height: 430px; }
+.fx-box[data-status="ready"] [data-content="ready"] {
+  display: block; }
+.fx-box[data-status="error"] [data-content="error"] {
+  display: block; }
+.fx-box[data-status="loading"] [data-content="loading"] {
+  display: block; }
+.fx-box[data-status="empty"] [data-content="empty"] {
+  display: block; }
+.fx-box [data-content="ready"] [data-section] {
+  display: none; }
+.fx-box [data-content="ready"][data-tab="chart"] [data-section="chart"] {
+  display: block; }
+.fx-box [data-content="ready"][data-tab="table"] [data-section="table"] {
+  display: block; }
+.fx-box [data-content="ready"][data-tab="map"] [data-section="map"] {
+  display: block; }
+.fx-box [data-content="ready"][data-tab="blank"] [data-section="blank"] {
+  display: block; }
+.fx-box [data-content="ready"][data-tab="metadata"] [data-section="metadata"] {
+  display: block; }
+.fx-box [data-content="ready"][data-tab="download"] [data-section="download"] {
+  display: block; }
 
-.swiper-container, .swiper-slide {
-  width: 100%;
-  height: 350px; }
+.vb-toolbar {
+  background-color: white;
+  border-bottom: 1px solid #dddddd; }
+  .vb-toolbar .meta-btn {
+    margin-top: 1px; }
+  .vb-toolbar button {
+    border: 0;
+    background-color: transparent;
+    font-size: 16px;
+    padding: 0 12px;
+    -moz-border-radius-topleft: 0;
+    -webkit-border-top-left-radius: 0;
+    border-top-left-radius: 0;
+    -moz-border-radius-topright: 0;
+    -webkit-border-top-right-radius: 0;
+    border-top-right-radius: 0;
+    -moz-border-radius-bottomright: 0;
+    -webkit-border-bottom-right-radius: 0;
+    border-bottom-right-radius: 0;
+    -moz-border-radius-bottomleft: 0;
+    -webkit-border-bottom-left-radius: 0;
+    border-bottom-left-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    border-radius: 0; }
+    .vb-toolbar button[disabled] {
+      background-color: transparent;
+      border: 0; }
+    .vb-toolbar button:hover {
+      border: 0;
+      border-color: transparent; }
+  .vb-toolbar .box-title {
+    font-size: 11px;
+    color: #0076ff;
+    padding-left: 95px;
+    padding-right: 200px;
+    margin-top: 5px;
+    margin-bottom: 5px; }
+  .vb-toolbar .toolbar-cmd-left {
+    width: 95px;
+    position: absolute;
+    top: 0;
+    left: 0; }
+  .vb-toolbar .toolbar-cmd-right {
+    width: 200px;
+    position: absolute;
+    top: 0;
+    right: 0; }
 
 /*Flip effect */
 /* entire container, keeps perspective */
@@ -367,10 +424,6 @@
 /* flip the pane when hovered*/
 .flip-container.flipped .flipper {
   transform: rotateY(180deg); }
-
-.flip-container, .front, .back {
-  width: 100%;
-  height: 100%; }
 
 /* flip speed goes here */
 .flipper {
@@ -382,38 +435,54 @@
 /* hide back of pane during swap */
 .front, .back {
   backface-visibility: hidden;
-  height: 100%;
+  width: 100%;
   position: absolute;
   top: 0;
   left: 0; }
 
-/* front pane, placed above back */
+/* FRONT pane, placed above back */
 .front {
   z-index: 2;
   /* for firefox 31 */
   transform: rotateY(0deg);
-  background-color: white; }
-
-/* back, initially hidden pane */
-[data-section] {
-  position: relative; }
+  background-color: white;
+  border: 1px solid #dddddd; }
 
 [data-role="toolbar"] {
   z-index: 1;
   position: absolute;
   background-color: white; }
 
-/* back, initially hidden pane */
+[data-section] {
+  position: relative; }
+
+/* BACK, initially hidden pane */
 .back {
   transform: rotateY(180deg);
-  background-color: #d2d0d0; }
+  background-color: #dddddd;
+  border: 1px solid #dddddd; }
+
+.show-back-sidebar {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0; }
+
+.back-right-content {
+  height: 100%; }
+
+.swiper-container, .swiper-slide {
+  width: 100%;
+  height: 350px; }
 
 .back-row {
-  position: relative; }
+  position: relative;
+  height: 100%; }
 
 [data-role='back-sidebar'] {
   background-color: white;
   z-index: 1;
+  height: 100%;
   position: absolute; }
   @media screen and (min-width: 768px) {
     [data-role='back-sidebar'] {
@@ -427,6 +496,11 @@
 
 [data-role="back-content"] {
   height: 100%; }
+
+.process-details {
+  height: 350px;
+  overflow-x: hidden;
+  overflow-y: auto; }
 
 /*TODO temporary*/
 [data-role="toolbar"] {

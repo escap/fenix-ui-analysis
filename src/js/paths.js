@@ -3,7 +3,7 @@ define(function () {
     var config = {
 
         paths: {
-            'fx-analysis/start': './start',
+            'fx-analysis/start': './analysis',
             'fx-analysis/html': '../../html',
             'fx-analysis/js': './',
             'fx-analysis/config' :  '../../config',

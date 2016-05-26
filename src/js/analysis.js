@@ -11,11 +11,12 @@ define([
     'i18n!fx-analysis/nls/analysis',
     'fx-catalog/start',
     'fx-v-b/start',
+    'fx-common/utils',
     'handlebars',
     'fx-common/structures/fx-fluid-grid',
     'amplify',
     'bootstrap'
-], function ($, _, log, ERR, EVT, C, CD, Templates, i18nLabels, Catalog, Box, Handlebars, Grid) {
+], function ($, _, log, ERR, EVT, C, CD, Templates, i18nLabels, Catalog, Box, Utils, Handlebars, Grid) {
 
     'use strict';
 
@@ -119,6 +120,7 @@ define([
 
         this.id = this.initial.id;
         this.$el = this.initial.$el;
+        this.environment = this.initial.environment;
 
     };
 
@@ -226,12 +228,20 @@ define([
     Analysis.prototype._addToGrid = function (obj) {
 
         var $blank = this.grid.getBlankContainer(),
-            box = new Box({
+            config = {
                 el: $blank,
-                uid: "adam_country_indicators"
-                //uid: obj.model.uid,
-                //version : obj.model.version,
-            });
+                uid: obj.model.uid,
+                environment : this.environment
+            },
+            box;
+
+        if (obj.model.version) {
+            config.version = obj.model.version;
+        }
+
+        console.log(config)
+
+        box = new Box(config);
 
         this._bindBoxEventListeners(box);
 
@@ -355,41 +365,13 @@ define([
 
     Analysis.prototype._setObjState = function (key, val) {
 
-        this.assign(this.state, key, val);
+        Utils.assign(this.state, key, val);
 
-    };
-
-    Analysis.prototype.assign = function (obj, prop, value) {
-        if (typeof prop === "string")
-            prop = prop.split(".");
-
-        if (prop.length > 1) {
-            var e = prop.shift();
-            this.assign(obj[e] =
-                    Object.prototype.toString.call(obj[e]) === "[object Object]"
-                        ? obj[e]
-                        : {},
-                prop,
-                value);
-        } else {
-            obj[prop[0]] = value;
-        }
     };
 
     Analysis.prototype._getObjState = function (path) {
 
-        return this.getNestedProperty(path, this.state);
-    };
-
-    Analysis.prototype.getNestedProperty = function (path, obj) {
-
-        var obj = $.extend(true, {}, obj),
-            arr = path.split(".");
-
-        while (arr.length && (obj = obj[arr.shift()]));
-
-        return obj;
-
+        return Utils.getNestedProperty(path, this.state);
     };
 
     return Analysis;

@@ -31,6 +31,7 @@ require.config({
         metadataViewerPaths : pathProjectRoot + 'submodules/fenix-ui-metadata-viewer/src/js/paths',
         catalogPaths: pathProjectRoot + 'submodules/fenix-ui-catalog/src/js/paths',
         dataManagementPaths: pathProjectRoot + 'submodules/fenix-ui-data-management/src/js/paths',
+        fenixMap : pathProjectRoot + 'submodules/fenix-ui-map/src/paths'
     }
 });
 
@@ -44,8 +45,10 @@ require([
     "olapPaths",
     "metadataViewerPaths",
     "chartPaths",
-    "mapPaths"
-], function (Compiler, Common, Filter, Analysis, Catalog, Box, Olap, MetadataViewer, ChartCreator, MapCreator) {
+    "mapPaths",
+    "reportPaths",
+    "fenixMap"
+], function (Compiler, Common, Filter, Analysis, Catalog, Box, Olap, MetadataViewer, ChartCreator, MapCreator, Report, Map) {
 
     'use strict';
 
@@ -75,10 +78,16 @@ require([
     var chartConfig = ChartCreator;
     chartConfig.baseUrl = submodules_path + 'fenix-ui-chart-creator/src/js';
 
-    var mapConfig = MapCreator;
-    mapConfig.baseUrl = submodules_path + 'fenix-ui-map-creator/src/js';
+    var mapCreatorConfig = MapCreator;
+    mapCreatorConfig.baseUrl = submodules_path + 'fenix-ui-map-creator/src/js';
 
-    Compiler.resolve([commonConfig, catalogConfig, filterConfig, analysisConfig, boxConfig, olapConfig, metadataViewerConfig, chartConfig, mapConfig],
+    var reportConfig = Report;
+    reportConfig.baseUrl = submodules_path + 'fenix-ui-reports/src/js';
+
+    var mapConfig = Map;
+    mapConfig.baseUrl = submodules_path + 'fenix-ui-map';
+
+    Compiler.resolve([commonConfig, catalogConfig, filterConfig, analysisConfig, boxConfig, olapConfig, metadataViewerConfig, chartConfig, mapCreatorConfig, reportConfig, mapConfig],
         {
             placeholders: {"FENIX_CDN": "http://fenixrepo.fao.org/cdn"},
 
@@ -131,7 +140,7 @@ require([
     ], function (log, Test) {
 
         //trace, debug, info, warn, error, silent
-        log.setLevel('silent');
+        log.setLevel('trace');
 
         log.warn("~~~~~ FENIX Analysis: test");
         log.info("===== Start testing:...");

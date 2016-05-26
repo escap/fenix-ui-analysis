@@ -32,7 +32,8 @@ define([
     Test.prototype._renderStandard = function () {
 
         var analysis = this.createInstance({
-            $el: s.STANDARD
+            $el: s.STANDARD,
+            environment : "develop"
         });
     };
 

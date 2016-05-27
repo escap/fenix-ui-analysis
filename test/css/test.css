@@ -251,14 +251,14 @@
   top: 37px; }
 
 .irs-bar {
-  border-top: 1px solid #0076ff;
-  border-bottom: 1px solid #0076ff; }
+  border-top: 1px solid red;
+  border-bottom: 1px solid red; }
 
 .irs-bar-edge {
-  border: 1px solid #0076ff; }
+  border: 1px solid red; }
 
 .irs-bar, .irs-bar-edge {
-  background: #0076ff; }
+  background: red; }
 
 .irs-line {
   background: #bdbdbd;
@@ -272,29 +272,29 @@
 
 .irs-from, .irs-to, .irs-single {
   background: transparent;
-  color: #0076ff; }
+  color: red; }
 
 /* Time */
 .time-selector-icon {
   font-size: 20px; }
 
 [data-selector-time] .day.active {
-  background-color: #0076ff; }
+  background-color: red; }
   [data-selector-time] .day.active:hover {
-    background-color: #407bbf; }
+    background-color: #bf4040; }
 [data-selector-time] .day.today:before {
-  border-bottom-color: #0076ff; }
+  border-bottom-color: red; }
 [data-selector-time] .month.active {
-  background-color: #0076ff; }
+  background-color: red; }
 [data-selector-time] .year.active {
-  background-color: #0076ff; }
+  background-color: red; }
 [data-selector-time] .fx-time-addon {
   font-size: 24px;
   padding: 2px 8px;
-  color: #0076ff; }
+  color: red; }
 [data-selector-time] [data-action="incrementHours"], [data-selector-time] [data-action="decrementHours"], [data-selector-time] [data-action="incrementMinutes"], [data-selector-time] [data-action="decrementMinutes"] {
   font-size: 24px;
-  color: #0076ff; }
+  color: red; }
 [data-selector-time] [data-action="previous"] span:before, [data-selector-time] [data-action="next"] span:before {
   content: none; }
 [data-selector-time] [data-action="next"] span {
@@ -305,7 +305,7 @@
   padding: 0; }
   [data-selector-time] [data-action="togglePicker"] span {
     font-size: 24px;
-    color: #0076ff;
+    color: red;
     line-height: 35px !important;
     height: auto !important; }
 
@@ -479,9 +479,9 @@
       border: 0;
       border-color: transparent;
       background-color: #e0e0e0;
-      color: #0076ff; }
+      color: red; }
   .vb-toolbar .box-title {
-    color: #0076ff;
+    color: red;
     margin-top: 5px;
     margin-bottom: 5px; }
 
@@ -571,7 +571,9 @@
 .process-details {
   height: 350px;
   overflow-x: hidden;
-  overflow-y: auto; }
+  overflow-y: auto;
+  background-color: white;
+  padding: 0 15px; }
 
 .show-back-sidebar {
   position: absolute;
@@ -586,7 +588,7 @@
   padding-bottom: 10px; }
 
 .filter-slide {
-  width: 250px !important; }
+  padding: 0 10px; }
 
 .back-right-content {
   height: 100%;
@@ -645,7 +647,7 @@
     position: absolute;
     height: 100%;
     width: 29px;
-    background-color: #0076ff;
+    background-color: red;
     top: 0;
     left: 0;
     color: white; }
@@ -707,7 +709,7 @@
   height: 37px;
   line-height: 37px;
   padding: 0;
-  background-color: #0076ff;
+  background-color: red;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
   -ms-border-radius: 50%;
@@ -755,6 +757,75 @@
     pointer-events: auto; }
   .btn-fx-toolbar-confirm span[class^="icojam_"] {
     color: #333; }
+
+/* OLAP */
+.tab-item-content .gt-viewport {
+  font-family: "Lucida Console", Monaco, monospace !important;
+  font-size: 12px !important;
+  color: #333 !important; }
+
+.gt-hd-row td .gt-inner {
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+.gt-inner {
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+.gt-row-selected td {
+  background-color: #ffe6e6; }
+
+.gt-head-wrap td {
+  background-color: #f4f4f4 !important; }
+
+/* Freezed Rows */
+.gt-freeze-div[id*="bodyDiv"] td {
+  background-color: #f4f4f4 !important; }
+
+/* Freezed Header */
+.gt-hd-split {
+  background-color: transparent !important;
+  border-right: 1px solid #bbbbbb !important;
+  padding-left: 5px !important;
+  position: relative;
+  overflow: visible; }
+  .gt-hd-split:before {
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 3px;
+    width: 1px;
+    border-right: 1px solid #bbbbbb; }
+
+.gt-freeze-div[id*="headDiv"] table {
+  border-bottom: 1px solid  #d6d6d6 !important;
+  /* Suspicious */ }
+.gt-freeze-div[id*="headDiv"] td {
+  background-color: #f4f4f4 !important; }
+
+.gt-row-over td {
+  border-bottom-color: red; }
+
+.gt-row-even {
+  background-color: white; }
+
+/* Toolbar */
+.gt-toolbar-box {
+  padding-top: 5px;
+  height: 30px; }
+
+.gt-button-split {
+  width: 15px;
+  background-color: transparent; }
+
+.gt-image-button div, .gt-image-button button {
+  position: relative;
+  top: 3px; }
+
+.gt-toolbar-text {
+  margin-left: 3px; }
 
 /* Analysis */
 

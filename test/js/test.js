@@ -33,7 +33,7 @@ define([
 
         var analysis = this.createInstance({
             $el: s.STANDARD,
-            environment : "develop"
+            environment : "distribution"
         });
     };
 

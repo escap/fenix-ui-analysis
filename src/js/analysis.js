@@ -212,24 +212,28 @@ define([
     };
 
     Analysis.prototype._initCatalog = function () {
-        var defaultSelectors = C.default_catalog_selectors || CD.default_catalog_selectors;
 
-        this.catalog = new Catalog({
-            $el: s.CATALOG_EL,
-            defaultSelectors: defaultSelectors,
-            //actions: ["download", 'view'],
-            //baseFilter : { test : "test"}
-        });
+        var defaultSelectors = C.catalog_default_selectors || CD.catalog_default_selectors,
+            actions = C.catalog_actions || CD.catalog_actions,
+            baseFilter = C.catalog_base_filter || CD.catalog_base_filter,
+            config = {
+                $el: s.CATALOG_EL,
+                defaultSelectors: defaultSelectors,
+                actions: actions
+            };
+
+        if (baseFilter) {
+            config["baseFilter"] = baseFilter;
+        }
+
+        this.catalog = new Catalog(config);
 
     };
 
     //Grid
     Analysis.prototype._addToGrid = function (obj) {
 
-        // hide courtesy message if it is first box
-        if (this.gridItems.length === 0) {
-            this._hideCourtesy();
-        }
+        this._checkCourtesy();
 
         var $blank = this.grid.getBlankContainer(),
             config = {
@@ -249,7 +253,7 @@ define([
 
             this._bindBoxEventListeners(box);
 
-            this.gridItems.push(box);
+            this.gridItems.push({model: box, el: $blank});
 
             this.grid.add($blank);
 
@@ -257,7 +261,7 @@ define([
 
     };
 
-    Analysis.prototype._addToGridFromCatalog = function ( obj ) {
+    Analysis.prototype._addToGridFromCatalog = function (obj) {
 
         var uid = Utils.getNestedProperty("model.uid", obj),
             version = Utils.getNestedProperty("model.version", obj);
@@ -268,7 +272,7 @@ define([
         }
 
         var config = {
-            uid : uid
+            uid: uid
         };
 
         if (version) {
@@ -282,14 +286,15 @@ define([
     Analysis.prototype._removeFromGrid = function (obj) {
 
         //remove item from list
-        this.gridItems = _.without(this.gridItems, _.findWhere(this.gridItems, {id: obj.id}));
+        var item = this._findModelFromGrid(obj.id),
+            model = item.model;
+
+        this.gridItems = _.without(this.gridItems, model);
 
         this.grid.redraw();
 
         // hide courtesy message if it is first box
-        if (this.gridItems.length === 0) {
-            this._showCourtesy();
-        }
+        this._checkCourtesy();
 
     };
 
@@ -298,11 +303,21 @@ define([
         var self = this;
 
         Box.on("minimize", function (payload) {
-            self._addToStack(payload)
+            self._addToStack(payload);
+            self.grid.redraw();
+            self._checkCourtesy()
         });
 
         Box.on("remove", function (payload) {
-            self._removeFromGrid(payload)
+            self._removeFromGrid(payload);
+        });
+
+        Box.on("clone", function (payload) {
+            self._addToGrid(payload)
+        });
+
+        Box.on("resize", function (payload) {
+            self._setBoxSize(payload)
         });
 
     };
@@ -313,7 +328,7 @@ define([
 
         var $item = this._createStackItem(obj);
 
-        this.stackItems.push(obj);
+        this.stackItems.push({model: obj, el: $item});
 
         this.$stack.append($item);
 
@@ -342,10 +357,11 @@ define([
         $html.find(s.STACK_ITEM_REMOVE_BUTTON).on('click', _.bind(function (e) {
             var $html = $(e.target).closest(s.STACK_ITEM),
                 id = $html.attr("data-id"),
-                model = _.findWhere(this.stackItems, {id: id});
+                item = this._findModelFromStack(id),
+                model = item.model;
 
             //remove item from list
-            this.stackItems = _.without(this.stackItems, model);
+            this.stackItems = _.without(this.stackItems, model.model);
 
             this._removeFromStack($html);
 
@@ -355,9 +371,8 @@ define([
 
             var $html = $(e.target).closest(s.STACK_ITEM),
                 id = $html.attr("data-id"),
-                model = _.findWhere(this.stackItems, {id: id});
-
-            console.log(model)
+                item = this._findModelFromStack(id),
+                model = item.model;
 
             //remove item from list
             this.stackItems = _.without(this.stackItems, model);
@@ -370,6 +385,27 @@ define([
 
     };
 
+    Analysis.prototype._setBoxSize = function (model) {
+
+        console.log(model.id)
+
+        var item = this._findModelFromGrid(model.id),
+            $el = item.el,
+            size = model.size || "";
+
+        console.log(this.gridItems)
+
+        if ($el.length === 0) {
+
+            log.error("Impossible to find $el for " + model.id);
+        }
+
+        $el.attr("data-size", size);
+
+        this.grid.redraw();
+
+    };
+
     Analysis.prototype._unbindStackItemEventListeners = function ($html) {
 
         $html.find(s.STACK_ITEM_REMOVE_BUTTON).off();
@@ -378,6 +414,18 @@ define([
     };
 
     // courtesy
+
+    Analysis.prototype._checkCourtesy = function () {
+
+        if (this.gridItems.length === 0) {
+            this._showCourtesy();
+        }
+
+        if (this.gridItems.length === 0) {
+            this._hideCourtesy();
+        }
+
+    };
 
     Analysis.prototype._showCourtesy = function () {
 
@@ -400,6 +448,20 @@ define([
         var baseEvent = EVT[evt] ? EVT[evt] : evt;
 
         return excludeId === true ? baseEvent : baseEvent + "." + this.id;
+    };
+
+    Analysis.prototype._findModelFromGrid = function (id) {
+        return this._findModelFromList(this.gridItems, id);
+    };
+
+    Analysis.prototype._findModelFromStack = function (id) {
+        return this._findModelFromList(this.stackItems, id);
+    };
+
+    Analysis.prototype._findModelFromList = function (list, id) {
+        return _.findWhere(list, function (item) {
+            return item.model === id;
+        });
     };
 
     //disposition

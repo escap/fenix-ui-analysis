@@ -6720,10 +6720,10 @@ input[type="radio"]:disabled + label {
   margin-left: 3px; }
 
 /* Analysis */
-[data-size="full"] {
+.fx-grid-item[data-size="full"] {
   width: 100%; }
 
-[data-size="half"] {
+.fx-grid-item[data-size="half"] {
   width: 50%; }
 
 .courtesy-img {

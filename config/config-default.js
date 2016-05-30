@@ -6,9 +6,10 @@ define(function () {
 
     return {
 
-            default_catalog_selectors :  ['resourceType', 'contextSystem', 'uid'],
-        pulsingButtonClassName : 'first-init'
-
+        catalog_default_selectors: ['resourceType', 'contextSystem', 'uid'],
+        catalog_actions: ["select", "download", 'view'],
+        //catalog_base_filter : { test : "test"}
+ pulsingButtonClassName : 'first-init'
     }
 
 });

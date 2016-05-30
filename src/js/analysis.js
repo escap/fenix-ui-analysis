@@ -11,12 +11,13 @@ define([
     'i18n!fx-analysis/nls/analysis',
     'fx-catalog/start',
     'fx-v-b/start',
+    "fx-reports/start",
     'fx-common/utils',
     'handlebars',
     'fx-common/structures/fx-fluid-grid',
     'amplify',
     'bootstrap'
-], function ($, _, log, ERR, EVT, C, CD, Templates, i18nLabels, Catalog, Box, Utils, Handlebars, Grid) {
+], function ($, _, log, ERR, EVT, C, CD, Templates, i18nLabels, Catalog, Box, Report, Utils, Handlebars, Grid) {
 
     'use strict';
 
@@ -122,6 +123,8 @@ define([
         this.id = this.initial.id;
         this.$el = this.initial.$el;
         this.environment = this.initial.environment;
+        this.lang = this.initial.lang || "EN";
+        this.lang = this.lang.toUpperCase();
 
     };
 
@@ -201,6 +204,10 @@ define([
 
     Analysis.prototype._initComponents = function () {
 
+        this.report = new Report({
+            environment: this.environment
+        });
+
         this._initCatalog();
 
         this.grid = new Grid({
@@ -229,9 +236,44 @@ define([
 
         this.catalog = new Catalog(config);
 
+        this.catalog.on("download", _.bind(this._onDownloadResult, this));
+
+    };
+
+    Analysis.prototype._onDownloadResult = function ( p ) {
+
+        this.$modal.modal("hide");
+
+        var uid = Utils.getNestedProperty("model.uid", p),
+            payload = {
+            resource: {
+                "metadata":{
+                    "uid":uid
+                }
+            },
+            input: {
+                config: {}
+            },
+            output: {
+                config: {
+                    lang: this.lang.toUpperCase()
+                }
+            }
+        };
+
+        log.info("Configure FENIX export: tableExport");
+
+        this.report.init('tableExport');
+
+        log.info(payload);
+
+        this.report.exportData({
+            config: payload
+        });
     };
 
     //Grid
+
     Analysis.prototype._addToGrid = function (obj) {
 
         this._checkCourtesy();

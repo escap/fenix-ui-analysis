@@ -6,7 +6,7 @@ define(function () {
 
     return {
 
-        defaultSelectors: ['resourceType', 'contextSystem', 'uid']
+            default_catalog_selectors :  ['resourceType', 'contextSystem', 'uid']
 
     }
 

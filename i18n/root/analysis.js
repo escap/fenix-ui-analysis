@@ -26,7 +26,9 @@ define(function () {
 
         //Errors
         request : "Request error",
-        empty_values : "Empty selection"
+        empty_values : "Empty selection",
+
+        courtesy_intro: "Welcome to the Fenix Platform Analysis Section. <br>Here you will be able to produce statistic analysis by using all the data stored in the Fenix Network.<br> Please start with your first AVB (Analysis Visualization Box) by choosing a resource from the catalog by clicking the button above."
 
     }
 });

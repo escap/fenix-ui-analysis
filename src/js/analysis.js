@@ -228,6 +228,8 @@ define([
     //Grid
     Analysis.prototype._addToGrid = function (obj) {
 
+        console.log(obj)
+
         var $blank = this.grid.getBlankContainer(),
             config = {
                 el: $blank,

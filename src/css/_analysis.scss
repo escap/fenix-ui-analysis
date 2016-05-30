@@ -7,3 +7,16 @@
 
 .fx-grid-item { width: 100%; }
 .fx-grid-item-half { width: 50%; }
+
+.courtesy-intro{
+
+}
+
+
+.courtesy-img{
+  width: 140px;
+  height: 129px;
+  background-image: url("#{$fx-ui-common}/css/img/mascot-01-gray.svg");
+  background-size: contain;
+  margin: 0 auto;
+}

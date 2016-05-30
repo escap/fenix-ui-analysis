@@ -6589,4 +6589,11 @@ input[type="radio"]:disabled + label {
 .fx-grid-item-half {
   width: 50%; }
 
+.courtesy-img {
+  width: 140px;
+  height: 129px;
+  background-image: url("../../../fenix-ui-common//css/img/mascot-01-gray.svg");
+  background-size: contain;
+  margin: 0 auto; }
+
 /*# sourceMappingURL=test.css.map */

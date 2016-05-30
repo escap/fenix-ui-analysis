@@ -30,7 +30,7 @@ define([
         STACK_ITEM: "[data-role='stack-item']",
         STACK_ITEM_REMOVE_BUTTON: "[data-action='stack-item-remove']",
         STACK_ITEM_ENLARGE_BUTTON: "[data-action='stack-item-enlarge']",
-        COURTESY: "[data-role='courtesy]"
+        COURTESY: "[data-role='courtesy']"
     };
 
     function Analysis(o) {
@@ -188,19 +188,14 @@ define([
 
     Analysis.prototype._bindEventListeners = function () {
 
-        var self = this;
-
         this.$catalogButton.on("click", _.bind(function () {
             this.$modal.modal("show");
-            //this._addToStack();
         }, this));
 
-        this.catalog.on("select", function (payload) {
-            self.$modal.modal("hide");
-            self._addToGrid(payload);
-        });
-
-        //amplify.subscribe(this._getEventName("select"), this, this._onSelectResult);
+        this.catalog.on("select", _.bind(function (payload) {
+            this.$modal.modal("hide");
+            this._addToGridFromCatalog(payload);
+        }, this));
 
     };
 
@@ -229,11 +224,6 @@ define([
     //Grid
     Analysis.prototype._addToGrid = function (obj) {
 
-        if (!Utils.getNestedProperty("model.uid", obj)) {
-            log.error("Impossible to find model.uid. Abort addToGrid() fn");
-            return;
-        }
-
         // hide courtesy message if it is first box
         if (this.gridItems.length === 0) {
             this._hideCourtesy();
@@ -242,29 +232,57 @@ define([
         var $blank = this.grid.getBlankContainer(),
             config = {
                 el: $blank,
-                uid: obj.model.uid,
-                environment : this.environment
+                uid: obj.uid,
+                environment: this.environment
             },
             box;
 
-        if (obj.model.version) {
-            config.version = obj.model.version;
+        if (obj.version) {
+            config.version = obj.version;
         }
 
-        box = new Box(config);
+        window.setTimeout(_.bind(function () {
 
-        this._bindBoxEventListeners(box);
+            box = new Box(config);
 
-        this.gridItems.push(box);
+            this._bindBoxEventListeners(box);
 
-        this.grid.add($blank);
+            this.gridItems.push(box);
+
+            this.grid.add($blank);
+
+        }, this), 100);
+
+    };
+
+    Analysis.prototype._addToGridFromCatalog = function ( obj ) {
+
+        var uid = Utils.getNestedProperty("model.uid", obj),
+            version = Utils.getNestedProperty("model.version", obj);
+
+        if (!uid) {
+            log.error("Impossible to find model.uid. Abort addToGrid() fn");
+            return;
+        }
+
+        var config = {
+            uid : uid
+        };
+
+        if (version) {
+            config.version = version;
+        }
+
+        this._addToGrid(config);
 
     };
 
     Analysis.prototype._removeFromGrid = function (obj) {
 
-        //TODO remove from list - delete this.gridItems[...]
+        //remove item from list
+        this.gridItems = _.without(this.gridItems, _.findWhere(this.gridItems, {id: obj.id}));
 
+        this.grid.redraw();
 
         // hide courtesy message if it is first box
         if (this.gridItems.length === 0) {
@@ -282,7 +300,7 @@ define([
         });
 
         Box.on("remove", function (payload) {
-            //self._addToStack(payload)
+            self._removeFromGrid(payload)
         });
 
     };
@@ -293,7 +311,7 @@ define([
 
         var $item = this._createStackItem(obj);
 
-        this.stackItems.push($item);
+        this.stackItems.push(obj);
 
         this.$stack.append($item);
 
@@ -320,16 +338,32 @@ define([
     Analysis.prototype._bindStackItemEventListeners = function ($html) {
 
         $html.find(s.STACK_ITEM_REMOVE_BUTTON).on('click', _.bind(function (e) {
-            var $html = $(e.target).closest(s.STACK_ITEM);
+            var $html = $(e.target).closest(s.STACK_ITEM),
+                id = $html.attr("data-id"),
+                model = _.findWhere(this.stackItems, {id: id});
+
+            //remove item from list
+            this.stackItems = _.without(this.stackItems, model);
+
             this._removeFromStack($html);
+
         }, this));
 
         $html.find(s.STACK_ITEM_ENLARGE_BUTTON).on('click', _.bind(function (e) {
 
-            var $html = $(e.target).closest(s.STACK_ITEM);
+            var $html = $(e.target).closest(s.STACK_ITEM),
+                id = $html.attr("data-id"),
+                model = _.findWhere(this.stackItems, {id: id});
+
+            console.log(model)
+
+            //remove item from list
+            this.stackItems = _.without(this.stackItems, model);
 
             this._removeFromStack($html);
-            this._addToGrid()
+
+            this._addToGrid(model);
+
         }, this));
 
     };

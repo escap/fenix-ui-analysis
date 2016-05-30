@@ -5,8 +5,8 @@
 }
 
 
-.fx-grid-item { width: 100%; }
-.fx-grid-item-half { width: 50%; }
+[data-size="full"] { width: 100%; }
+[data-size="half"] { width: 50%; }
 
 .courtesy-intro{
 

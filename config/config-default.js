@@ -7,9 +7,9 @@ define(function () {
     return {
 
         catalog_default_selectors: ['resourceType', 'contextSystem', 'uid'],
-        catalog_actions: ["select", "download", 'view'],
+        catalog_actions: ["download", "select"], /* , 'view' */
         //catalog_base_filter : { test : "test"}
- pulsingButtonClassName : 'first-init'
+        pulsingButtonClassName : 'first-init'
     }
 
 });

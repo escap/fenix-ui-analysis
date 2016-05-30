@@ -180,10 +180,8 @@ define([
         this.$catalogButton = this.$el.find(s.CATALOG_BUTTON);
         this.$modal = this.$el.find(s.MODAL);
         this.$stack = this.$el.find(s.STACK);
-
         this.stackItems = [];
         this.gridItems = [];
-
         this.pulsingButtonClassName = C.pulsingButtonClassName || CD.pulsingButtonClassName;
 
     };
@@ -251,11 +249,11 @@ define([
 
             box = new Box(config);
 
-            this._bindBoxEventListeners(box);
-
-            this.gridItems.push({model: box, el: $blank});
+            this.gridItems[box.id] = {model: box, el: $blank};
 
             this.grid.add($blank);
+
+            this._bindBoxEventListeners(box);
 
         }, this), 100);
 
@@ -285,11 +283,7 @@ define([
 
     Analysis.prototype._removeFromGrid = function (obj) {
 
-        //remove item from list
-        var item = this._findModelFromGrid(obj.id),
-            model = item.model;
-
-        this.gridItems = _.without(this.gridItems, model);
+        delete this.gridItems[obj.id];
 
         this.grid.redraw();
 
@@ -320,6 +314,10 @@ define([
             self._setBoxSize(payload)
         });
 
+        Box.on("ready", function () {
+            self.grid.redraw();
+        });
+
     };
 
     //Stack
@@ -328,7 +326,7 @@ define([
 
         var $item = this._createStackItem(obj);
 
-        this.stackItems.push({model: obj, el: $item});
+        this.stackItems[obj.id] = {model: obj, el: $item};
 
         this.$stack.append($item);
 
@@ -356,12 +354,10 @@ define([
 
         $html.find(s.STACK_ITEM_REMOVE_BUTTON).on('click', _.bind(function (e) {
             var $html = $(e.target).closest(s.STACK_ITEM),
-                id = $html.attr("data-id"),
-                item = this._findModelFromStack(id),
-                model = item.model;
+                id = $html.attr("data-id");
 
             //remove item from list
-            this.stackItems = _.without(this.stackItems, model.model);
+            delete this.stackItems[id];
 
             this._removeFromStack($html);
 
@@ -375,7 +371,8 @@ define([
                 model = item.model;
 
             //remove item from list
-            this.stackItems = _.without(this.stackItems, model);
+
+            delete this.stackItems[id];
 
             this._removeFromStack($html);
 
@@ -387,13 +384,9 @@ define([
 
     Analysis.prototype._setBoxSize = function (model) {
 
-        console.log(model.id)
-
         var item = this._findModelFromGrid(model.id),
             $el = item.el,
             size = model.size || "";
-
-        console.log(this.gridItems)
 
         if ($el.length === 0) {
 
@@ -459,9 +452,8 @@ define([
     };
 
     Analysis.prototype._findModelFromList = function (list, id) {
-        return _.findWhere(list, function (item) {
-            return item.model === id;
-        });
+
+        return list[id];
     };
 
     //disposition

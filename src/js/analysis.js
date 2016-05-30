@@ -204,7 +204,10 @@ define([
         this._initCatalog();
 
         this.grid = new Grid({
-            $el: s.GRID
+            $el: s.GRID,
+            config: {
+                containment: s.GRID
+            }
         });
 
     };

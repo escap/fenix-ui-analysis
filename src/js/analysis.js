@@ -214,10 +214,11 @@ define([
     };
 
     Analysis.prototype._initCatalog = function () {
+        var defaultSelectors = C.default_catalog_selectors || CD.default_catalog_selectors;
 
         this.catalog = new Catalog({
             $el: s.CATALOG_EL,
-            defaultSelectors: ['region', 'resourceType'],
+            defaultSelectors: defaultSelectors,
             //actions: ["download", 'view'],
             //baseFilter : { test : "test"}
         });

@@ -30,6 +30,7 @@ define([
         STACK_ITEM: "[data-role='stack-item']",
         STACK_ITEM_REMOVE_BUTTON: "[data-action='stack-item-remove']",
         STACK_ITEM_ENLARGE_BUTTON: "[data-action='stack-item-enlarge']",
+        COURTESY: "[data-role='courtesy]"
     };
 
     function Analysis(o) {
@@ -228,7 +229,15 @@ define([
     //Grid
     Analysis.prototype._addToGrid = function (obj) {
 
-        console.log(obj)
+        if (!Utils.getNestedProperty("model.uid", obj)) {
+            log.error("Impossible to find model.uid. Abort addToGrid() fn");
+            return;
+        }
+
+        // hide courtesy message if it is first box
+        if (this.gridItems.length === 0) {
+            this._hideCourtesy();
+        }
 
         var $blank = this.grid.getBlankContainer(),
             config = {
@@ -242,8 +251,6 @@ define([
             config.version = obj.model.version;
         }
 
-        console.log(config)
-
         box = new Box(config);
 
         this._bindBoxEventListeners(box);
@@ -255,7 +262,15 @@ define([
     };
 
     Analysis.prototype._removeFromGrid = function (obj) {
+
         //TODO remove from list - delete this.gridItems[...]
+
+
+        // hide courtesy message if it is first box
+        if (this.gridItems.length === 0) {
+            this._showCourtesy();
+        }
+
     };
 
     Analysis.prototype._bindBoxEventListeners = function (Box) {
@@ -273,6 +288,7 @@ define([
     };
 
     //Stack
+
     Analysis.prototype._addToStack = function (obj) {
 
         var $item = this._createStackItem(obj);
@@ -325,7 +341,19 @@ define([
 
     };
 
-    // Handlers
+    // courtesy
+
+    Analysis.prototype._showCourtesy = function () {
+
+        this.$el.find(s.COURTESY).show();
+    };
+
+    Analysis.prototype._hideCourtesy = function () {
+
+        this.$el.find(s.COURTESY).hide();
+    };
+
+    // utils
 
     Analysis.prototype._getEventName = function (evt, excludeId) {
 

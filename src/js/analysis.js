@@ -184,6 +184,8 @@ define([
         this.stackItems = [];
         this.gridItems = [];
 
+        this.pulsingButtonClassName = C.pulsingButtonClassName || CD.pulsingButtonClassName;
+
     };
 
     Analysis.prototype._bindEventListeners = function () {
@@ -379,10 +381,14 @@ define([
 
     Analysis.prototype._showCourtesy = function () {
 
+        this.$catalogButton.removeClass(this.pulsingButtonClassName);
+
         this.$el.find(s.COURTESY).show();
     };
 
     Analysis.prototype._hideCourtesy = function () {
+
+        this.$catalogButton.addClass(this.pulsingButtonClassName);
 
         this.$el.find(s.COURTESY).hide();
     };

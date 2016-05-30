@@ -6,7 +6,8 @@ define(function () {
 
     return {
 
-            default_catalog_selectors :  ['resourceType', 'contextSystem', 'uid']
+            default_catalog_selectors :  ['resourceType', 'contextSystem', 'uid'],
+        pulsingButtonClassName : 'first-init'
 
     }
 

@@ -44,10 +44,10 @@
 
   span{
     position: relative;
-    
+    left: 1px;
   }
 
-  &:hover, &:focus, &:active, &:visited{
+  &:hover, &:focus, &:active, &:visited, &.first-init{
     color: white;
     -webkit-animation: none;-moz-animation: none;-ms-animation: none;animation: none;
   }

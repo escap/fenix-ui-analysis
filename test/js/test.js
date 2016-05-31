@@ -33,7 +33,30 @@ define([
 
         var analysis = this.createInstance({
             $el: s.STANDARD,
-            environment : "distribution"
+            environment : "develop",
+            catalog_default_selectors : ['contextSystem', 'uid'],
+            catalog_selectors_registry : {
+                contextSystem : {
+                    selector : {
+                        id : "dropdown",
+                        source : [
+                            {value : "cstat_mdg", label : "CountrySTAT Madagascar"},
+                            {value : "uneca", label : "UNECA"}
+                        ],
+                        default : ["cstat_mdg"],
+                        hideSummary : true
+                    },
+
+                    template : {
+                        hideRemoveButton : false
+                    },
+
+                    format : {
+                        output : "enumeration",
+                        metadataAttribute: "dsd.contextSystem"
+                    }
+                }
+            }
         });
     };
 

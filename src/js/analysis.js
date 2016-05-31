@@ -126,6 +126,10 @@ define([
         this.lang = this.initial.lang || "EN";
         this.lang = this.lang.toUpperCase();
 
+        this.catalog_base_filter = this.initial.catalog_base_filter || C.catalog_base_filter || CD.catalog_base_filter;
+        this.catalog_default_selectors = this.initial.catalog_default_selectors || C.catalog_default_selectors || CD.catalog_default_selectors;
+        this.catalog_actions = this.initial.catalog_actions || C.catalog_actions || CD.catalog_actions;
+        this.catalog_selectors_registry = this.initial.catalog_selectors_registry || C.C.catalog_selectors_registry || CD.catalog_selectors_registry;
     };
 
     Analysis.prototype._validateInput = function () {
@@ -221,18 +225,14 @@ define([
 
     Analysis.prototype._initCatalog = function () {
 
-        var defaultSelectors = C.catalog_default_selectors || CD.catalog_default_selectors,
-            actions = C.catalog_actions || CD.catalog_actions,
-            baseFilter = C.catalog_base_filter || CD.catalog_base_filter,
-            config = {
+        var config = {
                 $el: s.CATALOG_EL,
-                defaultSelectors: defaultSelectors,
-                actions: actions
+                defaultSelectors: this.catalog_default_selectors,
+                baseFilter: this.catalog_base_filter ,
+                actions: this.catalog_actions,
+                selectorsRegistry: this.catalog_selectors_registry,
+                environment : this.environment
             };
-
-        if (baseFilter) {
-            config["baseFilter"] = baseFilter;
-        }
 
         this.catalog = new Catalog(config);
 
@@ -240,26 +240,26 @@ define([
 
     };
 
-    Analysis.prototype._onDownloadResult = function ( p ) {
+    Analysis.prototype._onDownloadResult = function (p) {
 
         this.$modal.modal("hide");
 
         var uid = Utils.getNestedProperty("model.uid", p),
             payload = {
-            resource: {
-                "metadata":{
-                    "uid":uid
+                resource: {
+                    "metadata": {
+                        "uid": uid
+                    }
+                },
+                input: {
+                    config: {}
+                },
+                output: {
+                    config: {
+                        lang: this.lang.toUpperCase()
+                    }
                 }
-            },
-            input: {
-                config: {}
-            },
-            output: {
-                config: {
-                    lang: this.lang.toUpperCase()
-                }
-            }
-        };
+            };
 
         log.info("Configure FENIX export: tableExport");
 
@@ -279,9 +279,10 @@ define([
         this._checkCourtesy();
 
         var $blank = this.grid.getBlankContainer(),
-            config = $.extend(true, {
-                el: $blank
-            }, obj),
+            config = $.extend(true, obj, {
+                el: $blank,
+                environment: this.environment
+            }),
             box;
 
         $blank.attr('data-size', config.size);

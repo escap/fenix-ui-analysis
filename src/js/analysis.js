@@ -183,8 +183,8 @@ define([
         this.$catalogButton = this.$el.find(s.CATALOG_BUTTON);
         this.$modal = this.$el.find(s.MODAL);
         this.$stack = this.$el.find(s.STACK);
-        this.stackItems = [];
-        this.gridItems = [];
+        this.stackItems = {};
+        this.gridItems = {};
         this.pulsingButtonClassName = C.pulsingButtonClassName || CD.pulsingButtonClassName;
 
     };
@@ -279,16 +279,12 @@ define([
         this._checkCourtesy();
 
         var $blank = this.grid.getBlankContainer(),
-            config = {
-                el: $blank,
-                uid: obj.uid,
-                environment: this.environment
-            },
+            config = $.extend(true, {
+                el: $blank
+            }, obj),
             box;
 
-        if (obj.version) {
-            config.version = obj.version;
-        }
+        $blank.attr('data-size', config.size);
 
         window.setTimeout(_.bind(function () {
 
@@ -297,6 +293,8 @@ define([
             this.gridItems[box.id] = {model: box, el: $blank};
 
             this.grid.add($blank);
+
+            this._checkCourtesy();
 
             this._bindBoxEventListeners(box);
 
@@ -329,7 +327,6 @@ define([
     Analysis.prototype._removeFromGrid = function (obj) {
 
         delete this.gridItems[obj.id];
-
         this.grid.redraw();
 
         // hide courtesy message if it is first box
@@ -402,7 +399,7 @@ define([
                 id = $html.attr("data-id");
 
             //remove item from list
-            delete this.stackItems[id];
+            delete this.gridItems[id];
 
             this._removeFromStack($html);
 
@@ -455,11 +452,13 @@ define([
 
     Analysis.prototype._checkCourtesy = function () {
 
-        if (this.gridItems.length === 0) {
+        var length = Object.keys(this.gridItems).length;
+
+        if (length === 0) {
             this._showCourtesy();
         }
 
-        if (this.gridItems.length === 0) {
+        if (length !== 0) {
             this._hideCourtesy();
         }
 

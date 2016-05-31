@@ -5943,15 +5943,15 @@ input[type="radio"]:disabled + label {
     margin-bottom: 5px;
     text-align: center; }
 
-[data-action="select"].btn-default {
+[data-role="results"] [data-action="select"].btn-default {
   color: #fff;
   background-color: #337ab7;
   border-color: #2e6da4; }
-  [data-action="select"].btn-default:hover {
+  [data-role="results"] [data-action="select"].btn-default:hover {
     color: #fff;
     background-color: #286090;
     border-color: #204d74; }
-  [data-action="select"].btn-default:focus {
+  [data-role="results"] [data-action="select"].btn-default:focus {
     color: #fff;
     background-color: #286090;
     border-color: #122b40; }
@@ -6983,6 +6983,9 @@ input[type="radio"]:disabled + label {
     background-color: #0076ff; }
 
 /* Analysis */
+.fx-grid-item {
+  padding: 5px; }
+
 .fx-grid-item[data-size="full"] {
   width: 100%; }
 

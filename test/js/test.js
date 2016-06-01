@@ -11,7 +11,8 @@ define([
     var s = {
             STANDARD: "#standard"
         },
-        instances = [];
+        instances = [],
+        environment = "production";
 
     function Test() {
     }
@@ -33,17 +34,17 @@ define([
 
         var analysis = this.createInstance({
             $el: s.STANDARD,
-            environment : "develop",
-            catalog_default_selectors : ['contextSystem', 'uid'],
+            environment : environment,
+            catalog_default_selectors : ['contextSystem', "dataDomain","resourceType" ],
             catalog_selectors_registry : {
                 contextSystem : {
                     selector : {
                         id : "dropdown",
                         source : [
-                            {value : "cstat_mdg", label : "CountrySTAT Madagascar"},
-                            {value : "uneca", label : "UNECA"}
+                            {value : "uneca", label : "UNECA"},
+                            {value : "FAOSTAT", label : "FAOSTAT"}
                         ],
-                        default : ["cstat_mdg"],
+                        default : ["uneca"],
                         hideSummary : true
                     },
 

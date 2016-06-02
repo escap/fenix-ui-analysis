@@ -10,7 +10,9 @@ define(function () {
         catalog_actions: ["download", "select"], /* , 'view' */
         //catalog_base_filter : { test : "test"}
         //catalog_selectors_registry : {}
-        pulsingButtonClassName : 'first-init'
+        pulsingButtonClassName : 'first-init',
+
+        box_config : {}
     }
 
 });

@@ -126,10 +126,14 @@ define([
         this.lang = this.initial.lang || "EN";
         this.lang = this.lang.toUpperCase();
 
+        //catalog
         this.catalog_base_filter = this.initial.catalog_base_filter || C.catalog_base_filter || CD.catalog_base_filter;
         this.catalog_default_selectors = this.initial.catalog_default_selectors || C.catalog_default_selectors || CD.catalog_default_selectors;
         this.catalog_actions = this.initial.catalog_actions || C.catalog_actions || CD.catalog_actions;
         this.catalog_selectors_registry = this.initial.catalog_selectors_registry || C.C.catalog_selectors_registry || CD.catalog_selectors_registry;
+
+        //box
+        this.box_config = this.initial.box_config || C.C.box_config || CD.box_config;
     };
 
     Analysis.prototype._validateInput = function () {
@@ -282,7 +286,7 @@ define([
             config = $.extend(true, obj, {
                 el: $blank,
                 environment: this.environment
-            }),
+            }, this.box_config),
             box;
 
         $blank.attr('data-size', config.size);

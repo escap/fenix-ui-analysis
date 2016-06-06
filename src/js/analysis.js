@@ -133,7 +133,7 @@ define([
         this.catalog_selectors_registry = this.initial.catalog_selectors_registry || C.C.catalog_selectors_registry || CD.catalog_selectors_registry;
 
         //box
-        this.box_config = this.initial.box_config || C.C.box_config || CD.box_config;
+        this.box_config = this.initial.box_config || C.box_config || CD.box_config;
     };
 
     Analysis.prototype._validateInput = function () {

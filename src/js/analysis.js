@@ -125,6 +125,7 @@ define([
         this.environment = this.initial.environment;
         this.lang = this.initial.lang || "EN";
         this.lang = this.lang.toUpperCase();
+        this.cache = this.initial.cache;
 
         //catalog
         this.catalog_base_filter = this.initial.catalog_base_filter || C.catalog_base_filter || CD.catalog_base_filter;
@@ -213,6 +214,7 @@ define([
     Analysis.prototype._initComponents = function () {
 
         this.report = new Report({
+            cache : this.cache,
             environment: this.environment
         });
 
@@ -230,7 +232,8 @@ define([
     Analysis.prototype._initCatalog = function () {
 
         var config = {
-                $el: s.CATALOG_EL,
+                el: s.CATALOG_EL,
+                cache : this.cache,
                 defaultSelectors: this.catalog_default_selectors,
                 baseFilter: this.catalog_base_filter ,
                 actions: this.catalog_actions,
@@ -285,7 +288,8 @@ define([
         var $blank = this.grid.getBlankContainer(),
             config = $.extend(true, obj, {
                 el: $blank,
-                environment: this.environment
+                environment: this.environment,
+                cache : this.cache
             }, this.box_config),
             box;
 

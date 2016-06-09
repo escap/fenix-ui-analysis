@@ -202,6 +202,7 @@ define([
 
         this.$catalogButton.on("click", _.bind(function () {
             this.$modal.modal("show");
+            this._trigger("catalog.show");
         }, this));
 
         this.catalog.on("select", _.bind(function (payload) {

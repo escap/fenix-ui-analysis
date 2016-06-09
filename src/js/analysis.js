@@ -6,7 +6,6 @@ define([
     'fx-analysis/config/errors',
     'fx-analysis/config/events',
     'fx-analysis/config/config',
-    'fx-analysis/config/config-default',
     'text!fx-analysis/html/analysis.hbs',
     'i18n!fx-analysis/nls/analysis',
     'fx-catalog/start',
@@ -17,7 +16,7 @@ define([
     'fx-common/structures/fx-fluid-grid',
     'amplify',
     'bootstrap'
-], function ($, _, log, ERR, EVT, C, CD, Templates, i18nLabels, Catalog, Box, Report, Utils, Handlebars, Grid) {
+], function ($, _, log, ERR, EVT, C, Templates, i18nLabels, Catalog, Box, Report, Utils, Handlebars, Grid) {
 
     'use strict';
 
@@ -38,7 +37,7 @@ define([
         log.info("FENIX analysis");
         log.info(o);
 
-        $.extend(true, this, {initial: o}, CD, C);
+        $.extend(true, this, {initial: o}, C);
 
         this._registerHandlebarsHelpers();
 
@@ -121,20 +120,21 @@ define([
     Analysis.prototype._parseInput = function () {
 
         this.id = this.initial.id;
-        this.$el = this.initial.$el;
+        this.$el = $(this.initial.el);
         this.environment = this.initial.environment;
         this.lang = this.initial.lang || "EN";
         this.lang = this.lang.toUpperCase();
         this.cache = this.initial.cache;
 
         //catalog
-        this.catalog_base_filter = this.initial.catalog_base_filter || C.catalog_base_filter || CD.catalog_base_filter;
-        this.catalog_default_selectors = this.initial.catalog_default_selectors || C.catalog_default_selectors || CD.catalog_default_selectors;
-        this.catalog_actions = this.initial.catalog_actions || C.catalog_actions || CD.catalog_actions;
-        this.catalog_selectors_registry = this.initial.catalog_selectors_registry || C.C.catalog_selectors_registry || CD.catalog_selectors_registry;
+        this.catalogBaseFilter = this.initial.catalogBaseFilter || C.catalogBaseFilter;
+        this.catalogDefaultSelectors = this.initial.catalogDefaultSelectors || C.catalogDefaultSelectors;
+        this.catalogActions = this.initial.catalogActions || C.catalogActions;
+        this.catalogSelectorsRegistry = this.initial.catalogSelectorsRegistry || C.catalogSelectorsRegistry;
 
         //box
-        this.box_config = this.initial.box_config || C.box_config || CD.box_config;
+        this.boxConfig = this.initial.boxConfig || C.boxConfig;
+        this.catalogMenuExcludedItems = this.initial.catalogMenuExcludedItems || C.catalogMenuExcludedItems;
     };
 
     Analysis.prototype._validateInput = function () {
@@ -194,7 +194,7 @@ define([
         this.$stack = this.$el.find(s.STACK);
         this.stackItems = {};
         this.gridItems = {};
-        this.pulsingButtonClassName = C.pulsingButtonClassName || CD.pulsingButtonClassName;
+        this.pulsingButtonClassName = C.pulsingButtonClassName;
 
     };
 
@@ -214,7 +214,7 @@ define([
     Analysis.prototype._initComponents = function () {
 
         this.report = new Report({
-            cache : this.cache,
+            cache: this.cache,
             environment: this.environment
         });
 
@@ -232,14 +232,15 @@ define([
     Analysis.prototype._initCatalog = function () {
 
         var config = {
-                el: s.CATALOG_EL,
-                cache : this.cache,
-                defaultSelectors: this.catalog_default_selectors,
-                baseFilter: this.catalog_base_filter ,
-                actions: this.catalog_actions,
-                selectorsRegistry: this.catalog_selectors_registry,
-                environment : this.environment
-            };
+            cache: this.cache,
+            environment: this.environment,
+            el: s.CATALOG_EL,
+            defaultSelectors: this.catalogDefaultSelectors,
+            baseFilter: this.catalogBaseFilter,
+            actions: this.catalogActions,
+            selectorsRegistry: this.catalogSelectorsRegistry,
+            menuExcludedItems : this.catalogMenuExcludedItems
+        };
 
         this.catalog = new Catalog(config);
 
@@ -289,8 +290,8 @@ define([
             config = $.extend(true, obj, {
                 el: $blank,
                 environment: this.environment,
-                cache : this.cache
-            }, this.box_config),
+                cache: this.cache
+            }, this.boxConfig),
             box;
 
         $blank.attr('data-size', config.size);

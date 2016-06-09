@@ -124,7 +124,7 @@ define([
         this.environment = this.initial.environment;
         this.lang = this.initial.lang || "EN";
         this.lang = this.lang.toUpperCase();
-        this.cache = this.initial.cache;
+        this.cache = typeof this.initial.cache === "boolean" ? this.initial.cache : C.cache;
 
         //catalog
         this.catalogBaseFilter = this.initial.catalogBaseFilter || C.catalogBaseFilter;

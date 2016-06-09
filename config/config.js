@@ -12,8 +12,9 @@ define(function () {
         //catalogSelectorsRegistry : {}
         catalogMenuExcludedItems : [],
         pulsingButtonClassName: 'first-init',
-
-        boxConfig: {}
+        boxConfig: {},
+        
+        cache : false
     }
 
 });

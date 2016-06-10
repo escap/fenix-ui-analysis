@@ -78,13 +78,14 @@ define([
 
     /**
      * pub/sub
-     * @return {Object} analysis instance
+     * @return {Object} component instance
      */
-    Analysis.prototype.on = function (channel, fn) {
+    Analysis.prototype.on = function (channel, fn, context) {
+        var _context = context || this;
         if (!this.channels[channel]) {
             this.channels[channel] = [];
         }
-        this.channels[channel].push({context: this, callback: fn});
+        this.channels[channel].push({context: _context, callback: fn});
         return this;
     };
 

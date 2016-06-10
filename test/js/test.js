@@ -33,10 +33,10 @@ define([
     Test.prototype._renderStandard = function () {
 
         var analysis = this.createInstance({
-            $el: s.STANDARD,
+            el: s.STANDARD,
             environment : environment,
-            catalog_default_selectors : ['contextSystem', "dataDomain","resourceType" ],
-            catalog_selectors_registry : {
+            catalogDefaultDelectors : ['contextSystem', "dataDomain","resourceType" ],
+            catalogSelectorsRegistry : {
                 contextSystem : {
                     selector : {
                         id : "dropdown",

@@ -7,7 +7,7 @@ define(function () {
             'fx-analysis/html': '../../html',
             'fx-analysis/js': './',
             'fx-analysis/config' :  '../../config',
-            'fx-analysis/nls' :  '../../i18n',
+            'fx-analysis/nls' :  '../../nls',
 
             //3rd party libs
             'jquery': '{FENIX_CDN}/js/jquery/2.1.1/jquery.min',

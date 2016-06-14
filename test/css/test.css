@@ -5791,6 +5791,8 @@ input[type="radio"]:disabled + label {
     display: block; }
   .fx-catalog [data-status="intro"] [data-content="intro"] {
     display: block; }
+  .fx-catalog [data-status="huge"] [data-content="huge"] {
+    display: block; }
   .fx-catalog .cat-title {
     margin-left: 50px;
     margin-right: 50px; }
@@ -6440,6 +6442,8 @@ input[type="radio"]:disabled + label {
     pointer-events: auto; }
   @media screen and (min-width: 768px) {
     .fx-box .front-toolbar .toolbar-cmd-left, .fx-box .front-toolbar .toolbar-cmd-right {
+      opacity: 0;
+      pointer-events: none;
       -webkit-transition: all 0.3s ease 0.2s;
       -moz-transition: all 0.3s ease 0.2s;
       -ms-transition: all 0.3s ease 0.2s;
@@ -6454,6 +6458,7 @@ input[type="radio"]:disabled + label {
       -o-transition: all 0.3s ease 0.2s;
       transition: all 0.3s ease 0.2s; }
     .fx-box:hover .front-toolbar .toolbar-cmd-left, .fx-box:hover .front-toolbar .toolbar-cmd-right {
+      opacity: 1;
       pointer-events: auto; }
     .fx-box:hover .front-toolbar .box-title {
       margin-left: 85px;

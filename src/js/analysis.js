@@ -59,8 +59,6 @@ define([
 
             this._bindEventListeners();
 
-            this.$el.find('[data-toggle="tooltip"]').tooltip();
-
             return this;
 
         } else {

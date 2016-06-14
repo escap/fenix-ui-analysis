@@ -59,6 +59,8 @@ define([
 
             this._bindEventListeners();
 
+            this.$el.find('[data-toggle="tooltip"]').tooltip();
+
             return this;
 
         } else {
@@ -127,15 +129,11 @@ define([
         this.lang = this.lang.toUpperCase();
         this.cache = typeof this.initial.cache === "boolean" ? this.initial.cache : C.cache;
 
-        //catalog
-        this.catalogBaseFilter = this.initial.catalogBaseFilter || C.catalogBaseFilter;
-        this.catalogDefaultSelectors = this.initial.catalogDefaultSelectors || C.catalogDefaultSelectors;
-        this.catalogActions = this.initial.catalogActions || C.catalogActions;
-        this.catalogSelectorsRegistry = this.initial.catalogSelectorsRegistry || C.catalogSelectorsRegistry;
+        // catalog proxied config
+        this.catalogConfig =  this.initial.catalog || C.catalog;
 
-        //box
-        this.boxConfig = this.initial.boxConfig || C.boxConfig;
-        this.catalogMenuExcludedItems = this.initial.catalogMenuExcludedItems || C.catalogMenuExcludedItems;
+        // box proxied config
+        this.boxConfig = this.initial.box || C.box;
     };
 
     Analysis.prototype._validateInput = function () {
@@ -233,16 +231,11 @@ define([
 
     Analysis.prototype._initCatalog = function () {
 
-        var config = {
+        var config = $.extend(true, {}, {
             cache: this.cache,
             environment: this.environment,
-            el: s.CATALOG_EL,
-            defaultSelectors: this.catalogDefaultSelectors,
-            baseFilter: this.catalogBaseFilter,
-            actions: this.catalogActions,
-            selectorsRegistry: this.catalogSelectorsRegistry,
-            menuExcludedItems : this.catalogMenuExcludedItems
-        };
+            el: s.CATALOG_EL
+        }, this.catalogConfig);
 
         this.catalog = new Catalog(config);
 

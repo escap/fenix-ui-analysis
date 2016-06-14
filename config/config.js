@@ -6,14 +6,20 @@ define(function () {
 
     return {
 
-        catalogDefaultSelectors: ['resourceType', 'contextSystem', 'uid'],
-        catalogActions: ["download", "select"], /* , 'view' */
-        //catalogBaseFilter : { test : "test"}
-        //catalogSelectorsRegistry : {}
-        catalogMenuExcludedItems : [],
+        catalog : {
+            defaultSelectors: ['resourceType', 'contextSystem', 'uid'],
+            actions: ["download", "select"], /* , 'view' */
+            //baseFilter : { test : "test"}
+            //selectorsRegistry : {}
+            menuExcludedItems : [],
+        },
+
+        box: {
+            hideMinimizeButton : true
+        },
+
         pulsingButtonClassName: 'first-init',
-        boxConfig: {},
-        
+
         cache : false
     }
 

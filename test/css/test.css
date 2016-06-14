@@ -5892,6 +5892,7 @@ input[type="radio"]:disabled + label {
     width: 950px; } }
 
 .cat-toolbar {
+  position: relative;
   padding: 0; }
   .cat-toolbar .cat-btn-left {
     width: 50px;
@@ -6439,8 +6440,6 @@ input[type="radio"]:disabled + label {
     pointer-events: auto; }
   @media screen and (min-width: 768px) {
     .fx-box .front-toolbar .toolbar-cmd-left, .fx-box .front-toolbar .toolbar-cmd-right {
-      opacity: 0;
-      pointer-events: none;
       -webkit-transition: all 0.3s ease 0.2s;
       -moz-transition: all 0.3s ease 0.2s;
       -ms-transition: all 0.3s ease 0.2s;
@@ -6455,7 +6454,6 @@ input[type="radio"]:disabled + label {
       -o-transition: all 0.3s ease 0.2s;
       transition: all 0.3s ease 0.2s; }
     .fx-box:hover .front-toolbar .toolbar-cmd-left, .fx-box:hover .front-toolbar .toolbar-cmd-right {
-      opacity: 1;
       pointer-events: auto; }
     .fx-box:hover .front-toolbar .box-title {
       margin-left: 85px;

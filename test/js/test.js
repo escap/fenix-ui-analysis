@@ -35,29 +35,31 @@ define([
         var analysis = this.createInstance({
             el: s.STANDARD,
             environment : environment,
-            catalogDefaultDelectors : ['contextSystem', "dataDomain","resourceType" ],
-            catalogSelectorsRegistry : {
-                contextSystem : {
-                    selector : {
-                        id : "dropdown",
-                        source : [
-                            {value : "uneca", label : "UNECA"},
-                            {value : "FAOSTAT", label : "FAOSTAT"}
-                        ],
-                        default : ["uneca"],
-                        hideSummary : true
-                    },
+            catalog : {
+                defaultSelectors : ['contextSystem', "dataDomain","resourceType" ],
+                selectorsRegistry : {
+                    contextSystem : {
+                        selector : {
+                            id : "dropdown",
+                            source : [
+                                {value : "uneca", label : "UNECA"},
+                                {value : "FAOSTAT", label : "FAOSTAT"}
+                            ],
+                            default : ["uneca"],
+                            hideSummary : true
+                        },
 
-                    template : {
-                        hideRemoveButton : false
-                    },
+                        template : {
+                            hideRemoveButton : false
+                        },
 
-                    format : {
-                        output : "enumeration",
-                        metadataAttribute: "dsd.contextSystem"
+                        format : {
+                            output : "enumeration",
+                            metadataAttribute: "dsd.contextSystem"
+                        }
                     }
                 }
-            }
+            },
         });
     };
 

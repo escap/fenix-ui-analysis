@@ -9,7 +9,7 @@ define([
     'text!fx-analysis/html/analysis.hbs',
     'i18n!fx-analysis/nls/analysis',
     'fx-catalog/start',
-    'fx-v-b/start',
+    'fx-box/start',
     "fx-reports/start",
     'fx-common/utils',
     'handlebars',

@@ -20,7 +20,9 @@ define(function () {
 
         pulsingButtonClassName: 'first-init',
 
-        cache : false
+        cache : false,
+        
+        lang : "EN"
     }
 
 });

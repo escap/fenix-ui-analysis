@@ -120,10 +120,9 @@ define([
 
     Analysis.prototype._parseInput = function () {
 
-        this.id = this.initial.id;
         this.$el = $(this.initial.el);
         this.environment = this.initial.environment;
-        this.lang = this.initial.lang || "EN";
+        this.lang = this.initial.lang || C.lang;
         this.lang = this.lang.toUpperCase();
         this.cache = typeof this.initial.cache === "boolean" ? this.initial.cache : C.cache;
 
@@ -146,7 +145,7 @@ define([
 
             this.id = "fx-analysis-" + String(window.fx_analysis_id);
 
-            log.warn("Impossible to find analysis id. Set auto id to: " + this.id);
+            log.info("Set analysis id: " + this.id);
         }
 
 

@@ -1,67 +1,84 @@
 # FENIX Analysis
 
-# Configuration
-
 ```javascript
-var analysis = new Analysis(options);
+var Analysis = require('fx-analysis/start');
+
+var analysis = new Analysis({
+        el : "#analysis-container",
+        ...
+    });
 ```
 
-<table>
-  <thead>
-    <tr>
-      <th>Parameter</th>
-      <th>Type</th>
-      <th>Default Value</th>
-      <th>Example</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>el</td>
-      <td>CSS3 Selector/JavaScript DOM element/jQuery DOM element</td>
-      <td> - </td>
-      <td>"#container"</td>
-      <td>component container</td>
-    </tr>
+# Configuration
 
-    <tr>
-      <td>cache</td>
-      <td>boolean</td>
-      <td>false</td>
-      <td>true</td>
-      <td>whether or not to use FENIX bridge cache</td>
-    </tr>
-    
-    <tr>
-      <td>pulsingButtonClassName</td>
-      <td>string</td>
-      <td>'first-init'</td>
-      <td>'my-first-init'</td>
-      <td>CSS class applied to make the Open Catalog button pulsing</td>
-    </tr>
-    
-     <tr>
-      <td>catalog</td>
-      <td>object</td>
-      <td> - </td>
-      <td> - </td>
-      <td>Proxied FENIX Catalog options. Check out the documentation for complete list</td>
-    </tr>
-    
+Check `fx-analysis/config/config.js` to have a look of the default configuration.
+
+<table>
+   <thead>
       <tr>
-          <td>box</td>
-          <td>object</td>
-          <td> - </td>
-          <td> - </td>
-          <td>Proxied FENIX Visualization Box options. Check out the documentation for complete list</td>
-        </tr>
-       
-       
-  </tbody>
+         <th>Parameter</th>
+         <th>Type</th>
+         <th>Default Value</th>
+         <th>Example</th>
+         <th>Description</th>
+      </tr>
+   </thead>
+   <tbody>
+      <tr>
+         <td>el</td>
+         <td>CSS3 Selector/JavaScript DOM element/jQuery DOM element</td>
+         <td> - </td>
+         <td>"#container"</td>
+         <td>component container</td>
+      </tr>
+      <tr>
+         <td>cache</td>
+         <td>boolean</td>
+         <td>false</td>
+         <td>true</td>
+         <td>whether or not to use FENIX bridge cache</td>
+      </tr>
+      <tr>
+         <td>environment</td>
+         <td>string</td>
+         <td>'develop'</td>
+         <td>'production'</td>
+         <td>Server environment</td>
+      </tr>
+      <tr>
+         <td>lang</td>
+         <td>string</td>
+         <td>'EN'</td>
+         <td>'IT'</td>
+         <td>Multilingual</td>
+      </tr>
+      <tr>
+         <td>catalog</td>
+         <td>Object</td>
+         <td> - </td>
+         <td> - </td>
+         <td>Proxied FENIX Catalog configuration. Check FENIX Catalog.</td>
+      </tr>
+      <tr>
+         <td>box</td>
+         <td>Object</td>
+         <td> - </td>
+         <td> - </td>
+         <td>Proxied FENIX Visualization Box configuration. Check FENIX Visualization Box.</td>
+      </tr>
+   </tbody>
 </table>
 
 # API
 
+```javascript
+//This is an example
+analysis.on("catalog.show", function () {...});
+```
 
+- `analysis.on(event, callback[, context])` : pub/sub 
+- `analysis.dispose()` : dispose the analysis instance
 
+# Events
+
+- `catalog.show` : triggered when a catalog is shown

@@ -231,7 +231,8 @@ define([
         var config = $.extend(true, {}, {
             cache: this.cache,
             environment: this.environment,
-            el: s.CATALOG_EL
+            el: s.CATALOG_EL,
+            lang : this.lang
         }, this.catalogConfig);
 
         this.catalog = new Catalog(config);

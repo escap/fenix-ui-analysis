@@ -1,36 +1,27 @@
 {
-    "name": "fenix-ui-analysis",
-    "version": "0.0.1",
-    "description": "FENIX Analysis tool",
-    "main": "main.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/FENIX-Platform/fenix-ui-analysis.git"
-    },
-    "keywords": [
-        "FENIX"
-    ],
-    "author": "FENIX Development Team",
-    "license": "GPL3",
-    "bugs": {
-        "url": "https://github.com/FENIX-Platform/fenix-ui-analysis/issues"
-    },
-    "homepage": "https://github.com/FENIX-Platform/fenix-ui-analysis",
-    "dependencies": {
-        "jquery": "~2.1.0",
-        "intro.js": "~0.9.0",
-        "nprogress": "~0.1.6",
-        "jstree": "~3.0.8",
-        "bootstrap": "~3.2.0",
-        "requirejs": "~2.1.14",
-        "domReady": "https://github.com/requirejs/domReady/tarball/master",
-        "text": "https://github.com/requirejs/text/tarball/master",
-        "i18n": "https://github.com/requirejs/i18n/tarball/master",
-        "draggabilly": "~1.1.1",
-        "packery": "~1.2.4",
-        "gsap": "~1.14.2"
-    }
+  "name": "fenix-ui-analysis",
+  "version": "2.0.0-beta.0",
+  "description": "FENIX analysis",
+  "main": "src/js/start.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FENIX-Platform/fenix-ui-analysis.git"
+  },
+  "author": "FENIX team (http://fenix.fao.org/)",
+  "license": "GPL2",
+  "bugs": {
+    "url": "https://github.com/FENIX-Platform/fenix-ui-analysis/issues"
+  },
+  "homepage": "https://github.com/FENIX-Platform/fenix-analysis#readme",
+  "dependencies": {
+    "amplify": "0.0.11",
+    "bootstrap": "3.3.6",
+    "handlebars": "4.0.5",
+    "jquery": "3.1.0",
+    "loglevel": "1.4.1",
+    "underscore": "1.8.3"
+  }
 }

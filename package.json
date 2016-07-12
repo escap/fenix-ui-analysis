@@ -1,6 +1,6 @@
 {
   "name": "fenix-ui-analysis",
-  "version": "1.0.0-alpha",
+  "version": "2.0.0-beta.0",
   "description": "FENIX analysis",
   "main": "src/js/start.js",
   "scripts": {
@@ -10,10 +10,18 @@
     "type": "git",
     "url": "https://github.com/FENIX-Platform/fenix-ui-analysis.git"
   },
-  "author": "Daniele Salvatore <daniele.salvatore@fao.org> (http://fenix.fao.org/)",
+  "author": "FENIX team (http://fenix.fao.org/)",
   "license": "GPL2",
   "bugs": {
     "url": "https://github.com/FENIX-Platform/fenix-ui-analysis/issues"
   },
-  "homepage": "https://github.com/FENIX-Platform/fenix-analysis#readme"
+  "homepage": "https://github.com/FENIX-Platform/fenix-analysis#readme",
+  "dependencies": {
+    "amplify": "0.0.11",
+    "bootstrap": "3.3.6",
+    "handlebars": "4.0.5",
+    "jquery": "3.1.0",
+    "loglevel": "1.4.1",
+    "underscore": "1.8.3"
+  }
 }

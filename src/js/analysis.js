@@ -262,13 +262,12 @@ define([
                 }
             };
 
-        log.info("Configure FENIX export: tableExport");
-
-        this.report.init('tableExport');
+        log.info("Configure FENIX export: table");
 
         log.info(payload);
 
-        this.report.exportData({
+        this.report.export({
+            format : "table",
             config: payload
         });
     };

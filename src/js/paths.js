@@ -4,10 +4,10 @@ define(function () {
 
         paths: {
             'fx-analysis/start': './analysis',
-            'fx-analysis/html': '../../html',
+            'fx-analysis/html': '../html',
             'fx-analysis/js': './',
-            'fx-analysis/config' :  '../../config',
-            'fx-analysis/nls' :  '../../nls',
+            'fx-analysis/config' :  '../config',
+            'fx-analysis/nls' :  '../nls',
 
             //3rd party libs
             'jquery': '{FENIX_CDN}/js/jquery/2.1.1/jquery.min',

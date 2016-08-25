@@ -9,10 +9,11 @@ define([
     'use strict';
 
     var s = {
-            STANDARD: "#standard"
+            STANDARD: "#standard",
+            ADD_BTN: "#add-btn"
         },
         instances = [],
-        environment = "production";
+        environment = "develop";
 
     function Test() {
     }
@@ -34,33 +35,85 @@ define([
 
         var analysis = this.createInstance({
             el: s.STANDARD,
-            environment : environment,
-            catalog : {
-                defaultSelectors : ['contextSystem', "dataDomain","resourceType" ],
-                selectorsRegistry : {
-                    contextSystem : {
-                        selector : {
-                            id : "dropdown",
-                            source : [
-                                {value : "uneca", label : "UNECA"},
-                                {value : "FAOSTAT", label : "FAOSTAT"}
+            environment: environment,
+            /*            catalog : {
+             defaultSelectors : ['contextSystem', "dataDomain","resourceType" ],
+             selectorsRegistry : {
+             contextSystem : {
+             selector : {
+             id : "dropdown",
+             source : [
+             {value : "uneca", label : "UNECA"},
+             {value : "FAOSTAT", label : "FAOSTAT"}
+             ],
+             default : ["uneca"],
+             hideSummary : true
+             },
+
+             template : {
+             hideRemoveButton : false
+             },
+
+             format : {
+             output : "enumeration",
+             metadataAttribute: "dsd.contextSystem"
+             }
+             }
+             }
+             },*/
+            catalog: false
+        });
+
+        $(s.ADD_BTN).on("click", function () {
+            analysis.add({
+                uid: "adam_usd_commitment",
+                process: [
+                    {
+                        "name": "filter",
+                        "parameters": {
+                            "rows": {
+                                "year": {
+                                    "time": [
+                                        {
+                                            "from": 2000,
+                                            "to": 2014
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "pggroup",
+                        "parameters": {
+                            "by": [
+                                "year"
                             ],
-                            default : ["uneca"],
-                            hideSummary : true
-                        },
-
-                        template : {
-                            hideRemoveButton : false
-                        },
-
-                        format : {
-                            output : "enumeration",
-                            metadataAttribute: "dsd.contextSystem"
+                            "aggregations": [
+                                {
+                                    "columns": ["value"],
+                                    "rule": "SUM"
+                                },
+                                {
+                                    "columns": ["unitcode"],
+                                    "rule": "pgfirst"
+                                },
+                                {
+                                    "columns": ["flowcategory"],
+                                    "rule": "pgfirst"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "name": "order",
+                        "parameters": {
+                            "year": "ASC"
                         }
                     }
-                }
-            },
-        });
+                ]
+            })
+        })
     };
 
     //Utils

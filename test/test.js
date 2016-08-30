@@ -15,19 +15,18 @@ require.config({
     paths: {
         compilerPaths: pathProjectRoot + 'submodules/fenix-ui-common/js/Compiler',
         commonPaths: pathProjectRoot + 'submodules/fenix-ui-common/js/paths',
-        menuPaths: pathProjectRoot + 'submodules/fenix-ui-menu/js/paths',
+        menuPaths: pathProjectRoot + 'submodules/fenix-ui-menu/src/js/paths',
         dashboardPaths: pathProjectRoot + 'submodules/fenix-ui-dashboard/src/js/paths',
         chartPaths: pathProjectRoot + 'submodules/fenix-ui-chart-creator/src/js/paths',
         mapPaths: pathProjectRoot + 'submodules/fenix-ui-map-creator/src/js/paths',
         tablePaths: pathProjectRoot + 'submodules/fenix-ui-table-creator/src/js/paths',
         filterPaths: pathProjectRoot + 'submodules/fenix-ui-filter/src/js/paths',
         analysisPaths: pathProjectRoot + 'submodules/fenix-ui-analysis/src/js/paths',
-        olapPaths: pathProjectRoot + 'submodules/fenix-ui-olap/src/js/paths',
         reportPaths: pathProjectRoot + 'submodules/fenix-ui-reports/src/js/paths',
         visualizationPaths: pathProjectRoot + 'submodules/fenix-ui-visualization-box/src/js/paths',
-        dataEditorPaths: pathProjectRoot + 'submodules/fenix-ui-DataEditor/js/paths',
-        dsdEditorPaths: pathProjectRoot + 'submodules/fenix-ui-DSDEditor/js/paths',
-        metadataEditorPaths: pathProjectRoot + 'submodules/fenix-ui-metadata-editor/js/paths',
+        dataEditorPaths: pathProjectRoot + 'submodules/fenix-ui-DataEditor/src/js/paths',
+        dsdEditorPaths: pathProjectRoot + 'submodules/fenix-ui-DSDEditor/src/js/paths',
+        metadataEditorPaths: pathProjectRoot + 'submodules/fenix-ui-metadata-editor/src/js/paths',
         metadataViewerPaths : pathProjectRoot + 'submodules/fenix-ui-metadata-viewer/src/js/paths',
         catalogPaths: pathProjectRoot + 'submodules/fenix-ui-catalog/src/js/paths',
         dataManagementPaths: pathProjectRoot + 'submodules/fenix-ui-data-management/src/js/paths',
@@ -42,13 +41,13 @@ require([
     "analysisPaths",
     "catalogPaths",
     "visualizationPaths",
-    "olapPaths",
+    "tablePaths",
     "metadataViewerPaths",
     "chartPaths",
     "mapPaths",
     "reportPaths",
     "fenixMap"
-], function (Compiler, Common, Filter, Analysis, Catalog, Box, Olap, MetadataViewer, ChartCreator, MapCreator, Report, Map) {
+], function (Compiler, Common, Filter, Analysis, Catalog, Box, Table, MetadataViewer, ChartCreator, MapCreator, Report, Map) {
 
     'use strict';
 
@@ -69,8 +68,8 @@ require([
     var filterConfig = Filter;
     filterConfig.baseUrl = submodules_path + 'fenix-ui-filter/src/js';
 
-    var olapConfig = Olap;
-    olapConfig.baseUrl = submodules_path + 'fenix-ui-olap/src/js';
+    var tableConfig = Table;
+    tableConfig.baseUrl = submodules_path + 'fenix-ui-table-creator/src/js';
 
     var metadataViewerConfig = MetadataViewer;
     metadataViewerConfig.baseUrl = submodules_path + 'fenix-ui-metadata-viewer/src/js';
@@ -87,7 +86,7 @@ require([
     var mapConfig = Map;
     mapConfig.baseUrl = submodules_path + 'fenix-ui-map';
 
-    Compiler.resolve([commonConfig, catalogConfig, filterConfig, analysisConfig, boxConfig, olapConfig, metadataViewerConfig, chartConfig, mapCreatorConfig, reportConfig, mapConfig],
+    Compiler.resolve([commonConfig, catalogConfig, filterConfig, analysisConfig, boxConfig, tableConfig, metadataViewerConfig, chartConfig, mapCreatorConfig, reportConfig, mapConfig],
         {
             placeholders: {"FENIX_CDN": "http://fenixrepo.fao.org/cdn"},
 

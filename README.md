@@ -54,10 +54,10 @@ Check `fx-analysis/config/config.js` to have a look of the default configuration
       </tr>
       <tr>
          <td>catalog</td>
-         <td>Object</td>
+         <td>Object || false </td>
          <td> - </td>
          <td> - </td>
-         <td>Proxied FENIX Catalog configuration. Check FENIX Catalog.</td>
+         <td>Proxied FENIX Catalog configuration. Check FENIX Catalog. `false` to do not render catalog</td>
       </tr>
       <tr>
          <td>box</td>
@@ -82,3 +82,4 @@ analysis.on("catalog.show", function () {...});
 # Events
 
 - `catalog.show` : triggered when a catalog is shown
+- `ready` : triggered when a instance is ready

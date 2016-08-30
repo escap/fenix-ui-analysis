@@ -59,6 +59,11 @@ define([
 
             this._bindEventListeners();
 
+            //make async the event
+            window.setTimeout(_.bind(function () {
+                this._trigger("ready");
+            }, this), 100);
+
             return this;
 
         } else {
@@ -102,6 +107,24 @@ define([
 
     };
 
+    /**
+     * Add model to analysis
+     * @param obj
+     * @returns {*}
+     *
+     */
+    Analysis.prototype.add = function ( obj ){
+        log.info("Add model to analysis:");
+        log.info(obj);
+
+        if (!obj.hasOwnProperty('uid')){
+            log.error("Impossible to add model to Analysis: uid missing. Abort add() fn");
+            return;
+        }
+
+        this._addToGrid(obj);
+    };
+
     // end API
 
     Analysis.prototype._trigger = function (channel) {
@@ -127,7 +150,8 @@ define([
         this.cache = typeof this.initial.cache === "boolean" ? this.initial.cache : C.cache;
 
         // catalog proxied config
-        this.catalogConfig =  this.initial.catalog || C.catalog;
+        //this.catalogConfig =  this.initial.catalog || C.catalog;
+        this.catalogConfig = (typeof this.initial.catalog === "boolean" && this.initial.catalog === false )? false : this.initial.catalog || C.catalog;
 
         // box proxied config
         this.boxConfig = this.initial.box || C.box;
@@ -172,7 +196,7 @@ define([
     Analysis.prototype._attach = function () {
 
         var template = Handlebars.compile($(Templates).find(s.ANALYSIS)[0].outerHTML),
-            $html = $(template($.extend(true, {}, i18nLabels)));
+            $html = $(template($.extend(true, {hideCatalog : !!this.catalogConfig}, i18nLabels)));
 
         this.$el.html($html);
 
@@ -196,15 +220,17 @@ define([
 
     Analysis.prototype._bindEventListeners = function () {
 
-        this.$catalogButton.on("click", _.bind(function () {
-            this.$modal.modal("show");
-            this._trigger("catalog.show");
-        }, this));
+        if (!!this.catalogConfig) {
+            this.$catalogButton.on("click", _.bind(function () {
+                this.$modal.modal("show");
+                this._trigger("catalog.show");
+            }, this));
 
-        this.catalog.on("select", _.bind(function (payload) {
-            this.$modal.modal("hide");
-            this._addToGridFromCatalog(payload);
-        }, this));
+            this.catalog.on("select", _.bind(function (payload) {
+                this.$modal.modal("hide");
+                this._addToGridFromCatalog(payload);
+            }, this));
+        }
 
     };
 
@@ -215,7 +241,9 @@ define([
             environment: this.environment
         });
 
-        this._initCatalog();
+        if (!!this.catalogConfig) {
+            this._initCatalog();
+        }
 
         this.grid = new Grid({
             $el: s.GRID,
@@ -262,13 +290,12 @@ define([
                 }
             };
 
-        log.info("Configure FENIX export: tableExport");
-
-        this.report.init('tableExport');
+        log.info("Configure FENIX export: table");
 
         log.info(payload);
 
-        this.report.exportData({
+        this.report.export({
+            format : "table",
             config: payload
         });
     };

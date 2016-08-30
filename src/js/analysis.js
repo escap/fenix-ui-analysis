@@ -9,7 +9,7 @@ define([
     'fx-analysis/config/events',
     'fx-analysis/config/config',
     'text!fx-analysis/html/analysis.hbs',
-    'i18n!fx-analysis/nls/analysis',
+    'i18n!fx-analysis/nls/labels',
     'fx-catalog/start',
     'fx-box/start',
     "fx-reports/start",

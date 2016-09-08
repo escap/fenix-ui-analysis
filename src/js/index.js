@@ -1,24 +1,21 @@
-if (typeof define !== 'function') {
-    var define = require('amdefine')(module);
-}
 define([
     'jquery',
     'underscore',
     'loglevel',
-    'fx-analysis/config/errors',
-    'fx-analysis/config/events',
-    'fx-analysis/config/config',
-    'text!fx-analysis/html/analysis.hbs',
-    'i18n!fx-analysis/nls/labels',
-    'fx-catalog/start',
-    'fx-box/start',
-    "fx-reports/start",
-    'fx-common/utils',
+    '../config/errors',
+    '../config/events',
+    '../config/config',
+    '../html/analysis.hbs',
+    '../html/item.hbs',
+    '../nls/labels',
+    'fenix-ui-catalog',
+    'fenix-ui-visualization-box',
+    "fenix-ui-reports",
     'handlebars',
-    'fx-common/structures/fx-fluid-grid',
-    'amplify',
+    './fx-fluid-grid',
+    'amplify-pubsub',
     'bootstrap'
-], function ($, _, log, ERR, EVT, C, Templates, i18nLabels, Catalog, Box, Report, Utils, Handlebars, Grid) {
+], function ($, _, log, ERR, EVT, C, TemplateAnalysis, TemplateItem, i18nLabels, Catalog, Box, Report, Handlebars, Grid, amplify) {
 
     'use strict';
 
@@ -197,8 +194,7 @@ define([
 
     Analysis.prototype._attach = function () {
 
-        var template = Handlebars.compile($(Templates).find(s.ANALYSIS)[0].outerHTML),
-            $html = $(template($.extend(true, {hideCatalog : !!this.catalogConfig}, i18nLabels)));
+        var $html = $(TemplateAnalysis($.extend(true, {hideCatalog : !!this.catalogConfig}, i18nLabels)));
 
         this.$el.html($html);
 
@@ -275,7 +271,7 @@ define([
 
         this.$modal.modal("hide");
 
-        var uid = Utils.getNestedProperty("model.uid", p),
+        var uid = this._getNesetdProperty("model.uid", p),
             payload = {
                 resource: {
                     "metadata": {
@@ -336,8 +332,8 @@ define([
 
     Analysis.prototype._addToGridFromCatalog = function (obj) {
 
-        var uid = Utils.getNestedProperty("model.uid", obj),
-            version = Utils.getNestedProperty("model.version", obj);
+        var uid = this._getNesetdProperty("model.uid", obj),
+            version = this._getNesetdProperty("model.version", obj);
 
         if (!uid) {
             log.error("Impossible to find model.uid. Abort addToGrid() fn");
@@ -416,8 +412,7 @@ define([
 
     Analysis.prototype._createStackItem = function (obj) {
 
-        var template = Handlebars.compile($(Templates).find(s.STACK_ITEM)[0].outerHTML),
-            $html = $(template($.extend(true, {}, i18nLabels, obj)));
+        var $html = $(TemplateItem($.extend(true, {}, i18nLabels, obj)));
 
         this._bindStackItemEventListeners($html);
 
@@ -566,14 +561,43 @@ define([
 
     Analysis.prototype._setObjState = function (key, val) {
 
-        Utils.assign(this.state, key, val);
+        this._assign(this.state, key, val);
 
     };
 
     Analysis.prototype._getObjState = function (path) {
 
-        return Utils.getNestedProperty(path, this.state);
+        return this._getNesetdProperty(path, this.state);
     };
+
+    Analysis.prototype._assign = function (obj, prop, value) {
+        if (typeof prop === "string")
+            prop = prop.split(".");
+
+        if (prop.length > 1) {
+            var e = prop.shift();
+            this.assign(obj[e] =
+                    Object.prototype.toString.call(obj[e]) === "[object Object]"
+                        ? obj[e]
+                        : {},
+                prop,
+                value);
+        } else {
+            obj[prop[0]] = value;
+        }
+    };
+
+    Analysis.prototype._getNestedProperty = function (path, obj) {
+
+        var obj = $.extend(true, {}, obj),
+            arr = path.split(".");
+
+        while (arr.length && (obj = obj[arr.shift()]));
+
+        return obj;
+
+    };
+
 
     return Analysis;
 });

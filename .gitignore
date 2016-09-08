@@ -2,6 +2,7 @@ node_modules
 npm.log
 npm-debug.log
 *.iml
+/.idea/
 .idea
 Web.config
 **/.DS_Store

@@ -2,8 +2,8 @@ define([
     'loglevel',
     'jquery',
     'underscore',
-    'fx-analysis/start',
-    'i18n!test/nls/labels'
+    '../../../src/js/index',
+    '../nls/labels'
 ], function (log, $, _, Analysis) {
 
     'use strict';
@@ -15,10 +15,13 @@ define([
         instances = [],
         environment = "develop";
 
-    function Test() {
+    function Dev() {
+        console.clear();
+        log.setLevel('trace')
+        this.start();
     }
 
-    Test.prototype.start = function () {
+    Dev.prototype.start = function () {
 
         log.trace("Test started");
 
@@ -26,12 +29,12 @@ define([
 
     };
 
-    Test.prototype._render = function () {
+    Dev.prototype._render = function () {
 
         this._renderStandard();
     };
 
-    Test.prototype._renderStandard = function () {
+    Dev.prototype._renderStandard = function () {
 
         var analysis = this.createInstance({
             el: s.STANDARD,
@@ -118,7 +121,7 @@ define([
 
     //Utils
 
-    Test.prototype.createInstance = function (params) {
+    Dev.prototype.createInstance = function (params) {
 
         var instance = new Analysis(params);
 
@@ -127,6 +130,6 @@ define([
         return instance;
     };
 
-    return new Test();
+    return new Dev();
 
 });

@@ -18,7 +18,7 @@
     "url": "https://github.com/FENIX-Platform/fenix-ui-analysis.git"
   },
   "author": "FENIX team (http://fenix.fao.org/)",
-  "license": "GPL2",
+  "license": "GPL-2.0",
   "bugs": {
     "url": "https://github.com/FENIX-Platform/fenix-ui-analysis/issues"
   },
@@ -43,8 +43,12 @@
     "amplify-pubsub": "0.0.1",
     "bootstrap": "^3.3.7",
     "draggabilly": "^2.1.1",
+    "fenix-ui-catalog": "^2.0.0-beta.0",
     "fenix-ui-reports": "^2.0.0-beta.0",
+    "fenix-ui-visualization-box": "^2.0.0-beta.0",
     "handlebars": "^4.0.5",
+    "handlebars-loader": "^1.4.0",
+    "imports-loader": "^0.6.5",
     "jquery": "^3.1.0",
     "loglevel": "^1.4.1",
     "packery": "^2.1.1",

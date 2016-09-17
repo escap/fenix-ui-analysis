@@ -5,7 +5,9 @@ var distFolderPath = "dist",
     devFolderPath = "dev",
     webpack = require('webpack'),
     packageJson = require("./package.json"),
+    ExtractTextPlugin = require("extract-text-webpack-plugin"),
     CleanWebpackPlugin = require('clean-webpack-plugin'),
+    HtmlWebpackPlugin = require('html-webpack-plugin'),
     Path = require('path'),
     dependencies = Object.keys(packageJson.dependencies);
 
@@ -22,7 +24,8 @@ module.exports = {
     resolve: {
         root: Path.resolve(__dirname),
         alias: {
-            handlebars: 'handlebars/dist/handlebars.min.js',
+            handlebars : Path.join(__dirname, 'node_modules/handlebars/dist/handlebars.js'),
+            'bootstrap-table' : Path.join(__dirname, 'node_modules/bootstrap-table/dist/bootstrap-table.min.js'),
             jquery: Path.join(__dirname, 'node_modules/jquery/dist/jquery')
         }
     },
@@ -30,18 +33,38 @@ module.exports = {
     externals: isProduction(dependencies, undefined),
 
     module: {
+        /*        preLoaders: [
+         {test: /\.js$/, exclude: /node_modules/, loader: "jshint-loader"}
+         ],*/
         loaders: [
-            {test: /\.hbs$/, loader: "handlebars-loader"},
+            {test: /\.css$/, loader: ExtractTextPlugin.extract("style-loader", "css-loader")},
+            {test: /\.scss$/, loaders: ['style', 'css', 'postcss', 'sass']},
+            {test: /\.(woff2?|ttf|eot|svg)$/, loader: 'url?limit=10000'},
+            {test: /bootstrap\/dist\/js\/umd\//, loader: 'imports?jQuery=jquery'},
             {test: /\.json$/, loader: "json-loader"},
-            {test: /bootstrap.+\.(jsx|js)$/, loader: 'imports?jQuery=jquery,$=jquery'}
+            {test: /\.hbs$/, loader: "handlebars-loader"},
+            {test: /bootstrap.+\.(jsx|js)$/, loader: 'imports?jQuery=jquery,$=jquery'},
+            {
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                loaders: [
+                    'file?hash=sha512&digest=hex&name=' + packageJson.name + '.[ext]',
+                    'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
+                ]
+            }
         ]
     },
 
     plugins: clearArray([
+        new webpack.ProvidePlugin({$: "jquery", jQuery: "jquery"}),
         isDemo(undefined, new CleanWebpackPlugin([distFolderPath])),
+        new ExtractTextPlugin(packageJson.name + '.min.css'),
         isProduction(new webpack.optimize.UglifyJsPlugin({
             compress: {warnings: false},
             output: {comments: false}
+        })),
+        isDevelop(new HtmlWebpackPlugin({
+            inject: "body",
+            template: devFolderPath + "/index.template.html"
         }))
     ])
 
@@ -92,7 +115,7 @@ function getOutput() {
             break;
         case "develop" :
             output = {
-                path: Path.join(__dirname, devFolderPath, distFolderPath),
+                path: Path.join(__dirname, devFolderPath),
                 //publicPath: "/dev/",
                 filename: "index.js"
             };

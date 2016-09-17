@@ -17,6 +17,9 @@ define([
 
     function Dev() {
         console.clear();
+
+        this._importThirdPartyCss();
+
         log.setLevel('trace')
         this.start();
     }
@@ -64,7 +67,7 @@ define([
              }
              }
              },*/
-            catalog: false
+            //catalog: false
         });
 
         $(s.ADD_BTN).on("click", function () {
@@ -128,6 +131,39 @@ define([
         instances.push(instance);
 
         return instance;
+    };
+
+    // utils
+
+    Dev.prototype._importThirdPartyCss = function () {
+
+        //Bootstrap
+        require("bootstrap-loader");
+
+
+        //dropdown selector
+        require("../../../node_modules/selectize/dist/css/selectize.bootstrap3.css");
+        // fenix-ui-filter
+        require("../../../node_modules/fenix-ui-filter/dist/fenix-ui-filter.min.css");
+        // fenix-ui-dropdown
+        require("../../../node_modules/fenix-ui-dropdown/dist/fenix-ui-dropdown.min.css");
+
+        // bootstrap-table
+        require("../../../node_modules/bootstrap-table/dist/bootstrap-table.min.css");
+
+        //tree selector
+        require("../../../node_modules/jstree/dist/themes/default/style.min.css");
+
+        // fenix-ui-table-creator
+        require("../../../node_modules/fenix-ui-table-creator/dist/fenix-ui-table-creator.min.css");
+
+        // jquery-grid for fenix-ui-metadata-viewer
+        require("../../../node_modules/jquery-treegrid-webpack/css/jquery.treegrid.css");
+
+        // iDangerous swiper
+        require("../../../node_modules/swiper/dist/css/swiper.min.css");
+
+
     };
 
     return new Dev();

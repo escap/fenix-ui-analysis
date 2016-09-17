@@ -1,9 +1,20 @@
 /* Analysis */
+@import 'utils/fx-functions';
+@import 'utils/fx-mixins';
+@import 'utils/fx-utils';
+
+@import 'themes/fx-bootstrap-queries';
+@import 'themes/fx-variables';
+
+@import 'base/fx-buttons';
+@import 'base/fx-fonts-import';
+@import 'base/fx-icons';
+@import 'base/fx-radio-checkbox';
+@import 'base/fx-typography';
 
 .fx-analysis {
 
 }
-
 
 .fx-grid-item{
   padding: 5px;
@@ -11,7 +22,6 @@
 
 .fx-grid-item[data-size="full"] { width: 100%; }
 .fx-grid-item[data-size="half"] { width: 50%; }
-
 
 
 .courtesy-intro{
@@ -22,7 +32,7 @@
 .courtesy-img{
   width: 140px;
   height: 129px;
-  background-image: url("#{$fx-ui-common}/css/img/mascot-01-gray.svg");
+  background-image: url("./img/mascot-01-gray.svg");
   background-size: contain;
   background-repeat: no-repeat;
   margin: 25px auto;

@@ -11,11 +11,10 @@ define([
     'fenix-ui-catalog',
     'fenix-ui-visualization-box',
     "fenix-ui-reports",
-    'handlebars',
     './fx-fluid-grid',
     'amplify-pubsub',
     'bootstrap'
-], function ($, _, log, ERR, EVT, C, TemplateAnalysis, TemplateItem, i18nLabels, Catalog, Box, Report, Handlebars, Grid, amplify) {
+], function ($, _, log, ERR, EVT, C, TemplateAnalysis, TemplateItem, i18nLabels, Catalog, Box, Report, Grid, amplify) {
 
     'use strict';
 
@@ -36,9 +35,10 @@ define([
         log.info("FENIX analysis");
         log.info(o);
 
-        $.extend(true, this, {initial: o}, C);
+        //import css
+        require("../css/fenix-ui-analysis.css");
 
-        this._registerHandlebarsHelpers();
+        $.extend(true, this, {initial: o}, C);
 
         this._parseInput();
 
@@ -532,14 +532,6 @@ define([
     Analysis.prototype._unbindEventListeners = function () {
 
         //amplify.unsubscribe(this._getEventName("view"), this._onViewResult);
-
-    };
-
-    Analysis.prototype._registerHandlebarsHelpers = function () {
-
-        Handlebars.registerHelper('isOpened', function (opened) {
-            return opened === true ? 'in' : '';
-        });
 
     };
 

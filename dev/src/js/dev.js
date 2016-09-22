@@ -163,6 +163,12 @@ define([
         // iDangerous swiper
         require("../../../node_modules/swiper/dist/css/swiper.min.css");
 
+        // fenix-ui-visualization-box
+        require("../../../node_modules/fenix-ui-visualization-box/dist/fenix-ui-visualization-box.min.css");
+
+        // fenix-ui-catalog
+        require("../../../node_modules/fenix-ui-catalog/dist/fenix-ui-catalog.min.css");
+
 
     };
 

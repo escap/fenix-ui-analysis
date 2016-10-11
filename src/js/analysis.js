@@ -157,6 +157,9 @@ define([
 
         // box proxied config
         this.boxConfig = this.initial.box || C.box;
+
+        this.nls = $.extend(true, {}, i18nLabels, this.initial.nls);
+
     };
 
     Analysis.prototype._validateInput = function () {
@@ -198,7 +201,7 @@ define([
     Analysis.prototype._attach = function () {
 
         var template = Handlebars.compile($(Templates).find(s.ANALYSIS)[0].outerHTML),
-            $html = $(template($.extend(true, {hideCatalog : !!this.catalogConfig}, i18nLabels)));
+            $html = $(template($.extend(true, {hideCatalog : !!this.catalogConfig}, this.nls)));
 
         this.$el.html($html);
 
@@ -417,7 +420,7 @@ define([
     Analysis.prototype._createStackItem = function (obj) {
 
         var template = Handlebars.compile($(Templates).find(s.STACK_ITEM)[0].outerHTML),
-            $html = $(template($.extend(true, {}, i18nLabels, obj)));
+            $html = $(template($.extend(true, {}, this.nls, obj)));
 
         this._bindStackItemEventListeners($html);
 
@@ -552,7 +555,7 @@ define([
 
         _.each(err, _.bind(function (e) {
 
-            var $li = $("<li>" + i18nLabels[e] + "</li>");
+            var $li = $("<li>" + this.nls[e] + "</li>");
 
             this.$el.find(s.ERROR_CONTAINER).show().append($li);
 

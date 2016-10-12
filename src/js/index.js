@@ -10,11 +10,12 @@ define([
     '../nls/labels',
     'fenix-ui-catalog',
     'fenix-ui-visualization-box',
+    'fenix-ui-filter-utils',
     "fenix-ui-reports",
     './fx-fluid-grid',
     'amplify-pubsub',
     'bootstrap'
-], function ($, _, log, ERR, EVT, C, TemplateAnalysis, TemplateItem, i18nLabels, Catalog, Box, Report, Grid, amplify) {
+], function ($, _, log, ERR, EVT, C, TemplateAnalysis, TemplateItem, i18nLabels, Catalog, Box, Utils, Report, Grid, amplify) {
 
     'use strict';
 
@@ -271,7 +272,7 @@ define([
 
         this.$modal.modal("hide");
 
-        var uid = this._getNesetdProperty("model.uid", p),
+        var uid = Utils.getNestedProperty("model.uid", p),
             payload = {
                 resource: {
                     "metadata": {
@@ -332,8 +333,8 @@ define([
 
     Analysis.prototype._addToGridFromCatalog = function (obj) {
 
-        var uid = this._getNesetdProperty("model.uid", obj),
-            version = this._getNesetdProperty("model.version", obj);
+        var uid = Utils.getNestedProperty("model.uid", obj),
+            version = Utils.getNestedProperty("model.version", obj);
 
         if (!uid) {
             log.error("Impossible to find model.uid. Abort addToGrid() fn");
@@ -559,7 +560,7 @@ define([
 
     Analysis.prototype._getObjState = function (path) {
 
-        return this._getNesetdProperty(path, this.state);
+        return Utils.getNestedProperty(path, this.state);
     };
 
     Analysis.prototype._assign = function (obj, prop, value) {

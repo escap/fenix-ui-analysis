@@ -1,6 +1,6 @@
 {
   "name": "fenix-ui-analysis",
-  "version": "3.0.0-beta.1",
+  "version": "3.0.0-beta.2",
   "description": "FENIX analysis",
   "main": "dist/fenix-ui-analysis.min.js",
   "scripts": {
@@ -38,6 +38,7 @@
     "imports-loader": "^0.6.5",
     "jshint": "^2.9.3",
     "jshint-loader": "^0.8.3",
+    "json-loader": "^0.5.4",
     "karma": "^1.2.0",
     "karma-chai": "^0.1.0",
     "karma-chrome-launcher": "^2.0.0",
@@ -60,7 +61,7 @@
     "draggabilly": "^2.1.1",
     "fenix-ui-catalog": "^2.0.0-beta.2",
     "fenix-ui-reports": "^2.0.0-beta.1",
-    "fenix-ui-visualization-box": "^2.0.0-beta.3",
+    "fenix-ui-visualization-box": "^2.0.0-beta.4",
     "jquery": "^3.1.0",
     "loglevel": "^1.4.1",
     "packery": "^2.1.1",

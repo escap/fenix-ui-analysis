@@ -1,6 +1,6 @@
 {
   "name": "fenix-ui-analysis",
-  "version": "3.0.0-beta.11",
+  "version": "3.0.0-beta.12",
   "description": "FENIX analysis",
   "main": "dist/fenix-ui-analysis.min.js",
   "scripts": {

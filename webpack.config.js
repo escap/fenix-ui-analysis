@@ -57,6 +57,7 @@ module.exports = {
     },
 
     plugins: clearArray([
+        new webpack.optimize.DedupePlugin(),
         new webpack.ProvidePlugin({$: "jquery", jQuery: "jquery"}),
         isProduction(new CleanWebpackPlugin([distFolderPath]), undefined),
         isProduction(new webpack.optimize.UglifyJsPlugin({

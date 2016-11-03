@@ -13,9 +13,7 @@ define([
     'fenix-ui-filter-utils',
     "fenix-ui-reports",
     './fx-fluid-grid',
-    'amplify-pubsub',
-    'bootstrap'
-], function ($, _, log, ERR, EVT, C, TemplateAnalysis, TemplateItem, i18nLabels, Catalog, Box, Utils, Report, Grid, amplify) {
+], function ($, _, log, ERR, EVT, C, TemplateAnalysis, TemplateItem, i18nLabels, Catalog, Box, Utils, Report, Grid) {
 
     'use strict';
 

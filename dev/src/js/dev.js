@@ -139,9 +139,6 @@ define([
 
         //Bootstrap
         require('bootstrap/dist/css/bootstrap.css');
-        //require('bootstrap');
-
-
 
         //dropdown selector
         require("../../../node_modules/selectize/dist/css/selectize.bootstrap3.css");

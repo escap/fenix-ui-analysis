@@ -41,6 +41,7 @@ define([
 
         var analysis = this.createInstance({
             el: s.STANDARD,
+            lang : "FR",
             environment: environment,
             /*            catalog : {
              defaultSelectors : ['contextSystem', "dataDomain","resourceType" ],
@@ -139,6 +140,9 @@ define([
 
         //Bootstrap
         require('bootstrap/dist/css/bootstrap.css');
+
+        //map
+        require("../../../node_modules/leaflet/dist/leaflet.css");
 
         //dropdown selector
         require("../../../node_modules/selectize/dist/css/selectize.bootstrap3.css");

@@ -41,7 +41,7 @@ define([
 
         var analysis = this.createInstance({
             el: s.STANDARD,
-            lang : "FR",
+            //ang : "FR",
             environment: environment,
             /*            catalog : {
              defaultSelectors : ['contextSystem', "dataDomain","resourceType" ],

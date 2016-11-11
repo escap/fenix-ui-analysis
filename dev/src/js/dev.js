@@ -143,6 +143,7 @@ define([
 
         //map
         require("../../../node_modules/leaflet/dist/leaflet.css");
+        require("../../../node_modules/fenix-ui-map/dist/fenix-ui-map.min.css");
 
         //dropdown selector
         require("../../../node_modules/selectize/dist/css/selectize.bootstrap3.css");

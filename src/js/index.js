@@ -307,7 +307,8 @@ define([
             config = $.extend(true, obj, {
                 el: $blank,
                 environment: this.environment,
-                cache: this.cache
+                cache: this.cache,
+                lang : this.lang
             }, this.boxConfig),
             box;
 

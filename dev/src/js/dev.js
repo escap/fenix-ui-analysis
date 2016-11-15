@@ -13,14 +13,15 @@ define([
             ADD_BTN: "#add-btn"
         },
         instances = [],
-        environment = "develop";
+        environment = "production";
 
     function Dev() {
         console.clear();
 
         this._importThirdPartyCss();
 
-        log.setLevel('trace')
+        log.setLevel('trace');
+
         this.start();
     }
 
@@ -39,37 +40,41 @@ define([
 
     Dev.prototype._renderStandard = function () {
 
+
         var analysis = this.createInstance({
             el: s.STANDARD,
-            lang : "FR",
+            lang: "FR",
             environment: environment,
-            /*            catalog : {
-             defaultSelectors : ['contextSystem', "dataDomain","resourceType" ],
-             selectorsRegistry : {
-             contextSystem : {
-             selector : {
-             id : "dropdown",
-             source : [
-             {value : "uneca", label : "UNECA"},
-             {value : "FAOSTAT", label : "FAOSTAT"}
-             ],
-             default : ["uneca"],
-             hideSummary : true
-             },
+            catalog:{"pluginRegistry":{"contextSystem":{"selector":{"source":[{"value":"cstat_ago","label":"CountrySTAT Angola"}],"default":["cstat_ago"]}},"dataDomain":{"cl":{"uid":"CSTAT_Core","level":1,"levels":1}}},"baseFilter":{"dsd.contextSystem":{"enumeration":["cstat_ago"]},"meContent.resourceRepresentationType":{"enumeration":["dataset"]}},"defaultSelectors":["freeText","dataDomain","region","referenceArea"],"menuExcludedItems":["accessibility"]}
 
-             template : {
-             hideRemoveButton : false
-             },
+        /*            catalog : {
+         defaultSelectors : ['contextSystem', "dataDomain","resourceType" ],
+         selectorsRegistry : {
+         contextSystem : {
+         selector : {
+         id : "dropdown",
+         source : [
+         {value : "uneca", label : "UNECA"},
+         {value : "FAOSTAT", label : "FAOSTAT"}
+         ],
+         default : ["uneca"],
+         hideSummary : true
+         },
 
-             format : {
-             output : "enumeration",
-             metadataAttribute: "dsd.contextSystem"
-             }
-             }
-             }
-             },*/
-            //catalog: false
-        });
+         template : {
+         hideRemoveButton : false
+         },
+
+         format : {
+         output : "enumeration",
+         metadataAttribute: "dsd.contextSystem"
+         }
+         }
+         }
+         },*/
+        //catalog: false
+    })
+        ;
 
         $(s.ADD_BTN).on("click", function () {
             analysis.add({
